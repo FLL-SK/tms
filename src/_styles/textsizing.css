@@ -1,0 +1,27 @@
+html {
+    font-size: 10px;
+}
+
+/* Bootstrap breakpoints
+(xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px)*/
+
+/*large*/
+@media only screen and (max-width: 992px) {
+    html {
+        font-size: 20px;
+    }
+}
+
+/*medium*/
+@media only screen and (max-width: 768px) {
+    html {
+        font-size: 30px;
+    }
+}
+
+/*small screen*/
+@media only screen and (max-width: 576px) {
+    html {
+        font-size: 40px;
+    }
+}
