@@ -1,0 +1,9 @@
+{
+    "home" : {
+        "test":"test-EN"
+    },
+    "global": "global-EN",
+    "LoginPage": {
+        "username_required":"Username is required"
+    }
+}

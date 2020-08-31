@@ -11,6 +11,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './_styles/textsizing.css';
 import './_styles/cursor.css';
 
+import './_locales';
+
 // setup fake backend
 import { configureFakeBackend } from './_helpers';
 configureFakeBackend();
