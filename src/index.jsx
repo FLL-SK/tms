@@ -13,6 +13,7 @@ import "./_styles/textsizing.css";
 // setup fake backend
 import { configureFakeBackend } from "./_helpers";
 configureFakeBackend();
+localStorage.setItem("user", JSON.stringify({ user: { username: "test" } }));
 
 apiService.setUrl("http://localhost:3000");
 

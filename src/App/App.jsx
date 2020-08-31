@@ -10,6 +10,7 @@ import { PrivateRoute } from "../_components";
 import { HomePage } from "../HomePage";
 import { LoginPage } from "../LoginPage";
 import { RegisterPage } from "../RegisterPage";
+import { RGScorerPage } from "../RGScorerPage";
 
 function App() {
     const alert = useSelector((state) => state.alert);
@@ -26,7 +27,7 @@ function App() {
         <Jumbotron>
             <Container fluid>
                 <Row>
-                    <Col lg={{ span: 8, offset: 2 }} xs>
+                    <Col lg={{ span: 8, offset: 2 }} sm>
                         <Alert variant={alert.type} show={alert.message}>
                             <p>{alert.message}</p>
                         </Alert>
@@ -38,6 +39,10 @@ function App() {
                                     component={HomePage}
                                 />
                                 <Route path="/login" component={LoginPage} />
+                                <Route
+                                    path="/scorer"
+                                    component={RGScorerPage}
+                                />
                                 <Route
                                     path="/register"
                                     component={RegisterPage}
