@@ -1,22 +1,25 @@
-var HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    mode: "development",
+    mode: 'development',
     resolve: {
-        extensions: [".js", ".jsx"],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
     module: {
         rules: [
             {
                 test: /\.jsx?$/,
-                loader: "babel-loader",
+                loader: 'babel-loader',
             },
+            { test: /\.tsx?$/, exclude: /node_modules/, loader: 'ts-loader' },
+            //{ test: /\.js$/, use: ['source-map-loader'], enforce: 'pre' },
             {
                 test: /\.css$/i,
                 use: [
-                    { loader: "style-loader" },
+                    { loader: 'style-loader' },
                     {
-                        loader: "css-loader",
+                        loader: 'css-loader',
                         options: {
                             import: true,
                         },
@@ -27,8 +30,9 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./src/index.html",
+            template: './src/index.html',
         }),
+        new MiniCssExtractPlugin({ filename: 'app.css' }),
     ],
     devServer: {
         historyApiFallback: true,
@@ -36,7 +40,7 @@ module.exports = {
     externals: {
         // global app config object
         config: JSON.stringify({
-            apiUrl: "http://localhost:4000",
+            apiUrl: 'http://localhost:4000',
         }),
     },
 };

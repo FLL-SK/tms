@@ -1,7 +1,7 @@
-import { userConstants } from "../_constants";
-import { userService } from "../_services";
-import { alertActions } from "./";
-import { history } from "../_helpers";
+import { userConstants } from '../_constants';
+import { userService } from '../_services';
+import { alertActions } from './';
+import { history } from '../_helpers';
 
 export const userActions = {
     login,
@@ -18,12 +18,12 @@ function login(username, password) {
         userService.login(username, password).then(
             (user) => {
                 dispatch(success(user));
-                history.push("/");
+                history.push('/');
             },
             (error) => {
                 dispatch(failure(error.toString()));
                 dispatch(alertActions.error(error.toString()));
-            }
+            },
         );
     };
 
@@ -49,14 +49,14 @@ function register(user) {
 
         userService.register(user).then(
             (user) => {
-                dispatch(success());
-                history.push("/login");
-                dispatch(alertActions.success("Registration successful"));
+                dispatch(success(user));
+                history.push('/login');
+                dispatch(alertActions.success('Registration successful'));
             },
             (error) => {
                 dispatch(failure(error.toString()));
                 dispatch(alertActions.error(error.toString()));
-            }
+            },
         );
     };
 
@@ -77,7 +77,7 @@ function getAll() {
 
         userService.getAll().then(
             (response) => dispatch(success(response.list)),
-            (error) => dispatch(failure(error.toString()))
+            (error) => dispatch(failure(error.toString())),
         );
     };
 
@@ -99,7 +99,7 @@ function _delete(id) {
 
         userService.delete(id).then(
             (user) => dispatch(success(id)),
-            (error) => dispatch(failure(id, error.toString()))
+            (error) => dispatch(failure(id, error.toString())),
         );
     };
 
