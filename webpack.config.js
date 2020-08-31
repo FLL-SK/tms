@@ -1,42 +1,45 @@
-var HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const glob = require('glob');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const PATHS = {
+    src: path.join(__dirname, 'src'),
+};
 
 module.exports = {
-    mode: "development",
+    mode: 'development',
     resolve: {
-        extensions: [".js", ".jsx"],
+        extensions: ['.js', '.ts', '.tsx'],
     },
     module: {
         rules: [
-            {
-                test: /\.jsx?$/,
-                loader: "babel-loader",
-            },
+            { test: /\.tsx?$/, exclude: /node_modules/, loader: 'ts-loader' },
+            { test: /\.js$/, use: ['source-map-loader'], enforce: 'pre' },
             {
                 test: /\.css$/i,
-                use: [
-                    { loader: "style-loader" },
-                    {
-                        loader: "css-loader",
-                        options: {
-                            import: true,
-                        },
-                    },
-                ],
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
             },
         ],
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./src/index.html",
+            template: './src/index.html',
         }),
+        new MiniCssExtractPlugin({ filename: 'app.[hash].css' }),
     ],
+    output: {
+        filename: 'app.[hash].js',
+    },
     devServer: {
+        inline: true,
         historyApiFallback: true,
+        port: 8080,
     },
     externals: {
         // global app config object
         config: JSON.stringify({
-            apiUrl: "http://localhost:4000",
+            apiUrl: 'http://localhost:4000',
         }),
     },
 };

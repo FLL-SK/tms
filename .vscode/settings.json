@@ -1,5 +1,6 @@
 {
     "prettier.packageManager": "yarn",
     "prettier.tabWidth": 4,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true
 }
