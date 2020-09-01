@@ -15,7 +15,6 @@ type Inputs = {
 };
 
 function RegisterPage() {
-    const [submitted, setSubmitted] = useState(false);
     const registering = useSelector((state: RootState) => state.registration.registering);
     const { register, handleSubmit, watch, errors } = useForm<Inputs>();
     const dispatch = useDispatch();
@@ -26,7 +25,6 @@ function RegisterPage() {
     }, []);
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
-        setSubmitted(true);
         if (data.fullName && data.username && data.password) {
             dispatch(
                 userActions.register({ username: data.username, fullName: data.fullName, password: data.password }),
@@ -46,7 +44,9 @@ function RegisterPage() {
                         ref={register({ required: true })}
                         className={errors.fullName ? ' is-invalid' : ''}
                     />
-                    {errors.fullName && <div className="invalid-feedback">Full Name is required</div>}
+                    {errors.fullName && (
+                        <Form.Control.Feedback type="invalid">Fullname is required</Form.Control.Feedback>
+                    )}
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Username</Form.Label>
@@ -56,12 +56,21 @@ function RegisterPage() {
                         ref={register({ required: true })}
                         className={errors.username ? ' is-invalid' : ''}
                     />
-                    {errors.username && <div className="invalid-feedback">Username is required</div>}
+                    {errors.username && (
+                        <Form.Control.Feedback type="invalid">Username is required</Form.Control.Feedback>
+                    )}
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" name="password" className={errors.password ? ' is-invalid' : ''} />
-                    {errors.password && <div className="invalid-feedback">Password is required</div>}
+                    <Form.Control
+                        type="password"
+                        name="password"
+                        ref={register({ required: true })}
+                        className={errors.password ? ' is-invalid' : ''}
+                    />
+                    {errors.password && (
+                        <Form.Control.Feedback type="invalid">Password is required</Form.Control.Feedback>
+                    )}
                 </Form.Group>
                 <Form.Group>
                     <Button variant="primary" type="submit">

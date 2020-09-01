@@ -18,7 +18,6 @@ type Inputs = {
 
 function LoginPage() {
     const { register, handleSubmit, watch, errors } = useForm<Inputs>();
-    const [submitted, setSubmitted] = useState(false);
     const loggingIn = useSelector((state: RootState) => state.authentication.loggingIn);
     const dispatch = useDispatch();
     const { t } = useTranslation();
@@ -29,10 +28,7 @@ function LoginPage() {
     }, []);
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
-        setSubmitted(true);
-        if (data.username && data.password) {
-            dispatch(userActions.login(data.username, data.password));
-        }
+        dispatch(userActions.login(data.username, data.password));
     };
 
     return (
@@ -47,7 +43,7 @@ function LoginPage() {
                             name="username"
                             defaultValue="aa"
                             ref={register({ required: true })}
-                            className={submitted && errors.username ? ' is-invalid' : ''}
+                            className={errors.username ? ' is-invalid' : ''}
                         />
                         {errors.username && (
                             <Form.Control.Feedback type="invalid">
@@ -61,7 +57,7 @@ function LoginPage() {
                             type="password"
                             name="password"
                             ref={register({ required: true })}
-                            className={submitted && errors.password ? ' is-invalid' : ''}
+                            className={errors.password ? ' is-invalid' : ''}
                         />
                         {errors.password && (
                             <Form.Control.Feedback type="invalid">
