@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, FormGroup, Button, FormLabel } from 'react-bootstrap';
+import { Form, Button, Col, Row } from 'react-bootstrap';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { userActions } from '../_actions';
 
 import { RootState } from '../_reducers';
 
+type Inputs = {
+    fullName: string;
+    username: string;
+    password: string;
+};
+
 function RegisterPage() {
-    const [user, setUser] = useState({
-        firstName: '',
-        lastName: '',
-        username: '',
-        password: '',
-    });
     const [submitted, setSubmitted] = useState(false);
     const registering = useSelector((state: RootState) => state.registration.registering);
+    const { register, handleSubmit, watch, errors } = useForm<Inputs>();
     const dispatch = useDispatch();
 
     // reset login status
@@ -23,69 +25,45 @@ function RegisterPage() {
         dispatch(userActions.logout());
     }, []);
 
-    function handleChange(e) {
-        const { name, value } = e.target;
-        setUser((user) => ({ ...user, [name]: value }));
-    }
-
-    function handleSubmit(e) {
-        e.preventDefault();
-
+    const onSubmit: SubmitHandler<Inputs> = (data) => {
         setSubmitted(true);
-        if (user.firstName && user.lastName && user.username && user.password) {
-            dispatch(userActions.register(user));
+        if (data.fullName && data.username && data.password) {
+            dispatch(
+                userActions.register({ username: data.username, fullName: data.fullName, password: data.password }),
+            );
         }
-    }
+    };
 
     return (
-        <div className="col-lg-8 offset-lg-2">
+        <Col lg={{ span: 8, offset: 2 }} sm>
             <h2>Register</h2>
-            <Form name="form" onSubmit={handleSubmit}>
-                <FormGroup>
-                    <FormLabel>First Name</FormLabel>
-                    <input
+            <Form name="form" onSubmit={handleSubmit(onSubmit)}>
+                <Form.Group>
+                    <Form.Label>Full Name</Form.Label>
+                    <Form.Control
                         type="text"
-                        name="firstName"
-                        value={user.firstName}
-                        onChange={handleChange}
-                        className={'form-control' + (submitted && !user.firstName ? ' is-invalid' : '')}
+                        name="fullName"
+                        ref={register({ required: true })}
+                        className={errors.fullName ? ' is-invalid' : ''}
                     />
-                    {submitted && !user.firstName && <div className="invalid-feedback">First Name is required</div>}
-                </FormGroup>
-                <FormGroup>
-                    <FormLabel>Last Name</FormLabel>
-                    <input
-                        type="text"
-                        name="lastName"
-                        value={user.lastName}
-                        onChange={handleChange}
-                        className={'form-control' + (submitted && !user.lastName ? ' is-invalid' : '')}
-                    />
-                    {submitted && !user.lastName && <div className="invalid-feedback">Last Name is required</div>}
-                </FormGroup>
-                <FormGroup>
-                    <FormLabel>Username</FormLabel>
-                    <input
+                    {errors.fullName && <div className="invalid-feedback">Full Name is required</div>}
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
                         type="text"
                         name="username"
-                        value={user.username}
-                        onChange={handleChange}
-                        className={'form-control' + (submitted && !user.username ? ' is-invalid' : '')}
+                        ref={register({ required: true })}
+                        className={errors.username ? ' is-invalid' : ''}
                     />
-                    {submitted && !user.username && <div className="invalid-feedback">Username is required</div>}
-                </FormGroup>
-                <FormGroup>
-                    <FormLabel>Password</FormLabel>
-                    <input
-                        type="password"
-                        name="password"
-                        value={user.password}
-                        onChange={handleChange}
-                        className={'form-control' + (submitted && !user.password ? ' is-invalid' : '')}
-                    />
-                    {submitted && !user.password && <div className="invalid-feedback">Password is required</div>}
-                </FormGroup>
-                <FormGroup>
+                    {errors.username && <div className="invalid-feedback">Username is required</div>}
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" name="password" className={errors.password ? ' is-invalid' : ''} />
+                    {errors.password && <div className="invalid-feedback">Password is required</div>}
+                </Form.Group>
+                <Form.Group>
                     <Button variant="primary" type="submit">
                         {registering && <span className="spinner-border spinner-border-sm mr-1"></span>}
                         Register
@@ -93,9 +71,9 @@ function RegisterPage() {
                     <Link to="/login" className="btn-link">
                         Cancel
                     </Link>
-                </FormGroup>
+                </Form.Group>
             </Form>
-        </div>
+        </Col>
     );
 }
 

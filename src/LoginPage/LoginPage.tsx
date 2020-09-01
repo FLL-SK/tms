@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { txt } from '../_locales';
 
@@ -10,13 +11,14 @@ import { userActions } from '../_actions';
 
 import { RootState } from '../_reducers';
 
+type Inputs = {
+    username: string;
+    password: string;
+};
+
 function LoginPage() {
-    const [inputs, setInputs] = useState({
-        username: '',
-        password: '',
-    });
+    const { register, handleSubmit, watch, errors } = useForm<Inputs>();
     const [submitted, setSubmitted] = useState(false);
-    const { username, password } = inputs;
     const loggingIn = useSelector((state: RootState) => state.authentication.loggingIn);
     const dispatch = useDispatch();
     const { t } = useTranslation();
@@ -26,35 +28,28 @@ function LoginPage() {
         dispatch(userActions.logout());
     }, []);
 
-    function handleChange(e) {
-        const { name, value } = e.target;
-        setInputs((inputs) => ({ ...inputs, [name]: value }));
-    }
-
-    function handleSubmit(e) {
-        e.preventDefault();
-
+    const onSubmit: SubmitHandler<Inputs> = (data) => {
         setSubmitted(true);
-        if (username && password) {
-            dispatch(userActions.login(username, password));
+        if (data.username && data.password) {
+            dispatch(userActions.login(data.username, data.password));
         }
-    }
+    };
 
     return (
         <Row>
             <Col md={{ span: 8, offset: 2 }} sm>
                 <h2>{t(txt.LoginPage.title)}</h2>
-                <Form name="form" onSubmit={handleSubmit}>
+                <Form name="form" onSubmit={handleSubmit(onSubmit)}>
                     <Form.Group>
                         <Form.Label>{t(txt.LoginPage.username)}</Form.Label>
                         <Form.Control
                             type="text"
                             name="username"
-                            value={username}
-                            onChange={handleChange}
-                            className={submitted && !username ? ' is-invalid' : ''}
+                            defaultValue="aa"
+                            ref={register({ required: true })}
+                            className={submitted && errors.username ? ' is-invalid' : ''}
                         />
-                        {submitted && !username && (
+                        {errors.username && (
                             <Form.Control.Feedback type="invalid">
                                 {t(txt.LoginPage.username_required)}
                             </Form.Control.Feedback>
@@ -65,11 +60,10 @@ function LoginPage() {
                         <Form.Control
                             type="password"
                             name="password"
-                            value={password}
-                            onChange={handleChange}
-                            className={submitted && !password ? ' is-invalid' : ''}
+                            ref={register({ required: true })}
+                            className={submitted && errors.password ? ' is-invalid' : ''}
                         />
-                        {submitted && !password && (
+                        {errors.password && (
                             <Form.Control.Feedback type="invalid">
                                 {t(txt.LoginPage.password_required)}
                             </Form.Control.Feedback>
