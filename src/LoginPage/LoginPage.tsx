@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useForm, SubmitHandler } from 'react-hook-form';
-
+import { AppContext } from '../_context/app.context';
 import { txt } from '../_locales';
 
 import { userActions } from '../_actions';
@@ -16,19 +15,21 @@ type Inputs = {
     password: string;
 };
 
-function LoginPage() {
+export function LoginPage() {
+    const { appState, appDispatch } = useContext(AppContext);
     const { register, handleSubmit, watch, errors } = useForm<Inputs>();
-    const loggingIn = useSelector((state: RootState) => state.authentication.loggingIn);
-    const dispatch = useDispatch();
+    const loggingIn = appState.loggedIn;
+
     const { t } = useTranslation();
 
     // reset login status
     useEffect(() => {
-        dispatch(userActions.logout());
+        appDispatch(userActions.logout());
     }, []);
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
-        dispatch(userActions.login(data.username, data.password));
+        console.log('submit');
+        appDispatch(userActions.login(data.username, data.password));
     };
 
     return (
@@ -79,5 +80,3 @@ function LoginPage() {
         </Row>
     );
 }
-
-export { LoginPage };

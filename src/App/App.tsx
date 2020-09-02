@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { Jumbotron, Container, Row, Col, Alert } from 'react-bootstrap';
 
@@ -12,11 +11,12 @@ import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
 import { RGScorerPage } from '../RGScorerPage';
 
-import { RootState } from '../_reducers';
+import { AppContext } from '../_context/app.context';
 
 function App() {
-    const alert = useSelector((state: RootState) => state.alert);
-    const dispatch = useDispatch();
+    const [state, dispatch] = useContext(AppContext);
+
+    const alert = state.alert;
 
     useEffect(() => {
         history.listen((location, action) => {
@@ -30,9 +30,11 @@ function App() {
             <Container fluid>
                 <Row>
                     <Col lg={{ span: 8, offset: 2 }} sm>
-                        <Alert variant={alert.type} show={alert.message != null}>
-                            <p>{alert.message}</p>
-                        </Alert>
+                        {alert && (
+                            <Alert variant={alert.type} show={alert.message != null}>
+                                <p>{alert.message}</p>
+                            </Alert>
+                        )}
                         <Router history={history}>
                             <Switch>
                                 <PrivateRoute exact path="/" component={HomePage} />

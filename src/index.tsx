@@ -7,6 +7,8 @@ import { App } from './App';
 
 import { apiService } from './_services';
 
+import { AppContextProvider } from './_context/app.context';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './_styles/textsizing.css';
 import './_styles/cursor.css';
@@ -22,7 +24,9 @@ apiService.setUrl('http://localhost:3000');
 
 render(
     <Provider store={store}>
-        <App />
+        <AppContextProvider>
+            <App />
+        </AppContextProvider>
     </Provider>,
     document.getElementById('app'),
 );

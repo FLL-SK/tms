@@ -18,13 +18,15 @@ function login(username, password) {
         data: { username, password },
     };
 
+    console.log('loging in ', username);
+
     return axios('/api/login', requestOptions)
         .then(handleResponse)
-        .then((user) => {
+        .then((data) => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('user', JSON.stringify(data));
 
-            return user;
+            return data;
         });
 }
 
