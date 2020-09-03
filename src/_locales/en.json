@@ -1,9 +1,13 @@
 {
-    "home" : {
-        "test":"test-EN"
+    "home": {
+        "test": "test-EN"
     },
     "global": "global-EN",
     "LoginPage": {
-        "username_required":"Username is required"
+        "username_required": "Username is required"
+    },
+    "Scorer": {
+        "mission": "Mission",
+        "score": "Score"
     }
 }

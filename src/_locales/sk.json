@@ -11,5 +11,9 @@
         "password_required": "Heslo je treba zadať.",
         "btnLogin": "Prihlásiť",
         "btnRegister": "Registrovať"
+    },
+    "Scorer": {
+        "mission": "Misia",
+        "score": "Skóre"
     }
 }

@@ -1,0 +1,23 @@
+{
+    "m01": {
+        "_panel": "Inovačný projekt",
+        "twopieces": "Aspon dve kocky",
+        "size4": "Velkost 4",
+        "touching": {
+            "_radios": "Dotýka sa",
+            "none": "ničoho",
+            "replay": "Replay",
+            "bench": "Lavičky"
+        }
+    },
+    "m02": {
+        "_panel": "Krokomer",
+        "color": {
+            "_radios": "Farba",
+            "none": "Ziadna",
+            "purple": "Purpurova",
+            "yellow": "Zlta",
+            "blue": "Modra"
+        }
+    }
+}

@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Row, Col } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+
 import { useForm, SubmitHandler } from 'react-hook-form';
 
+import { useTranslation } from 'react-i18next';
 import { txt } from '../_locales';
 
 import { userActions } from '../_actions';
@@ -39,7 +40,7 @@ function LoginPage() {
         <Row>
             <Col md={{ span: 8, offset: 2 }} sm>
                 <h2>{t(txt.LoginPage.title)}</h2>
-                <Form name="form" onSubmit={handleSubmit(onSubmit)}>
+                <Form name="loginForm" onSubmit={handleSubmit(onSubmit)}>
                     <Form.Group>
                         <Form.Label>{t(txt.LoginPage.username)}</Form.Label>
                         <Form.Control

@@ -3,22 +3,31 @@ import { initReactI18next } from 'react-i18next';
 
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import en from './en.json';
+//---- load translations for the whole application
 import sk from './sk.json';
-import { ConvertedToObjectType } from './types';
+import en from './en.json';
+
+//---- load translations for RobotGame Scorer 2020
+import skRG2020 from './rg2020.sk.json';
+import enRG2020 from './rg2020.en.json';
 
 const translationsJson = {
     en: {
         translation: en,
+        rg2020: enRG2020,
     },
     sk: {
         translation: sk,
+        rg2020: skRG2020,
     },
 };
 
 export type TranslationResource = typeof sk;
 export type LanguageKey = keyof TranslationResource;
 
+export type ConvertedToObjectType<T> = {
+    [P in keyof T]: T[P] extends string ? string : ConvertedToObjectType<T[P]>;
+};
 export const txt: ConvertedToObjectType<TranslationResource> = {} as any;
 
 interface Dict<T> {
