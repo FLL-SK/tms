@@ -11,27 +11,27 @@ interface MissionPanelProps {
     eventKey: string;
     mid: string; // mission id
     children?: React.ReactNode;
-    onChange?: (any) => void;
     tns: string; // translation name space
+    onChange: (any) => void;
 }
 
 interface MissionPanelContextType {
     mid: string; // mission id
-    onChange: (any) => void;
     tns: string; // translation namespace
+    onChange: (any) => void; // method to call on any answer
 }
 
 export const MissionPanelContext = createContext<Partial<MissionPanelContextType>>({});
 
 export function MissionPanel(props: MissionPanelProps) {
     const { t } = useTranslation('rg2020');
-    const { eventKey, children, mid, onChange, tns } = props;
+    const { eventKey, children, mid, tns, onChange } = props;
     const methods = useFormContext();
 
     const answered = methods.formState.dirtyFields[mid];
-    const score = methods.getValues(mid + '.score');
 
     methods.register({ name: mid + '.score', type: 'custom' });
+    const score = methods.watch(mid + '.score');
 
     return (
         <Container>
@@ -51,7 +51,7 @@ export function MissionPanel(props: MissionPanelProps) {
                     </Row>
                 </Accordion.Toggle>
             </Card>
-            <MissionPanelContext.Provider value={{ mid, onChange, tns }}>
+            <MissionPanelContext.Provider value={{ mid, tns, onChange }}>
                 <Accordion.Collapse eventKey={eventKey}>
                     <Card.Body>{children}</Card.Body>
                 </Accordion.Collapse>

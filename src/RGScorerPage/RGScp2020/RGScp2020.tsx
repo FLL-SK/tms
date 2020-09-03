@@ -3,20 +3,17 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Row, Col, Card, Accordion, useAccordionToggle } from 'react-bootstrap';
 
-import { useForm, SubmitHandler, Controller, FormProvider } from 'react-hook-form';
+import { useForm, SubmitHandler, Controller, FormProvider, useWatch } from 'react-hook-form';
 
 import { MissionPanel } from '../../_components/MissionPanel';
 import { MissionQuestion } from '../../_components/MissionQuestion';
-import { useTranslation } from 'react-i18next';
 
 type Inputs = {
     m01: { answered?: boolean; score: number; twopieces: boolean; size4: boolean; touching: string };
     m02: { answered?: boolean; score: number; color: string };
 };
 
-const initialValues = { m01: { score: 0 }, m02: { score: 0 } };
-
-function RGScp2020({ team, onSubmit }) {
+function RGScp2020({ team, onSubmit, details }) {
     const validate: SubmitHandler<Inputs> = (data) => {
         console.log(data);
         /*setSubmitted(true);
@@ -26,32 +23,34 @@ function RGScp2020({ team, onSubmit }) {
         */
     };
 
-    const methods = useForm<Inputs>({ defaultValues: initialValues });
+    const methods = useForm<Inputs>();
 
-    //const values = methods.getValues();
-    const [totalScore, setTotalScore] = useState(0);
-
-    console.log('total Score', totalScore);
+    //console.log('Watch', methods.watch(['m01', 'm02']));
 
     function calcScore() {
         const values = methods.getValues();
         console.log('Values', values);
-        let score = 0;
+        let s = 0;
         if (values.m01) {
-            score =
+            s =
                 values.m01.size4 && values.m01.twopieces && values.m01.touching && values.m01.touching !== 'none'
                     ? 20
                     : 0;
-            console.log('Score M01', score);
-            methods.setValue('m01.score', score, { shouldDirty: true });
+
+            //setScores({ ...scores, m01: s });
+            methods.setValue('m01.score', s);
+            console.log('Score M01', s, methods.getValues());
         }
     }
+
+    //useEffect(calcScore, [methods.watch(['m01', 'm02'])]); // recalculate score on any change
+    //useEffect(() => {}, [methods.watch('scores')]);
 
     return (
         <FormProvider {...methods}>
             <Form name="Scorer2020" onSubmit={methods.handleSubmit(validate)}>
                 <Accordion defaultActiveKey="01">
-                    <MissionPanel eventKey="01" mid="m01" onChange={calcScore} tns="rg2020">
+                    <MissionPanel eventKey="01" mid="m01" tns="rg2020" onChange={calcScore}>
                         <Row xs="1" md="2">
                             <Col>
                                 <MissionQuestion.Checkbox qid="twopieces" inline />

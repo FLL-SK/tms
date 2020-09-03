@@ -7,6 +7,17 @@ import { RGScp2020 } from './RGScp2020';
 
 import { RootState } from '../_reducers';
 
+export interface RGScorerDetails {
+    scores: Object;
+    values: Object;
+}
+
+export interface RGScorerProps {
+    team: string;
+    onSubmit: (any) => {};
+    details: RGScorerDetails;
+}
+
 function RGScorerPage() {
     const scorer = useSelector((state: RootState) => state.rgScorer);
     const handleSubmit = (details) => {
@@ -17,7 +28,7 @@ function RGScorerPage() {
 
     switch (scorer.programId) {
         case 'FLL2020':
-            return <RGScp2020 team={scorer.team} onSubmit={handleSubmit} />;
+            return <RGScp2020 team={scorer.team} onSubmit={handleSubmit} details={2} />;
         default:
             return null;
     }

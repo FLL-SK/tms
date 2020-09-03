@@ -20,7 +20,7 @@ interface MQCheckboxProps {
 function Checkbox(props: MQCheckboxProps) {
     const { t } = useTranslation();
     const { qid, ...rest } = props;
-    const { mid, onChange, tns } = useContext(MissionPanelContext);
+    const { mid, tns, onChange } = useContext(MissionPanelContext);
     const { register } = useFormContext();
     const fqid = mid + '.' + qid;
 
@@ -43,7 +43,7 @@ interface MQRadiosProps {
 function Radios(props: MQRadiosProps) {
     const { t } = useTranslation();
     const { qid, radios, ...rest } = props;
-    const { mid, onChange, tns } = useContext(MissionPanelContext);
+    const { mid, tns, onChange } = useContext(MissionPanelContext);
     const { register } = useFormContext();
     const fqid = mid + '.' + qid;
 
