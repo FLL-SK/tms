@@ -53,8 +53,8 @@ function RGScp2020({ team, onSubmit, details }) {
                     <MissionPanel eventKey="01" mid="m01" tns="rg2020" onChange={calcScore}>
                         <Row xs="1" md="2">
                             <Col>
-                                <MissionQuestion.Checkbox qid="twopieces" inline />
-                                <MissionQuestion.Checkbox qid="size4" inline />
+                                <MissionQuestion.Checkbox qid="twopieces" />
+                                <MissionQuestion.Checkbox qid="size4" />
                             </Col>
                             <Col>
                                 <MissionQuestion.Radios qid="touching" radios={['none', 'replay', 'bench']} />

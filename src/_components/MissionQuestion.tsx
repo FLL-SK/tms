@@ -25,12 +25,10 @@ function Checkbox(props: MQCheckboxProps) {
     const fqid = mid + '.' + qid;
 
     return (
-        <FormGroup>
-            <FormLabel>
-                <FormCheck type="checkbox" ref={register} name={fqid} onChange={onChange} {...rest} />
-                {t(tns + ':' + fqid)}
-            </FormLabel>
-        </FormGroup>
+        <Form.Row>
+            <FormCheck type="checkbox" ref={register} name={fqid} id={fqid} onChange={onChange} {...rest} />
+            <FormLabel htmlFor={fqid}>{t(tns + ':' + fqid)}</FormLabel>
+        </Form.Row>
     );
 }
 
@@ -48,20 +46,24 @@ function Radios(props: MQRadiosProps) {
     const fqid = mid + '.' + qid;
 
     return (
-        <Form.Group controlId={fqid}>
+        <>
             <Form.Label>{t(tns + ':' + fqid + '._radios')}</Form.Label>
+
             {radios.map((rid) => (
-                <Form.Check
-                    label={t(tns + ':' + fqid + '.' + rid)}
-                    type="radio"
-                    name={fqid}
-                    key={rid}
-                    value={rid}
-                    ref={register}
-                    onChange={onChange}
-                    {...rest}
-                />
+                <Form.Row key={rid}>
+                    <Form.Check
+                        type="radio"
+                        id={fqid + rid}
+                        key={rid}
+                        name={fqid}
+                        value={rid}
+                        ref={register}
+                        onChange={onChange}
+                        {...rest}
+                    />
+                    <Form.Label htmlFor={fqid + rid}> {t(tns + ':' + fqid + '.' + rid)}</Form.Label>
+                </Form.Row>
             ))}
-        </Form.Group>
+        </>
     );
 }
