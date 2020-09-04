@@ -11,6 +11,9 @@ import en from './en.json';
 import skRG2020 from './rg2020.sk.json';
 import enRG2020 from './rg2020.en.json';
 
+//---- JSON containg supported languages and namespaces within languages
+//---- first namespace (=translation) is the default one
+//---- remaining namespaces has to be adressed through prefix "namespace:"
 const translationsJson = {
     en: {
         translation: en,
