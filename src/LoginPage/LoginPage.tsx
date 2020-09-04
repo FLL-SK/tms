@@ -70,14 +70,23 @@ function LoginPage() {
                             </Form.Control.Feedback>
                         )}
                     </Form.Group>
+                    <Row>
+                        <Form.Group>
+                            <Button variant="secondary" type="submit">
+                                {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                                {t(txt.LoginPage.btnLogin)}
+                            </Button>
+                        </Form.Group>
+                        <Form.Group>
+                            <Link to="/register" className="btn-link">
+                                {t(txt.LoginPage.btnRegister)}
+                            </Link>
+                        </Form.Group>
+                    </Row>
                     <Form.Group>
-                        <Button variant="secondary" type="submit">
-                            {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                            {t(txt.LoginPage.btnLogin)}
+                        <Button href="/scorer" variant="secondary">
+                            Scorer
                         </Button>
-                        <Link to="/register" className="btn-link">
-                            {t(txt.LoginPage.btnRegister)}
-                        </Link>
                     </Form.Group>
                 </Form>
             </Col>
