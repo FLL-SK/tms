@@ -25,8 +25,6 @@ function RGScp2020({ team, onSubmit, details }) {
 
     const methods = useForm<Inputs>();
 
-    //console.log('Watch', methods.watch(['m01', 'm02']));
-
     function calcScore() {
         const values = methods.getValues();
         console.log('Values', values);
@@ -36,15 +34,22 @@ function RGScp2020({ team, onSubmit, details }) {
                 values.m01.size4 && values.m01.twopieces && values.m01.touching && values.m01.touching !== 'none'
                     ? 20
                     : 0;
-
-            //setScores({ ...scores, m01: s });
             methods.setValue('m01.score', s);
-            console.log('Score M01', s, methods.getValues());
+            console.log('Score M01', s);
+        }
+        if (values.m02) {
+            let a = [
+                ['blue', 20],
+                ['yellow', 15],
+                ['purple', 10],
+            ];
+            let i = a.find((i) => i[0] === values.m02.color);
+            if (i) s = i[1] as number;
+            else s = 0;
+            methods.setValue('m02.score', s);
+            console.log('Score M02', s);
         }
     }
-
-    //useEffect(calcScore, [methods.watch(['m01', 'm02'])]); // recalculate score on any change
-    //useEffect(() => {}, [methods.watch('scores')]);
 
     return (
         <FormProvider {...methods}>
@@ -64,8 +69,8 @@ function RGScp2020({ team, onSubmit, details }) {
                     <MissionPanel eventKey="02" mid="m02" tns="rg2020" onChange={calcScore}>
                         <MissionQuestion.Radios qid="color" radios={['none', 'purple', 'yellow', 'blue']} />
                     </MissionPanel>
-                    <Button type="submit">Submit</Button>
                 </Accordion>
+                <Button type="submit">Submit</Button>
             </Form>
         </FormProvider>
     );
