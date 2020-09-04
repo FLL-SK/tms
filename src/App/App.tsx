@@ -26,26 +26,24 @@ function App() {
     }, []);
 
     return (
-        <Jumbotron>
-            <Container fluid>
-                <Row>
-                    <Col lg={{ span: 8, offset: 2 }} sm>
-                        <Alert variant={alert.type} show={alert.message != null}>
-                            <p>{alert.message}</p>
-                        </Alert>
-                        <Router history={history}>
-                            <Switch>
-                                <PrivateRoute exact path="/" component={HomePage} />
-                                <Route path="/login" component={LoginPage} />
-                                <Route path="/scorer" component={RGScorerPage} />
-                                <Route path="/register" component={RegisterPage} />
-                                <Redirect from="*" to="/" />
-                            </Switch>
-                        </Router>
-                    </Col>
-                </Row>
-            </Container>
-        </Jumbotron>
+        <Container fluid>
+            <Row>
+                <Col lg={{ span: 8, offset: 2 }} sm>
+                    <Alert variant={alert.type} show={alert.message != null}>
+                        <p>{alert.message}</p>
+                    </Alert>
+                    <Router history={history}>
+                        <Switch>
+                            <PrivateRoute exact path="/" component={HomePage} />
+                            <Route path="/login" component={LoginPage} />
+                            <Route path="/scorer" component={RGScorerPage} />
+                            <Route path="/register" component={RegisterPage} />
+                            <Redirect from="*" to="/" />
+                        </Switch>
+                    </Router>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 

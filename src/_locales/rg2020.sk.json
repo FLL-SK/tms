@@ -1,23 +1,142 @@
 {
     "m01": {
-        "_panel": "Inovačný projekt",
-        "twopieces": "Aspon dve kocky",
-        "size4": "Velkost 4",
+        "_title": "Inovačný projekt",
+        "twopieces": {
+            "_title": "Aspoň dve kocky",
+            "yes": "Áno",
+            "no": "Nie"
+        },
+        "size4": {
+            "_title": "Veľkosť 4",
+            "yes": "Áno",
+            "no": "Nie"
+        },
         "touching": {
-            "_radios": "Dotýka sa",
-            "none": "ničoho",
+            "_title": "Dotýka sa",
+            "none": "Ničoho",
             "replay": "Replay",
             "bench": "Lavičky"
         }
     },
     "m02": {
-        "_panel": "Krokomer",
+        "_title": "Krokomer",
         "color": {
-            "_radios": "Farba",
-            "none": "Ziadna",
-            "purple": "Purpurova",
-            "yellow": "Zlta",
-            "blue": "Modra"
+            "_title": "Farba",
+            "none": "žiadna",
+            "purple": "Purpurová",
+            "yellow": "Žltá",
+            "blue": "Modrá"
+        }
+    },
+    "m03": {
+        "_title": "Šmykľavka",
+        "notOnSlide": {
+            "_title": "Mimo šmykľavky",
+            "none": "0",
+            "1": "1",
+            "2": "2"
+        },
+        "inHome": {
+            "_title": "Doma",
+            "none": "0",
+            "1": "1",
+            "2": "2"
+        },
+        "onTyre": {
+            "_title": "Na pneumatike",
+            "none": "0",
+            "1": "1",
+            "2": "2"
+        }
+    },
+    "m04": {
+        "_title": "Lavička",
+        "benchDown": {
+            "_title": "Lavička je dole",
+            "yes": "Áno",
+            "no": "Nie"
+        },
+        "cubesInHoles": {
+            "_title": "Kocky na miestach",
+            "none": "Žiadna",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4"
+        },
+        "backRemoved": {
+            "_title": "Operadlo odstránené",
+            "yes": "Áno",
+            "no": "Nie"
+        }
+    },
+    "m05": {
+        "_title": "Basketbal",
+        "cubeInHoop": {
+            "_title": "Kocka v koši",
+            "yes": "Áno",
+            "no": "Nie"
+        },
+        "hoopPosition": {
+            "_title": "Poloha koša",
+            "down": "Dole",
+            "middle": "V strede",
+            "top": "Hore"
+        }
+    },
+    "m06": {
+        "_title": "Hrazda",
+        "droveUnder": {
+            "_title": "Prešiel popod hrazdou",
+            "yes": "Áno",
+            "no": "Nie"
+        },
+        "hangingOn": {
+            "_title": "100% visí na hrazde",
+            "yes": "Áno",
+            "no": "Nie"
+        }
+    },
+    "m07": {
+        "_title": "Robotický tanec",
+        "onPlace": {
+            "_title": "Je na parkete",
+            "yes": "Áno",
+            "no": "Nie"
+        },
+        "isDancing": {
+            "_title": "Tancuje",
+            "yes": "Áno",
+            "no": "Nie"
+        }
+    },
+    "m08": {
+        "_title": "Boccia",
+        "cubeOnBothSides": {
+            "_title": "Jedna kocka na oboch stranách",
+            "yes": "Áno",
+            "no": "Nie"
+        },
+        "cubeSameColor": {
+            "_title": "Rovnaká farba kociek",
+            "yes": "Áno",
+            "no": "Nie"
+        },
+        "yellowCube": {
+            "_title": "Žltá kocka v cieli",
+            "yes": "Áno",
+            "no": "Nie"
+        },
+        "cubeCount": {
+            "_title": "Kocky v ráme alebo cieli",
+            "none": "Žiadna",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7"
         }
     }
 }

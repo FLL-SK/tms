@@ -5,15 +5,23 @@ import { Button, Form, Row, Col, Card, Accordion, useAccordionToggle } from 'rea
 
 import { useForm, SubmitHandler, Controller, FormProvider, useWatch } from 'react-hook-form';
 
-import { MissionPanel } from '../../_components/MissionPanel';
-import { MissionQuestion } from '../../_components/MissionQuestion';
+import { Scorer } from '../../_components/Scorer';
+import { ScorerPanel } from '../../_components/ScorerPanel';
+import { ButtonRadios } from '../../_components/ScorerQuestion';
+import calcScore from './caclScore';
 
 type Inputs = {
-    m01: { answered?: boolean; score: number; twopieces: boolean; size4: boolean; touching: string };
-    m02: { answered?: boolean; score: number; color: string };
+    m01: { score: number; twopieces: string; size4: string; touching: string };
+    m02: { score: number; color: string };
+    m03: { score: number; notOnSlide: string; inHome: string; onTyre: string };
+    m04: { score: number; benchDown: string; cubesInHoles: string; backRemoved: string };
+    m05: { score: number; cubeInHoop: string; hoopPosition: string };
+    m06: { score: number; droveUnder: string; hangingOn: string };
+    m07: { score: number; onPlace: string; isDancing: string };
+    m08: { score: number; cubeOnBothSides: string; cubeSameColor: string; cubeCount: string; yellowCube: string };
 };
 
-function RGScp2020({ team, onSubmit, details }) {
+export function RGScp2020({ team, onSubmit, details }) {
     const validate: SubmitHandler<Inputs> = (data) => {
         console.log(data);
         /*setSubmitted(true);
@@ -24,56 +32,67 @@ function RGScp2020({ team, onSubmit, details }) {
     };
 
     const methods = useForm<Inputs>();
-
-    function calcScore() {
-        const values = methods.getValues();
-        console.log('Values', values);
-        let s = 0;
-        if (values.m01) {
-            s =
-                values.m01.size4 && values.m01.twopieces && values.m01.touching && values.m01.touching !== 'none'
-                    ? 20
-                    : 0;
-            methods.setValue('m01.score', s);
-            console.log('Score M01', s);
-        }
-        if (values.m02) {
-            let a = [
-                ['blue', 20],
-                ['yellow', 15],
-                ['purple', 10],
-            ];
-            let i = a.find((i) => i[0] === values.m02.color);
-            if (i) s = i[1] as number;
-            else s = 0;
-            methods.setValue('m02.score', s);
-            console.log('Score M02', s);
-        }
-    }
+    const handleChange = () => {
+        calcScore(methods);
+    };
 
     return (
-        <FormProvider {...methods}>
+        <Scorer onChange={handleChange} tns="rg2020" formMethods={methods}>
             <Form name="Scorer2020" onSubmit={methods.handleSubmit(validate)}>
                 <Accordion defaultActiveKey="01">
-                    <MissionPanel eventKey="01" mid="m01" tns="rg2020" onChange={calcScore}>
-                        <Row xs="1" md="2">
-                            <Col>
-                                <MissionQuestion.Checkbox qid="twopieces" />
-                                <MissionQuestion.Checkbox qid="size4" />
-                            </Col>
-                            <Col>
-                                <MissionQuestion.Radios qid="touching" radios={['none', 'replay', 'bench']} />
-                            </Col>
+                    <ScorerPanel mid="m01">
+                        <Row>
+                            <ButtonRadios qid="twopieces" values={['no', 'yes']} />
+                            <ButtonRadios qid="size4" values={['no', 'yes']} />
+                            <ButtonRadios qid="touching" values={['none', 'replay', 'bench']} />
                         </Row>
-                    </MissionPanel>
-                    <MissionPanel eventKey="02" mid="m02" tns="rg2020" onChange={calcScore}>
-                        <MissionQuestion.Radios qid="color" radios={['none', 'purple', 'yellow', 'blue']} />
-                    </MissionPanel>
+                    </ScorerPanel>
+                    <ScorerPanel mid="m02">
+                        <ButtonRadios qid="color" values={['none', 'purple', 'yellow', 'blue']} />
+                    </ScorerPanel>
+                    <ScorerPanel mid="m03">
+                        <Row>
+                            <ButtonRadios qid="notOnSlide" values={['none', '1', '2']} />
+                            <ButtonRadios qid="inHome" values={['none', '1', '2']} />
+                            <ButtonRadios qid="onTyre" values={['none', '1', '2']} />
+                        </Row>
+                    </ScorerPanel>
+                    <ScorerPanel mid="m04">
+                        <Row>
+                            <ButtonRadios qid="benchDown" values={['no', 'yes']} />
+                            <ButtonRadios qid="cubesInHoles" values={['none', '1', '2', '3', '4']} />
+                            <ButtonRadios qid="backRemoved" values={['no', 'yes']} />
+                        </Row>
+                    </ScorerPanel>
+                    <ScorerPanel mid="m05">
+                        <Row>
+                            <ButtonRadios qid="cubeInHoop" values={['no', 'yes']} />
+                            <ButtonRadios qid="hoopPosition" values={['down', 'middle', 'top']} />
+                        </Row>
+                    </ScorerPanel>
+                    <ScorerPanel mid="m06">
+                        <Row>
+                            <ButtonRadios qid="droveUnder" values={['no', 'yes']} />
+                            <ButtonRadios qid="hangingOn" values={['no', 'yes']} />
+                        </Row>
+                    </ScorerPanel>
+                    <ScorerPanel mid="m07">
+                        <Row>
+                            <ButtonRadios qid="onPlace" values={['no', 'yes']} />
+                            <ButtonRadios qid="isDancing" values={['no', 'yes']} />
+                        </Row>
+                    </ScorerPanel>
+                    <ScorerPanel mid="m08">
+                        <Row>
+                            <ButtonRadios qid="cubeOnBothSides" values={['no', 'yes']} />
+                            <ButtonRadios qid="cubeSameColor" values={['no', 'yes']} />
+                            <ButtonRadios qid="cubeCount" values={['none', '1', '2', '3', '4', '5', '6', '7']} />
+                            <ButtonRadios qid="yellowCube" values={['no', 'yes']} />
+                        </Row>
+                    </ScorerPanel>
                 </Accordion>
                 <Button type="submit">Submit</Button>
             </Form>
-        </FormProvider>
+        </Scorer>
     );
 }
-
-export { RGScp2020 };
