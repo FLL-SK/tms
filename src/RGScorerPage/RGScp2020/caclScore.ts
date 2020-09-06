@@ -1,5 +1,6 @@
-export default function calcScore(methods) {
+export default function calcScore(methods, updateTotalScore: (score: number) => void) {
     const values = methods.getValues();
+    let totalScore = 0;
     methods.clearErrors();
     console.log('Values', values);
     console.log('Errors cleared', methods.errors);
@@ -13,6 +14,7 @@ export default function calcScore(methods) {
                 ? 20
                 : 0;
         methods.setValue('m01.score', s);
+        totalScore += s;
         if (s) console.log('Score M01', s);
     }
 
@@ -26,7 +28,9 @@ export default function calcScore(methods) {
         let i = a.find((i) => i[0] === values.m02.color);
         if (i) s = i[1] as number;
         else s = 0;
+
         methods.setValue('m02.score', s);
+        totalScore += s;
         if (s) console.log('Score M02', s);
     }
 
@@ -38,7 +42,9 @@ export default function calcScore(methods) {
         s += v == '2' ? 10 : v == '1' ? 10 : 0;
         v = values.m03.onTyre;
         s += v == '2' ? 20 : v == '1' ? 20 : 0;
+
         methods.setValue('m03.score', s);
+        totalScore += s;
         if (s) console.log('Score M03', s);
     }
 
@@ -52,6 +58,8 @@ export default function calcScore(methods) {
         }
         v = values.m04.backRemoved;
         s += v == 'yes' ? 15 : 0;
+
+        totalScore += s;
         methods.setValue('m04.score', s);
         if (s) console.log('Score M04', s);
     }
@@ -62,6 +70,8 @@ export default function calcScore(methods) {
         s += v == 'yes' ? 15 : 0;
         v = values.m05.hoopPosition;
         s += v == 'top' ? 25 : v == 'middle' ? 15 : 0;
+
+        totalScore += s;
         methods.setValue('m05.score', s);
         if (s) console.log('Score M05', s);
     }
@@ -72,6 +82,8 @@ export default function calcScore(methods) {
         s += v == 'yes' ? 15 : 0;
         v = values.m06.hangingOn;
         s += v == 'yes' ? 30 : 0;
+
+        totalScore += s;
         methods.setValue('m06.score', s);
         if (s) console.log('Score M06', s);
     }
@@ -79,6 +91,8 @@ export default function calcScore(methods) {
     if (values.m07) {
         let s = 0;
         s = values.m07.onPlace == 'yes' && values.m07.isDancing == 'yes' ? 20 : 0;
+
+        totalScore += s;
         methods.setValue('m07.score', s);
         if (s) console.log('Score M07', s);
     }
@@ -90,6 +104,7 @@ export default function calcScore(methods) {
         s += v * 5;
         s += values.m08.yellowCube == 'yes' ? 10 : 0;
 
+        totalScore += s;
         methods.setValue('m08.score', s);
         if (s) console.log('Score M08', s);
     }
@@ -107,6 +122,8 @@ export default function calcScore(methods) {
             v = values.m09.blackTyrePosition;
             s += v == 'inArea' ? 20 : v == 'onField' ? 15 : 0;
         }
+
+        totalScore += s;
         methods.setValue('m09.score', s);
         if (s) console.log('Score M09', s);
     }
@@ -114,6 +131,8 @@ export default function calcScore(methods) {
     if (values.m10) {
         let s = 0;
         s = values.m10.onField == 'yes' && values.m10.isFlipped == 'yes' ? 15 : 0;
+
+        totalScore += s;
         methods.setValue('m10.score', s);
         if (s) console.log('Score M10', s);
     }
@@ -132,6 +151,8 @@ export default function calcScore(methods) {
         if (i) s = i[1] as number;
         else s = 0;
         if (values.m11.touchedDial == 'yes') s = 0;
+
+        totalScore += s;
         methods.setValue('m11.score', s);
         if (s) console.log('Score M11', s);
     }
@@ -140,6 +161,8 @@ export default function calcScore(methods) {
         let s = 0;
         let v = values.m12.wheelPosition;
         s = v == 'inSmall' ? 30 : v == 'completelyOut' ? 15 : 0;
+
+        totalScore += s;
         methods.setValue('m12.score', s);
         if (s) console.log('Score M12', s);
     }
@@ -155,6 +178,8 @@ export default function calcScore(methods) {
         if (i) s = (i[1] as number) * 1;
         else s = 0;
         if (values.m13.latchUnder == 'no') s = 0;
+
+        totalScore += s;
         methods.setValue('m13.score', s);
         if (s) console.log('Score M13', s);
     }
@@ -169,6 +194,7 @@ export default function calcScore(methods) {
         }
         s = v1 * 5 + v2 * 10;
 
+        totalScore += s;
         methods.setValue('m14.score', s);
         if (s) console.log('Score M14', s);
     }
@@ -187,7 +213,11 @@ export default function calcScore(methods) {
         if (i) s = (i[1] as number) * 1;
         else s = 0;
 
+        totalScore += s;
         methods.setValue('m15.score', s);
         if (s) console.log('Score M15', s);
     }
+
+    console.log('Total score', totalScore);
+    updateTotalScore(totalScore);
 }

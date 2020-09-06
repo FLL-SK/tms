@@ -30,7 +30,7 @@ export function ScorerPanel(props: ScorerPanelProps) {
 
     return (
         <>
-            <Card bg={answered ? 'secondary' : 'primary'}>
+            <Card bg={answered ? 'secondary' : 'light'}>
                 <Accordion.Toggle as={Card.Header} eventKey={mid}>
                     <Row>
                         <Col>
