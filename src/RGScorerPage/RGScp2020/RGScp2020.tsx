@@ -5,10 +5,15 @@ import { Button, Form, Row, Col, Card, Accordion, useAccordionToggle } from 'rea
 
 import { useForm, SubmitHandler, Controller, FormProvider, useWatch } from 'react-hook-form';
 
+import { useTranslation } from 'react-i18next';
+import { txt } from '../../_locales';
+
 import { Scorer } from '../../_components/Scorer';
 import { ScorerPanel } from '../../_components/ScorerPanel';
 import { ButtonRadios } from '../../_components/ScorerQuestion';
 import calcScore from './caclScore';
+
+import '../../_styles/style.css';
 
 type Inputs = {
     m01: { score: number; twopieces: string; size4: string; touching: string };
@@ -45,9 +50,13 @@ export function RGScp2020({ team, onSubmit, details }) {
         */
     };
 
+    const [totalScore, setTotalScore] = useState(0);
+
     const methods = useForm<Inputs>();
+    const { t } = useTranslation();
+
     const handleChange = () => {
-        calcScore(methods);
+        calcScore(methods, setTotalScore);
         console.log('Errors', methods.errors);
     };
 
@@ -149,7 +158,22 @@ export function RGScp2020({ team, onSubmit, details }) {
                         </Row>
                     </ScorerPanel>
                 </Accordion>
-                <Button type="submit">Submit</Button>
+
+                <Card bg={'light'}>
+                    <Card.Header className={'fll_blue_bg'}>
+                        <Row>
+                            <Col>{t(txt.Scorer.totalScore)}</Col>
+                            <Col xs={5} sm={3} lg={2}>
+                                <Button variant="danger" size="lg" block>
+                                    {totalScore}
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Card.Header>
+                    <Card.Body>
+                        <Button type="submit">Submit</Button>
+                    </Card.Body>
+                </Card>
             </Form>
         </Scorer>
     );
