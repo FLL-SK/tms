@@ -19,6 +19,20 @@ type Inputs = {
     m06: { score: number; droveUnder: string; hangingOn: string };
     m07: { score: number; onPlace: string; isDancing: string };
     m08: { score: number; cubeOnBothSides: string; cubeSameColor: string; cubeCount: string; yellowCube: string };
+    m09: {
+        score: number;
+        blueTyrePosition: string;
+        blueTyreWhite: string;
+        blackTyrePosition: string;
+        blackTyreWhite: string;
+        blackTyreXLine: string;
+    };
+    m10: { score: number; isFlipped: string; onField: string };
+    m11: { score: number; touchedDial: string; color: string };
+    m12: { score: number; wheelPosition: string };
+    m13: { score: number; latchUnder: string; color: string };
+    m14: { score: number; inAreas: string; onPole: string };
+    m15: { score: number; count: string };
 };
 
 export function RGScp2020({ team, onSubmit, details }) {
@@ -34,6 +48,7 @@ export function RGScp2020({ team, onSubmit, details }) {
     const methods = useForm<Inputs>();
     const handleChange = () => {
         calcScore(methods);
+        console.log('Errors', methods.errors);
     };
 
     return (
@@ -86,8 +101,51 @@ export function RGScp2020({ team, onSubmit, details }) {
                         <Row>
                             <ButtonRadios qid="cubeOnBothSides" values={['no', 'yes']} />
                             <ButtonRadios qid="cubeSameColor" values={['no', 'yes']} />
-                            <ButtonRadios qid="cubeCount" values={['none', '1', '2', '3', '4', '5', '6', '7']} />
+                            <ButtonRadios qid="cubeCount" values={['0', '1', '2', '3', '4', '5', '6', '7']} />
                             <ButtonRadios qid="yellowCube" values={['no', 'yes']} />
+                        </Row>
+                    </ScorerPanel>
+                    <ScorerPanel mid="m09">
+                        <Row>
+                            <ButtonRadios qid="blueTyreWhite" values={['no', 'yes']} />
+                            <ButtonRadios qid="blueTyrePosition" values={['outside', 'onField', 'inArea']} />
+                            <ButtonRadios qid="blackTyreWhite" values={['no', 'yes']} />
+                            <ButtonRadios qid="blackTyrePosition" values={['outside', 'onField', 'inArea']} />
+                            <ButtonRadios qid="blackTyreXLine" values={['no', 'yes']} />
+                        </Row>
+                    </ScorerPanel>
+                    <ScorerPanel mid="m10">
+                        <Row>
+                            <ButtonRadios qid="isFlipped" values={['no', 'yes']} />
+                            <ButtonRadios qid="onField" values={['no', 'yes']} />
+                        </Row>
+                    </ScorerPanel>
+                    <ScorerPanel mid="m11">
+                        <ButtonRadios qid="touchedDial" values={['no', 'yes']} />
+                        <ButtonRadios
+                            qid="color"
+                            values={['none', 'gray', 'red', 'orange', 'yellow', 'lightGreen', 'darkGreen']}
+                        />
+                    </ScorerPanel>
+                    <ScorerPanel mid="m12">
+                        <Row>
+                            <ButtonRadios qid="wheelPosition" values={['notOut', 'completelyOut', 'inSmall']} />
+                        </Row>
+                    </ScorerPanel>
+                    <ScorerPanel mid="m13">
+                        <ButtonRadios qid="latchUnder" values={['no', 'yes']} />
+                        <ButtonRadios qid="color" values={['none', 'blue', 'purple', 'yellow']} />
+                    </ScorerPanel>
+                    <ScorerPanel mid="m14">
+                        <Row>
+                            <ButtonRadios qid="inAreas" values={['0', '1', '2', '3', '4', '5', '6', '7', '8']} />
+                            <ButtonRadios qid="onPole" values={['0', '1', '2', '3', '4']} />
+                            {methods.errors.m14?.onPole && 'celkovy pocet jednotiek musi byt mensi alebo rovny 8'}
+                        </Row>
+                    </ScorerPanel>
+                    <ScorerPanel mid="m15">
+                        <Row>
+                            <ButtonRadios qid="count" values={['0', '1', '2', '3', '4', '5', '6']} />
                         </Row>
                     </ScorerPanel>
                 </Accordion>
