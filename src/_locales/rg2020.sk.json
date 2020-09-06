@@ -129,7 +129,7 @@
         },
         "cubeCount": {
             "_title": "Kocky v ráme alebo cieli",
-            "none": "Žiadna",
+            "0": "Žiadna",
             "1": "1",
             "2": "2",
             "3": "3",
@@ -137,6 +137,127 @@
             "5": "5",
             "6": "6",
             "7": "7"
+        }
+    },
+    "m09": {
+        "_title": "Prevrátenie pneumatiky",
+        "blueTyrePosition": {
+            "_title": "Poloha modrej pneumatiky",
+            "outside": "Mimo ihriska",
+            "onField": "Na ihrisku",
+            "inArea": "V cieľovom kruhu"
+        },
+        "blueTyreWhite": {
+            "_title": "Je modrá prevrátená?",
+            "yes": "áno",
+            "no": "Nie"
+        },
+        "blackTyrePosition": {
+            "_title": "Poloha čiernej pneumatiky",
+            "outside": "Mimo ihriska",
+            "onField": "Na ihrisku",
+            "inArea": "V cieľovom kruhu"
+        },
+        "blackTyreWhite": {
+            "_title": "Je čierna prevrátená?",
+            "yes": "áno",
+            "no": "Nie"
+        },
+        "blackTyreXLine": {
+            "_title": "Čierna prešla čiaru?",
+            "yes": "áno",
+            "no": "Nie"
+        }
+    },
+    "m10": {
+        "_title": "Mobilný telefón",
+        "isFlipped": {
+            "_title": "Je prevrátený",
+            "yes": "Áno",
+            "no": "Nie"
+        },
+        "onField": {
+            "_title": "Je na hracej ploche",
+            "yes": "Áno",
+            "no": "Nie"
+        }
+    },
+    "m11": {
+        "_title": "Bežecký pás",
+        "touchedDial": {
+            "_title": "Dotkol sa ukazovateľa",
+            "yes": "Áno",
+            "no": "Nie"
+        },
+        "color": {
+            "_title": "Farba",
+            "none": "žiadna",
+            "gray": "Sivá",
+            "red": "Červená",
+            "orange": "Oranžová",
+            "yellow": "Žltá",
+            "lightGreen": "Svetlozelená",
+            "darkGreen": "Tmavozelená"
+        }
+    },
+    "m12": {
+        "_title": "Veslovací trenažér",
+        "wheelPosition": {
+            "_title": "Poloha kolesa",
+            "notOut": "Nie úplne vonku",
+            "completelyOut": "Úplne vonku",
+            "inSmall": "Úplne v malom kruhu"
+        }
+    },
+    "m13": {
+        "_title": "Posilňovací stroj",
+        "latchUnder": {
+            "_title": "Západka pod pákou",
+            "yes": "Áno",
+            "no": "Nie"
+        },
+        "color": {
+            "_title": "Farba",
+            "none": "žiadna",
+            "blue": "Modrá",
+            "purple": "Purpurová",
+            "yellow": "Žltá"
+        }
+    },
+    "m14": {
+        "_title": "Jednotky zdravia",
+        "inAreas": {
+            "_title": "Pri RePLAY alebo lavičke",
+            "0": "0",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8"
+        },
+        "onPole": {
+            "_title": "Na stĺpe",
+            "0": "0",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4"
+        }
+    },
+    "m15": {
+        "_title": "Presnosť",
+        "count": {
+            "_title": "Počet diskov",
+            "0": "0",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6"
         }
     }
 }

@@ -29,7 +29,7 @@ export function ScorerPanel(props: ScorerPanelProps) {
     const score = formMethods.watch(mid + '.score');
 
     return (
-        <Container>
+        <>
             <Card bg={answered ? 'secondary' : 'primary'}>
                 <Accordion.Toggle as={Card.Header} eventKey={mid}>
                     <Row>
@@ -51,6 +51,6 @@ export function ScorerPanel(props: ScorerPanelProps) {
                     <Card.Body>{children}</Card.Body>
                 </Accordion.Collapse>
             </ScorerPanelContext.Provider>
-        </Container>
+        </>
     );
 }
