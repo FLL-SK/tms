@@ -40,14 +40,11 @@ type Inputs = {
     m15: { score: number; count: string };
 };
 
-export function RGScp2020({ team, onSubmit, details }) {
-    const validate: SubmitHandler<Inputs> = (data) => {
+export function RGScp2020({ team, submitResults, details }) {
+    const doSubmit: SubmitHandler<Inputs> = (data) => {
         console.log(data);
-        /*setSubmitted(true);
-        if (data.username && data.password) {
-            dispatch(userActions.login(data.username, data.password));
-        }
-        */
+
+        submitResults(data);
     };
 
     const [totalScore, setTotalScore] = useState(0);
@@ -62,7 +59,7 @@ export function RGScp2020({ team, onSubmit, details }) {
 
     return (
         <Scorer onChange={handleChange} tns="rg2020" formMethods={methods}>
-            <Form name="Scorer2020" onSubmit={methods.handleSubmit(validate)}>
+            <Form name="Scorer2020" onSubmit={methods.handleSubmit(doSubmit)}>
                 <Accordion defaultActiveKey="01">
                     <ScorerPanel mid="m01">
                         <Row>

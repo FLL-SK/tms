@@ -14,7 +14,7 @@ export interface RGScorerDetails {
 
 export interface RGScorerProps {
     team: string;
-    onSubmit: (any) => {};
+    submitResults: (any) => {};
     details: RGScorerDetails;
 }
 
@@ -28,7 +28,7 @@ function RGScorerPage() {
 
     switch (scorer.programId) {
         case 'FLL2020':
-            return <RGScp2020 team={scorer.team} onSubmit={handleSubmit} details={2} />;
+            return <RGScp2020 team={scorer.team} submitResults={handleSubmit} details={2} />;
         default:
             return null;
     }
