@@ -1,0 +1,41 @@
+import { userConstants } from '../_constants';
+import { User } from '../_types/User';
+
+interface SimpleEvent {
+    _id: string;
+    name: string;
+}
+
+interface UserState {
+    loading?: boolean;
+    user?: User;
+    error?: string;
+    manager?: { loading?: boolean; events?: SimpleEvent[] };
+    judge?: { loading?: boolean; events?: SimpleEvent[] };
+    referee?: { loading?: boolean; events?: SimpleEvent[] };
+}
+
+export function user(state: UserState = {}, action): UserState {
+    switch (action.type) {
+        case userConstants.GETBYID_REQUEST:
+            return { ...state, loading: true };
+        case userConstants.GETBYID_SUCCESS:
+            return { ...state, loading: false, user: action.user };
+        case userConstants.GETBYID_FAILURE:
+            return { ...state, error: action.error, loading: false };
+        case userConstants.GET_EVTSJUDGE_REQUEST:
+            return { ...state, judge: { loading: true } };
+        case userConstants.GET_EVTSREFR_REQUEST:
+            return { ...state, referee: { loading: true } };
+        case userConstants.GET_EVTSMGR_REQUEST:
+            return { ...state, manager: { loading: true } };
+        case userConstants.GET_EVTSJUDGE_SUCCESS:
+            return { ...state, judge: { events: action.events } };
+        case userConstants.GET_EVTSREFR_SUCCESS:
+            return { ...state, referee: { events: action.events } };
+        case userConstants.GET_EVTSMGR_SUCCESS:
+            return { ...state, manager: { events: action.events } };
+        default:
+            return state;
+    }
+}

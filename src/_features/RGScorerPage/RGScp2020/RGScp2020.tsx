@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Form, Row, Col, Card, Accordion, useAccordionToggle } from 'react-bootstrap';
+import { Button, Form, Row, Col, Card, Accordion } from 'react-bootstrap';
 
-import { useForm, SubmitHandler, Controller, FormProvider, useWatch } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useTranslation } from 'react-i18next';
-import { txt } from '../../_locales';
+import { txt } from '../../../_locales';
 
-import { Scorer } from '../../_components/Scorer';
-import { ScorerPanel } from '../../_components/ScorerPanel';
-import { ButtonRadios } from '../../_components/ScorerQuestion';
+import { Scorer } from '../../../_components/Scorer';
+import { ScorerPanel } from '../../../_components/ScorerPanel';
+import { ButtonRadios } from '../../../_components/ScorerQuestion';
 import calcScore from './caclScore';
 
-import '../../_styles/style.css';
+import '../../../_styles/style.css';
 
 type Inputs = {
     m01: { score: number; twopieces: string; size4: string; touching: string };
@@ -49,7 +49,10 @@ export function RGScp2020({ team, submitResults, details }) {
 
     const [totalScore, setTotalScore] = useState(0);
 
+    // using reac-form might be an overkill, but going to keep it
+    // for possible future changes and it will be used in project anyway
     const methods = useForm<Inputs>();
+
     const { t } = useTranslation();
 
     const handleChange = () => {

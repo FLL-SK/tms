@@ -6,11 +6,11 @@ import { Button, Form, Row, Col } from 'react-bootstrap';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useTranslation } from 'react-i18next';
-import { txt } from '../_locales';
+import { txt } from '../../_locales';
 
-import { userActions } from '../_actions';
+import { userActions } from '../../_actions';
 
-import { RootState } from '../_reducers';
+import { RootState } from '../../_reducers';
 
 type Inputs = {
     username: string;

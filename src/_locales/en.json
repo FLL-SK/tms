@@ -8,6 +8,7 @@
     },
     "Scorer": {
         "mission": "Mission",
-        "score": "Score"
+        "score": "Score",
+        "totalScore": "Total Score"
     }
 }

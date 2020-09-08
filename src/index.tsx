@@ -14,9 +14,8 @@ import './_styles/cursor.css';
 import './_locales';
 
 // setup fake backend
-import { configureFakeBackend } from './_helpers';
-configureFakeBackend();
-localStorage.setItem('user', JSON.stringify({ user: { username: 'test' } }));
+//import { configureFakeBackend } from './_helpers';
+//configureFakeBackend();
 
 apiService.setUrl('http://localhost:3000');
 

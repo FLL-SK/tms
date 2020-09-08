@@ -5,7 +5,7 @@ import { Button, Form, Row, Col } from 'react-bootstrap';
 
 import { RGScp2020 } from './RGScp2020';
 
-import { RootState } from '../_reducers';
+import { RootState } from '../../_reducers';
 
 export interface RGScorerDetails {
     scores: Object;

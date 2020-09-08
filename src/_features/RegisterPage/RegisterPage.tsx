@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button, Col, Row } from 'react-bootstrap';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { userActions } from '../_actions';
+import { userActions } from '../../_actions';
 
-import { RootState } from '../_reducers';
+import { RootState } from '../../_reducers';
 
 type Inputs = {
     fullName: string;

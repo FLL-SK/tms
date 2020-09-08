@@ -72,6 +72,12 @@ export const i18n = i18next
             interpolation: {
                 escapeValue: false, // not needed for react as it escapes by default
             },
+            detection: {
+                order: ['localStorage', 'sessionStorage'],
+
+                // keys or params to lookup language from
+                lookupLocalStorage: 'i18nextLng',
+            },
         },
         () => {
             convertLanguageJsonToObject(sk, txt);

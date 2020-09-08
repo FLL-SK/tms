@@ -9,6 +9,8 @@ type AuthenticationState = {
 
 let storedUser = JSON.parse(localStorage.getItem('user') || '{}');
 
+console.log('Found stored user', storedUser);
+
 const initialState: AuthenticationState = storedUser ? { loggedIn: true, user: storedUser } : {};
 
 export function authentication(state = initialState, action): AuthenticationState {

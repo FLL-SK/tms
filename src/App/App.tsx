@@ -7,10 +7,11 @@ import { Jumbotron, Container, Row, Col, Alert } from 'react-bootstrap';
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
-import { HomePage } from '../HomePage';
-import { LoginPage } from '../LoginPage';
-import { RegisterPage } from '../RegisterPage';
-import { RGScorerPage } from '../RGScorerPage';
+import { HomePage } from '../_features/HomePage';
+import { LoginPage } from '../_features/LoginPage';
+import { RegisterPage } from '../_features/RegisterPage';
+import { RGScorerPage } from '../_features/RGScorerPage';
+import { SettingsPage } from '../_features/SettingsPage';
 
 import { RootState } from '../_reducers';
 
@@ -38,6 +39,7 @@ function App() {
                             <Route path="/login" component={LoginPage} />
                             <Route path="/scorer" component={RGScorerPage} />
                             <Route path="/register" component={RegisterPage} />
+                            <Route path="/settings" component={SettingsPage} />
                             <Redirect from="*" to="/" />
                         </Switch>
                     </Router>

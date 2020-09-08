@@ -16,5 +16,14 @@
         "mission": "Misia",
         "score": "Skóre",
         "totalScore": "Celkové skóre"
+    },
+    "SettingsPage": {
+        "title": "Nastavenia",
+        "apiUrl": "",
+        "language": "Jazyk",
+        "btnSave": "Uložiť nastavenia"
+    },
+    "HomePage": {
+        "title": "Profil"
     }
 }
