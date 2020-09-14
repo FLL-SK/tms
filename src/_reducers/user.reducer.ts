@@ -10,12 +10,19 @@ interface UserState {
     loading?: boolean;
     user?: User;
     error?: string;
-    manager?: { loading?: boolean; events?: SimpleEvent[] };
-    judge?: { loading?: boolean; events?: SimpleEvent[] };
-    referee?: { loading?: boolean; events?: SimpleEvent[] };
+    manager: { loading?: boolean; events?: SimpleEvent[] };
+    judge: { loading?: boolean; events?: SimpleEvent[] };
+    referee: { loading?: boolean; events?: SimpleEvent[] };
 }
 
-export function user(state: UserState = {}, action): UserState {
+const _initial = {
+    loading: true,
+    manager: { events: [] },
+    judge: { events: [] },
+    referee: { events: [] },
+};
+
+export function user(state: UserState = _initial, action): UserState {
     switch (action.type) {
         case userConstants.GETBYID_REQUEST:
             return { ...state, loading: true };
@@ -24,11 +31,11 @@ export function user(state: UserState = {}, action): UserState {
         case userConstants.GETBYID_FAILURE:
             return { ...state, error: action.error, loading: false };
         case userConstants.GET_EVTSJUDGE_REQUEST:
-            return { ...state, judge: { loading: true } };
+            return { ...state, judge: { loading: true, events: [] } };
         case userConstants.GET_EVTSREFR_REQUEST:
-            return { ...state, referee: { loading: true } };
+            return { ...state, referee: { loading: true, events: [] } };
         case userConstants.GET_EVTSMGR_REQUEST:
-            return { ...state, manager: { loading: true } };
+            return { ...state, manager: { loading: true, events: [] } };
         case userConstants.GET_EVTSJUDGE_SUCCESS:
             return { ...state, judge: { events: action.events } };
         case userConstants.GET_EVTSREFR_SUCCESS:

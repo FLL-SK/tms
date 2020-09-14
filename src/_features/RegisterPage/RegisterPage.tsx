@@ -20,6 +20,8 @@ function RegisterPage() {
     const { register, handleSubmit, watch, errors } = useForm<Inputs>();
     const dispatch = useDispatch();
 
+    console.log('Register page');
+
     // reset login status
     useEffect(() => {
         dispatch(userActions.logout());

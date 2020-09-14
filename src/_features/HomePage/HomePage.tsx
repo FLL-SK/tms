@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Row, Col, Card, ListGroup } from 'react-bootstrap';
+import { Row, Col, Card, ListGroup, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -9,13 +9,15 @@ import { RootState } from '../../_reducers';
 import { app } from '../../_reducers/app.reducer';
 //import { user } from '../../_reducers/user.reducer'
 
+import { NotLoggedIn } from '../../_components/NotLoggedIn';
+
 function HomePage() {
     const userState = useSelector((state: RootState) => state.user);
     const user = useSelector((state: RootState) => state.user.user);
     const auth = useSelector((state: RootState) => state.authentication);
     const dispatch = useDispatch();
 
-    if (!auth.loggedIn) return null;
+    if (!auth.loggedIn) return NotLoggedIn();
 
     console.log('HomePage user=', auth.user);
 
@@ -35,6 +37,7 @@ function HomePage() {
                     <Card.Body>
                         <Card.Title>Profil</Card.Title>
 
+                        {userState.loading && <Spinner animation="grow" size="sm" />}
                         {user && (
                             <>
                                 <Card.Text>
@@ -50,6 +53,7 @@ function HomePage() {
                     </Card.Body>
                 </Card>
 
+                {userState.manager && userState.manager.loading && <Spinner animation="grow" size="sm" />}
                 {userState.manager && userState.manager.events && (
                     <Card>
                         <Card.Body>
@@ -57,6 +61,40 @@ function HomePage() {
 
                             <ListGroup>
                                 {userState.manager.events.map((e) => (
+                                    <ListGroup.Item action href={'/event/' + e._id} key={e._id}>
+                                        {e.name}
+                                    </ListGroup.Item>
+                                ))}
+                            </ListGroup>
+                        </Card.Body>
+                    </Card>
+                )}
+
+                {userState.judge && userState.judge.loading && <Spinner animation="grow" size="sm" />}
+                {userState.judge && userState.judge.events && (
+                    <Card>
+                        <Card.Body>
+                            <Card.Title>Som porotcom</Card.Title>
+
+                            <ListGroup>
+                                {userState.judge.events.map((e) => (
+                                    <ListGroup.Item action href={'/event/' + e._id} key={e._id}>
+                                        {e.name}
+                                    </ListGroup.Item>
+                                ))}
+                            </ListGroup>
+                        </Card.Body>
+                    </Card>
+                )}
+
+                {userState.referee && userState.referee.loading && <Spinner animation="grow" size="sm" />}
+                {userState.referee && userState.referee.events && (
+                    <Card>
+                        <Card.Body>
+                            <Card.Title>Som rozhodcom</Card.Title>
+
+                            <ListGroup>
+                                {userState.referee.events.map((e) => (
                                     <ListGroup.Item action href={'/event/' + e._id} key={e._id}>
                                         {e.name}
                                     </ListGroup.Item>

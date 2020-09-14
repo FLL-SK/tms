@@ -22,6 +22,8 @@ function SettingsPage() {
     const { t } = useTranslation();
     const dispatch = useDispatch();
 
+    console.log('Settings page');
+
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         dispatch(appActions.changeLanguage(data.language));
         console.log('Settings saved', data);

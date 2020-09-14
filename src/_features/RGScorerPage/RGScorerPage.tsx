@@ -24,7 +24,7 @@ function RGScorerPage() {
         console.log('submit details', details);
     };
 
-    console.log(scorer);
+    console.log('Scorer', scorer);
 
     switch (scorer.programId) {
         case 'FLL2020':

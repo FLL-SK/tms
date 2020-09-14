@@ -25,5 +25,9 @@
     },
     "HomePage": {
         "title": "Profil"
+    },
+    "NotLoggedIn": {
+        "title": "Stránka vyžaduje prihlásenie.",
+        "login": "Prihlásiť sa"
     }
 }

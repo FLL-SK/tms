@@ -12,6 +12,7 @@ import { LoginPage } from '../_features/LoginPage';
 import { RegisterPage } from '../_features/RegisterPage';
 import { RGScorerPage } from '../_features/RGScorerPage';
 import { SettingsPage } from '../_features/SettingsPage';
+import { EventPage } from '../_features/EventPage';
 
 import { RootState } from '../_reducers';
 
@@ -35,6 +36,7 @@ function App() {
                     </Alert>
                     <Router history={history}>
                         <Switch>
+                            <Route exact path="/event/:id" component={EventPage} />
                             <PrivateRoute exact path="/" component={HomePage} />
                             <Route path="/login" component={LoginPage} />
                             <Route path="/scorer" component={RGScorerPage} />

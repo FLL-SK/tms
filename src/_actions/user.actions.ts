@@ -71,7 +71,7 @@ export namespace userActions {
             dispatch(request());
 
             userService.getById(id).then(
-                (response) => dispatch(success(response.fields)),
+                (response) => dispatch(success(response)),
                 (error) => {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
@@ -95,7 +95,7 @@ export namespace userActions {
             dispatch(request());
 
             eventService.getManagerEvents(userId).then(
-                (response) => dispatch(success(response.list)),
+                (response) => dispatch(success(response)),
                 (error) => {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
@@ -119,7 +119,7 @@ export namespace userActions {
             dispatch(request());
 
             eventService.getJudgeEvents(userId).then(
-                (response) => dispatch(success(response.list)),
+                (response) => dispatch(success(response)),
                 (error) => {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
@@ -143,7 +143,7 @@ export namespace userActions {
             dispatch(request());
 
             eventService.getRefereeEvents(userId).then(
-                (response) => dispatch(success(response.list)),
+                (response) => dispatch(success(response)),
                 (error) => {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));

@@ -10,17 +10,17 @@ export namespace eventService {
     }
 
     export function getManagerEvents(userId: string) {
-        const params = { cmd: 'getList', eo: userId };
+        const params = { cmd: 'getList', manager: userId };
         return getEvents(params);
     }
 
     export function getJudgeEvents(userId: string) {
-        const params = { cmd: 'getList', judgeId: userId };
+        const params = { cmd: 'getList', judge: userId };
         return getEvents(params);
     }
 
     export function getRefereeEvents(userId: string) {
-        const params = { cmd: 'getList', refereeId: userId };
+        const params = { cmd: 'getList', referee: userId };
         return getEvents(params);
     }
 
@@ -32,5 +32,19 @@ export namespace eventService {
         };
 
         return axios('/event', requestOptions).then(handleResponse);
+    }
+
+    export function getEvent(eventId: string, params?) {
+        const requestOptions: AxiosRequestConfig = {
+            method: 'get',
+            headers: authHeader(),
+            params: params,
+        };
+
+        return axios('/event/' + eventId, requestOptions).then(handleResponse);
+    }
+
+    export function getTeams(eventId: string) {
+        return getEvent(eventId, { cmd: 'getTeams' });
     }
 }

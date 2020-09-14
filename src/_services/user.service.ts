@@ -9,10 +9,11 @@ export namespace userService {
             data: { username, password },
         };
 
-        return axios('/api/login', requestOptions)
+        return axios('/login', requestOptions)
             .then(handleResponse)
             .then((result) => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
+                localStorage.setItem('token', result.token);
                 localStorage.setItem('user', JSON.stringify(result.user));
 
                 return result.user;
@@ -28,9 +29,6 @@ export namespace userService {
         const requestOptions: AxiosRequestConfig = {
             method: 'GET',
             headers: authHeader(),
-            params: {
-                cmd: 'getFields',
-            },
         };
 
         return axios(`/profile/${id}`, requestOptions).then(handleResponse);

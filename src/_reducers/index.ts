@@ -6,6 +6,7 @@ import { user } from './user.reducer';
 import { alert } from './alert.reducer';
 import { rgScorer } from './rgscorer.reducer';
 import { app } from './app.reducer';
+import { event } from './event.reducer';
 
 const rootReducer = combineReducers({
     authentication,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     alert,
     rgScorer,
     app,
+    event,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
