@@ -14,6 +14,38 @@ interface IParams {
     id: string;
 }
 
+function TeamBtn({ id, name }) {
+    return (
+        <>
+            <Button type="button" href={'/profile/' + id} variant="outline-primary" block>
+                {name}
+            </Button>
+        </>
+    );
+}
+
+function RGRound({ loading, round, schedule }) {
+    return (
+        <>
+            {loading && <Spinner animation="grow" size="sm" />}
+            {!loading && (
+                <Row>
+                    <Col>
+                        {schedule.map((i) =>
+                            i.round == round ? <TeamBtn id={i.t1._id} name={i.t1.name} key={i.t1._id} /> : '',
+                        )}
+                    </Col>
+                    <Col>
+                        {schedule.map((i) =>
+                            i.round == round ? <TeamBtn id={i.t2._id} name={i.t2.name} key={i.t2._id} /> : '',
+                        )}
+                    </Col>
+                </Row>
+            )}
+        </>
+    );
+}
+
 function EventPage(props: RouteComponentProps<IParams>) {
     const eventState = useSelector((state: RootState) => state.event);
     const event = useSelector((state: RootState) => state.event.event);
@@ -70,6 +102,12 @@ function EventPage(props: RouteComponentProps<IParams>) {
                                         {i.name}
                                     </Button>
                                 ))}
+                            <h3>Robot Game Round 1</h3>
+                            <RGRound loading={eventState.teams.loading} round={1} schedule={event.rgSchedule} />
+                            <h3>Robot Game Round 2</h3>
+                            <RGRound loading={eventState.teams.loading} round={2} schedule={event.rgSchedule} />
+                            <h3>Robot Game Round 3</h3>
+                            <RGRound loading={eventState.teams.loading} round={3} schedule={event.rgSchedule} />
                         </Card.Body>
                     )}
                 </Card>
