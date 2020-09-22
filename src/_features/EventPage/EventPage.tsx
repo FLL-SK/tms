@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Row, Col, Card, ListGroup, Spinner, Button } from 'react-bootstrap';
+import { Row, Col, Card, ListGroup, Spinner, Button, Form } from 'react-bootstrap';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -49,7 +49,7 @@ function RGRound({ loading, round, schedule }) {
 function EventPage(props: RouteComponentProps<IParams>) {
     const eventState = useSelector((state: RootState) => state.event);
     const event = useSelector((state: RootState) => state.event.event);
-    const auth = useSelector((state: RootState) => state.authentication);
+    const auth = useSelector((state: RootState) => state.auth);
     const dispatch = useDispatch();
 
     console.log('EventPage event=', event);
@@ -108,6 +108,19 @@ function EventPage(props: RouteComponentProps<IParams>) {
                             <RGRound loading={eventState.teams.loading} round={2} schedule={event.rgSchedule} />
                             <h3>Robot Game Round 3</h3>
                             <RGRound loading={eventState.teams.loading} round={3} schedule={event.rgSchedule} />
+
+                            <Form>
+                                <h3>Event status</h3>
+                                <Form.Control
+                                    as="select"
+                                    defaultValue={event.status}
+                                    disabled={!auth.sysRoles.isAdmin && !auth.eventRoles.isEventManager}
+                                >
+                                    <option value="1">In Progress</option>
+                                    <option value="0">Not Started</option>
+                                    <option value="2">Finished</option>
+                                </Form.Control>
+                            </Form>
                         </Card.Body>
                     )}
                 </Card>

@@ -24,4 +24,5 @@ export interface Event {
     referees: _user[];
     rgType: string;
     rgSchedule: _schedule[];
+    status: number;
 }

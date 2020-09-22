@@ -14,7 +14,7 @@ import { NotLoggedIn } from '../../_components/NotLoggedIn';
 function HomePage() {
     const userState = useSelector((state: RootState) => state.user);
     const user = useSelector((state: RootState) => state.user.user);
-    const auth = useSelector((state: RootState) => state.authentication);
+    const auth = useSelector((state: RootState) => state.auth);
     const dispatch = useDispatch();
 
     if (!auth.loggedIn) return NotLoggedIn();

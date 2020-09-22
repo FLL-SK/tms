@@ -1,4 +1,4 @@
-import { eventConstants } from '../_constants';
+import { eventConstants, userConstants } from '../_constants';
 import { eventService } from '../_services';
 import { alertActions } from '.';
 
@@ -9,9 +9,13 @@ export namespace eventActions {
             dispatch(request());
 
             eventService.getEvent(id).then(
-                (response) => dispatch(success(response)),
+                (response) => {
+                    dispatch(success(response));
+                    dispatch(determineUserRoles(response));
+                },
                 (error) => {
                     dispatch(failure(error.toString()));
+                    dispatch(clearUserRoles());
                     dispatch(alertActions.error(error.toString()));
                 },
             );
@@ -25,6 +29,12 @@ export namespace eventActions {
         }
         function failure(error) {
             return { type: eventConstants.GETBYID_FAILURE, error };
+        }
+        function determineUserRoles(event) {
+            return { type: userConstants.GET_EVT_ROLES, event };
+        }
+        function clearUserRoles() {
+            return { type: userConstants.CLEAR_EVT_ROLES };
         }
     }
 }

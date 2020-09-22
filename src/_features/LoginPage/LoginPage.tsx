@@ -20,7 +20,7 @@ type Inputs = {
 function LoginPage() {
     const { register, handleSubmit, watch, errors } = useForm<Inputs>();
     const [submitted, setSubmitted] = useState(false);
-    const loggingIn = useSelector((state: RootState) => state.authentication.loggingIn);
+    const loggingIn = useSelector((state: RootState) => state.auth.loggingIn);
     const dispatch = useDispatch();
     const { t } = useTranslation();
 
