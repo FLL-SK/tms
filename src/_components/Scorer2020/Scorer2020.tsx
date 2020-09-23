@@ -1,19 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+
 import { Button, Form, Row, Col, Card, Accordion } from 'react-bootstrap';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useTranslation } from 'react-i18next';
-import { txt } from '../../../_locales';
+import { txt } from '../../_locales';
 
-import { Scorer } from '../../../_components/Scorer';
-import { ScorerPanel } from '../../../_components/ScorerPanel';
-import { ButtonRadios } from '../../../_components/ScorerQuestion';
-import calcScore from './caclScore';
+import { ScorerProvider } from '../ScorerProvider';
+import { ScorerPanel } from '../ScorerPanel';
+import { ButtonRadios } from '../ScorerQuestion';
+import calcScore from './_caclScore';
 
-import '../../../_styles/style.css';
+import './../../_styles/style.css';
 
 type Inputs = {
     m01: { score: number; twopieces: string; size4: string; touching: string };
@@ -40,18 +39,34 @@ type Inputs = {
     m15: { score: number; count: string };
 };
 
-export function RGScp2020({ team, submitResults, details }) {
-    const doSubmit: SubmitHandler<Inputs> = (data) => {
-        console.log(data);
+interface Scorer2020Props {
+    onSubmit: (any) => any;
+    /** JSON string containing scorer values */
+    values?: string;
+}
 
-        submitResults(data);
+export function Scorer2020(props: Scorer2020Props) {
+    const { onSubmit, values } = props;
+
+    const _onSubmit: SubmitHandler<Inputs> = (data) => {
+        console.log(data);
+        onSubmit(data);
     };
 
     const [totalScore, setTotalScore] = useState(0);
 
+    let parsedValues: Inputs | undefined;
+
+    try {
+        parsedValues = values ? JSON.parse(values) : undefined;
+    } catch (err) {
+        console.log('Details parse error');
+        parsedValues = undefined;
+    }
+
     // using reac-form might be an overkill, but going to keep it
     // for possible future changes and it will be used in project anyway
-    const methods = useForm<Inputs>();
+    const methods = useForm<Inputs>({ defaultValues: parsedValues ? parsedValues : undefined });
 
     const { t } = useTranslation();
 
@@ -61,8 +76,8 @@ export function RGScp2020({ team, submitResults, details }) {
     };
 
     return (
-        <Scorer onChange={handleChange} tns="rg2020" formMethods={methods}>
-            <Form name="Scorer2020" onSubmit={methods.handleSubmit(doSubmit)}>
+        <ScorerProvider onChange={handleChange} tns="rg2020" formMethods={methods}>
+            <Form name="Scorer2020" onSubmit={methods.handleSubmit(_onSubmit)}>
                 <Accordion defaultActiveKey="01">
                     <ScorerPanel mid="m01">
                         <Row>
@@ -175,6 +190,6 @@ export function RGScp2020({ team, submitResults, details }) {
                     </Card.Body>
                 </Card>
             </Form>
-        </Scorer>
+        </ScorerProvider>
     );
 }

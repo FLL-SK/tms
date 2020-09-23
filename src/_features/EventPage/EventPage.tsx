@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Props, ReactElement, Component, useEffect, useState } from 'react';
 import { Row, Col, Card, ListGroup, Spinner, Button, Form } from 'react-bootstrap';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +9,10 @@ import { eventTeamActions } from '../../_actions/eventTeam.actions';
 import { RootState } from '../../_reducers';
 
 import { NotLoggedIn } from '../../_components/NotLoggedIn';
+import { User } from '../../_types/User';
+
+import { RankingTable } from './_ranking';
+import { EventProfile } from './_profile';
 
 interface IParams {
     id: string;
@@ -46,7 +50,7 @@ function RGRound({ loading, round, schedule }) {
     );
 }
 
-function EventPage(props: RouteComponentProps<IParams>) {
+export function EventPage(props: RouteComponentProps<IParams>) {
     const eventState = useSelector((state: RootState) => state.event);
     const event = useSelector((state: RootState) => state.event.event);
     const auth = useSelector((state: RootState) => state.auth);
@@ -56,77 +60,64 @@ function EventPage(props: RouteComponentProps<IParams>) {
 
     if (!auth.user) return NotLoggedIn();
 
+    function handleStatusChange(newStatus: number) {
+        if (!event) return;
+        dispatch(eventActions.setFields(event._id, { status: newStatus }));
+    }
+
     useEffect(() => {
         const { id } = props.match.params;
         dispatch(eventActions.getById(id));
         dispatch(eventTeamActions.getTeams(id));
+        dispatch(eventActions.getRanking(id));
     }, []);
 
     return (
         <>
-            <Col lg={{ span: 8, offset: 2 }}>
+            <Col lg={{ span: 10, offset: 1 }}>
                 <Card>
                     <h1>Turnaj</h1>
-                    {eventState.loading && <Spinner animation="grow" size="sm" />}
-                    {event && (
-                        <Card.Body>
-                            <Card.Title>Turnaj - {event.name}</Card.Title>
-                            <h3>Usporiadatelia</h3>
-                            {event.managers.map((i) => (
-                                <Button type="button" href={'/profile/' + i._id} variant="outline-primary" key={i._id}>
-                                    {i.fullName}
-                                </Button>
-                            ))}
-                            <h3>Porotci</h3>
-                            {event.judges.map((i) => (
-                                <Button type="button" href={'/profile/' + i._id} variant="outline-primary" key={i._id}>
-                                    {i.fullName}
-                                </Button>
-                            ))}
-                            <h3>Rozhodcovia</h3>
-                            {event.referees.map((i) => (
-                                <Button type="button" href={'/profile/' + i._id} variant="outline-primary" key={i._id}>
-                                    {i.fullName}
-                                </Button>
-                            ))}
-                            <h3>Tímy</h3>
-                            {eventState.teams.loading && <Spinner animation="grow" size="sm" />}
-                            {eventState.teams.list &&
-                                eventState.teams.list.map((i) => (
-                                    <Button
-                                        type="button"
-                                        href={'/profile/' + i._id}
-                                        variant="outline-primary"
-                                        key={i._id}
-                                    >
-                                        {i.name}
-                                    </Button>
-                                ))}
-                            <h3>Robot Game Round 1</h3>
-                            <RGRound loading={eventState.teams.loading} round={1} schedule={event.rgSchedule} />
-                            <h3>Robot Game Round 2</h3>
-                            <RGRound loading={eventState.teams.loading} round={2} schedule={event.rgSchedule} />
-                            <h3>Robot Game Round 3</h3>
-                            <RGRound loading={eventState.teams.loading} round={3} schedule={event.rgSchedule} />
-
-                            <Form>
-                                <h3>Event status</h3>
-                                <Form.Control
-                                    as="select"
-                                    defaultValue={event.status}
-                                    disabled={!auth.sysRoles.isAdmin && !auth.eventRoles.isEventManager}
-                                >
-                                    <option value="1">In Progress</option>
-                                    <option value="0">Not Started</option>
-                                    <option value="2">Finished</option>
-                                </Form.Control>
-                            </Form>
-                        </Card.Body>
-                    )}
+                    <Card.Title>{event ? event.name : ''}</Card.Title>
+                    <Card.Body>
+                        <EventProfile
+                            loading={eventState.loading || false}
+                            event={event}
+                            isAdmin={auth.sysRoles.isAdmin || false}
+                            isEventManager={auth.eventRoles.isEventManager || false}
+                            onStatusChange={handleStatusChange}
+                        />
+                    </Card.Body>
+                </Card>
+                <Card>
+                    <h3>Tímy</h3>
+                    {eventState.teams.loading && <Spinner animation="grow" size="sm" />}
+                    {eventState.teams.list &&
+                        eventState.teams.list.map((i) => (
+                            <Button type="button" href={'/profile/' + i._id} variant="outline-primary" key={i._id}>
+                                {i.name}
+                            </Button>
+                        ))}
+                </Card>
+                <Card>
+                    <h3>Robot Game Round 1</h3>
+                    <RGRound loading={eventState.teams.loading} round={1} schedule={event ? event.rgSchedule : []} />
+                    <h3>Robot Game Round 2</h3>
+                    <RGRound loading={eventState.teams.loading} round={2} schedule={event ? event.rgSchedule : []} />
+                    <h3>Robot Game Round 3</h3>
+                    <RGRound loading={eventState.teams.loading} round={3} schedule={event ? event.rgSchedule : []} />
+                </Card>
+                <Card>
+                    <h3>Ranking Table</h3>
+                    <RankingTable
+                        loading={eventState.ranking.loading || eventState.teams.loading ? true : false}
+                        teams={eventState.teams.list || []}
+                        scores={eventState.ranking.list || []}
+                    />
+                </Card>
+                <Card>
+                    <h3>Robot Game</h3>
                 </Card>
             </Col>
         </>
     );
 }
-
-export { EventPage };

@@ -47,4 +47,18 @@ export namespace eventService {
     export function getTeams(eventId: string) {
         return getEvent(eventId, { cmd: 'getTeams' });
     }
+
+    export function getRanking(eventId: string) {
+        return getEvent(eventId, { cmd: 'getRanking' });
+    }
+
+    export function setFields(eventId: string, fields: any) {
+        const requestOptions: AxiosRequestConfig = {
+            method: 'post',
+            headers: authHeader(),
+            data: fields,
+        };
+
+        return axios('/event/' + eventId + '/fields', requestOptions).then(handleResponse);
+    }
 }

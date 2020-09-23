@@ -10,7 +10,7 @@ import { PrivateRoute } from '../_components';
 import { HomePage } from '../_features/HomePage';
 import { LoginPage } from '../_features/LoginPage';
 import { RegisterPage } from '../_features/RegisterPage';
-import { RGScorerPage } from '../_features/RGScorerPage';
+import { Scorer as ScorerPage } from '../_features/ScorerPage';
 import { SettingsPage } from '../_features/SettingsPage';
 import { EventPage } from '../_features/EventPage';
 
@@ -30,7 +30,7 @@ function App() {
     return (
         <Container fluid>
             <Row>
-                <Col lg={{ span: 8, offset: 2 }} sm>
+                <Col sm lg={{ span: 10, offset: 1 }}>
                     <Alert variant={alert.type} show={alert.message != null}>
                         <p>{alert.message}</p>
                     </Alert>
@@ -39,7 +39,7 @@ function App() {
                             <Route exact path="/event/:id" component={EventPage} />
                             <PrivateRoute exact path="/" component={HomePage} />
                             <Route path="/login" component={LoginPage} />
-                            <Route path="/scorer" component={RGScorerPage} />
+                            <Route path="/scorer" component={ScorerPage} />
                             <Route path="/register" component={RegisterPage} />
                             <Route path="/settings" component={SettingsPage} />
                             <Redirect from="*" to="/" />
