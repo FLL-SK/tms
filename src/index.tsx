@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { store } from './_helpers';
 import { App } from './App';
 
-import { apiService } from './_services';
+import { AppSettings } from './_helpers/appSettings';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './_styles/textsizing.css';
@@ -17,7 +17,8 @@ import './_locales';
 //import { configureFakeBackend } from './_helpers';
 //configureFakeBackend();
 
-apiService.setUrl('http://localhost:3000');
+AppSettings.loadApiUrl();
+AppSettings.loadLanguage();
 
 render(
     <Provider store={store}>
