@@ -27,7 +27,11 @@
         },
         "results": {
             "title": "Výsledky",
-            "clearBtn": "Vymazať výsledky"
+            "clearBtn": "Vymazať výsledky",
+            "time": "Vytvorené",
+            "season": "Sezóna",
+            "score": "Skóre",
+            "note": "Poznámka"
         }
     },
     "SettingsPage": {

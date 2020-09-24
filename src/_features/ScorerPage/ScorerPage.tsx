@@ -54,6 +54,7 @@ export function ScorerPage() {
         setProgram(initialProgram);
         setEvaluating(false);
         setNote('');
+        //noteRef && noteRef.current && noteRef.current.innerText='';
         setTab('results');
     }
 
@@ -84,7 +85,7 @@ export function ScorerPage() {
                         <Col md={7}>
                             <FormGroup controlId="note">
                                 <FormLabel>{t(txt.ScorerPage.scorer.note)}</FormLabel>
-                                <FormControl onChange={handleNoteChange} />
+                                <FormControl value={note} onChange={handleNoteChange} />
                             </FormGroup>
                         </Col>
                         <Col md={2} className="my-auto">
@@ -109,12 +110,30 @@ export function ScorerPage() {
                             {t(txt.ScorerPage.results.clearBtn)}
                         </Button>
                     </Row>
+                    <Row>
+                        <Col>
+                            <p className="font-weight-bold">{t(txt.ScorerPage.results.time)}</p>
+                        </Col>
+                        <Col>
+                            <p className="font-weight-bold">{t(txt.ScorerPage.results.season)}</p>
+                        </Col>
+                        <Col>
+                            <p className="font-weight-bold">{t(txt.ScorerPage.results.score)}</p>
+                        </Col>
+                        <Col sm={6}>
+                            <p className="font-weight-bold">{t(txt.ScorerPage.results.note)}</p>
+                        </Col>
+                    </Row>
                     {results &&
                         results.map((r, idx) => {
                             return (
-                                <Row key={idx}>
+                                <Row key={idx} style={{ backgroundColor: idx % 2 ? '' : 'lightgrey' }}>
                                     <Col>
-                                        {r.time.getHours() + ':' + r.time.getMinutes() + ':' + r.time.getSeconds()}
+                                        {r.time.getHours().toString().padStart(2, '0') +
+                                            ':' +
+                                            r.time.getMinutes().toString().padStart(2, '0') +
+                                            ':' +
+                                            r.time.getSeconds().toString().padStart(2, '0')}
                                     </Col>
                                     <Col>{r.program}</Col>
                                     <Col>{r.score}</Col>
