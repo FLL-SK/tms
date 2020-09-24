@@ -12,23 +12,52 @@ import { txt } from '../../_locales';
 
 const programs = [{ id: 'FLL2020', name: '2020' }];
 
-function reducer(state, action) {
+const initialProgram = 'FLL2020';
+const localStorageItem = 'FLL_Scorer_Results_v1';
+
+interface ScorerResults {
+    submitedOn: Date;
+    score: number;
+    program: string;
+    data: string;
+    note: string;
+}
+
+let initialResults: ScorerResults[];
+
+try {
+    console.log('Reading results');
+    let r = localStorage.getItem(localStorageItem);
+    console.log('Results', r);
+    if (r) {
+        initialResults = JSON.parse(r);
+        initialResults = initialResults.map((i) => {
+            return { ...i, submitedOn: new Date(i.submitedOn) };
+        });
+        console.log('Parsed', initialResults);
+    }
+} catch (err) {
+    console.log('Error reading stored results');
+    initialResults = [];
+}
+
+function reducer(state, action): ScorerResults[] {
     switch (action.type) {
         case 'submit':
             return [...state, action.data];
         case 'clear':
             return [];
+        default:
+            return [...state];
     }
 }
-
-const initialProgram = 'FLL2020';
 
 export function ScorerPage() {
     const [evaluating, setEvaluating] = useState(false);
     const [program, setProgram] = useState(initialProgram);
     const [note, setNote] = useState('');
     const [tab, setTab] = useState('scorer');
-    const [results, dispatch] = useReducer(reducer, []);
+    const [results, dispatch] = useReducer(reducer, initialResults);
     const { t } = useTranslation();
 
     function handleProgramChange(ev) {
@@ -47,15 +76,26 @@ export function ScorerPage() {
         for (let m in data) {
             score += data[m]['score'];
         }
-        dispatch({
-            type: 'submit',
-            data: { time: new Date(), score: score, program: program, data: data, note: note },
-        });
+        let pkg = {
+            submitedOn: new Date(),
+            score: score,
+            program: program,
+            data: JSON.stringify(data),
+            note: note,
+        };
+        dispatch({ type: 'submit', data: pkg });
+
         setProgram(initialProgram);
         setEvaluating(false);
         setNote('');
-        //noteRef && noteRef.current && noteRef.current.innerText='';
         setTab('results');
+
+        localStorage.setItem(localStorageItem, JSON.stringify([...results, pkg]));
+    }
+
+    function clearResults() {
+        dispatch({ type: 'clear' });
+        localStorage.setItem(localStorageItem, JSON.stringify([]));
     }
 
     return (
@@ -106,7 +146,7 @@ export function ScorerPage() {
                 </Tab>
                 <Tab eventKey="results" title={t(txt.ScorerPage.results.title)}>
                     <Row>
-                        <Button onClick={() => dispatch('clear')} style={{ margin: '1em' }}>
+                        <Button onClick={clearResults} style={{ margin: '1em' }}>
                             {t(txt.ScorerPage.results.clearBtn)}
                         </Button>
                     </Row>
@@ -129,11 +169,11 @@ export function ScorerPage() {
                             return (
                                 <Row key={idx} style={{ backgroundColor: idx % 2 ? '' : 'lightgrey' }}>
                                     <Col>
-                                        {r.time.getHours().toString().padStart(2, '0') +
+                                        {r.submitedOn.getHours().toString().padStart(2, '0') +
                                             ':' +
-                                            r.time.getMinutes().toString().padStart(2, '0') +
+                                            r.submitedOn.getMinutes().toString().padStart(2, '0') +
                                             ':' +
-                                            r.time.getSeconds().toString().padStart(2, '0')}
+                                            r.submitedOn.getSeconds().toString().padStart(2, '0')}
                                     </Col>
                                     <Col>{r.program}</Col>
                                     <Col>{r.score}</Col>
