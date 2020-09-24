@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 
 export function AlertDisplay(type: any, message?: string) {
