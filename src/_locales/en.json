@@ -27,5 +27,11 @@
             "score": "Score",
             "note": "Note"
         }
+    },
+    "SettingsPage": {
+        "title": "Settings",
+        "apiUrl": "API",
+        "language": "Language",
+        "btnSave": "Save Settings"
     }
 }
