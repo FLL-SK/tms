@@ -21,7 +21,11 @@
         },
         "results": {
             "title": "Results",
-            "clearBtn": "Clear Results"
+            "clearBtn": "Clear Results",
+            "time": "Submited",
+            "season": "Season",
+            "score": "Score",
+            "note": "Note"
         }
     }
 }
