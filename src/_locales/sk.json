@@ -36,7 +36,7 @@
     },
     "SettingsPage": {
         "title": "Nastavenia",
-        "apiUrl": "",
+        "apiUrl": "API",
         "language": "Jazyk",
         "btnSave": "Uložiť nastavenia"
     },

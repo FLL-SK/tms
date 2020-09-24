@@ -1,5 +1,8 @@
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import format from 'date-fns/format';
+
+import { dateFns } from './date-fns';
 
 import LanguageDetector from 'i18next-browser-languagedetector';
 
@@ -70,7 +73,11 @@ export const i18n = i18next
             debug: process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test',
 
             interpolation: {
-                escapeValue: false, // not needed for react as it escapes by default
+                escapeValue: false, // not needed for react as it escapes by
+                format: function (value, fmt, lng) {
+                    if (value instanceof Date) return format(value, fmt || 'PP', { locale: dateFns.lang2Locale(lng) });
+                    return value;
+                },
             },
             detection: {
                 order: ['localStorage', 'sessionStorage'],
