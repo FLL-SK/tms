@@ -1,22 +1,20 @@
-import React, { createContext, useContext } from 'react';
-import { FormProvider } from 'react-hook-form';
+import React from 'react';
 
-interface ScorerContextType {
-    formMethods: any; // form methods
-    tns: string; // translation namespace
-    onChange: (any) => void; // method to call on any answer
-}
-
-export const ScorerContext = createContext<Partial<ScorerContextType>>({});
+import { Scorer2020 } from './Scorer2020';
 
 interface ScorerProps {
-    formMethods: any;
-    tns: string;
-    onChange: (any) => void;
-    children?: React.ReactNode;
+    onSubmit: (program: string, details: any) => any;
+    values?: string;
+    program: string;
 }
 
 export function Scorer(props: ScorerProps) {
-    const { formMethods, tns, onChange, children } = props;
-    return <ScorerContext.Provider value={{ formMethods, tns, onChange }}>{children}</ScorerContext.Provider>;
+    const { onSubmit, values, program } = props;
+
+    const handleSubmit = (details: any) => {
+        console.log('submit details', details);
+        onSubmit(program, details);
+    };
+
+    return <>{program == 'FLL2020' ? <Scorer2020 onSubmit={handleSubmit} values={values} /> : null}</>;
 }

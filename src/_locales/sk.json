@@ -16,5 +16,31 @@
         "mission": "Misia",
         "score": "Skóre",
         "totalScore": "Celkové skóre"
+    },
+    "ScorerPage": {
+        "title": "Scorer",
+        "scorer": {
+            "title": "Scorer",
+            "season": "Sezóna",
+            "note": "Poznámka",
+            "startBtn": "Štart"
+        },
+        "results": {
+            "title": "Výsledky",
+            "clearBtn": "Vymazať výsledky"
+        }
+    },
+    "SettingsPage": {
+        "title": "Nastavenia",
+        "apiUrl": "",
+        "language": "Jazyk",
+        "btnSave": "Uložiť nastavenia"
+    },
+    "HomePage": {
+        "title": "Profil"
+    },
+    "NotLoggedIn": {
+        "title": "Stránka vyžaduje prihlásenie.",
+        "login": "Prihlásiť sa"
     }
 }

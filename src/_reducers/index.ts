@@ -1,17 +1,21 @@
 import { combineReducers } from 'redux';
 
-import { authentication } from './authentication.reducer';
+import { auth } from './authentication.reducer';
 import { registration } from './registration.reducer';
-import { users } from './users.reducer';
+import { user } from './user.reducer';
 import { alert } from './alert.reducer';
 import { rgScorer } from './rgscorer.reducer';
+import { app } from './app.reducer';
+import { event } from './event.reducer';
 
 const rootReducer = combineReducers({
-    authentication,
+    auth,
     registration,
-    users,
+    user,
     alert,
     rgScorer,
+    app,
+    event,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

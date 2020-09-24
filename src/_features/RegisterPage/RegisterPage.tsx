@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button, Col, Row } from 'react-bootstrap';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { userActions } from '../_actions';
+import { userActions } from '../../_actions';
 
-import { RootState } from '../_reducers';
+import { RootState } from '../../_reducers';
 
 type Inputs = {
     fullName: string;
@@ -19,6 +19,8 @@ function RegisterPage() {
     const registering = useSelector((state: RootState) => state.registration.registering);
     const { register, handleSubmit, watch, errors } = useForm<Inputs>();
     const dispatch = useDispatch();
+
+    console.log('Register page');
 
     // reset login status
     useEffect(() => {

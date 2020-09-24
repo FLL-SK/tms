@@ -1,115 +1,164 @@
 import { userConstants } from '../_constants';
 import { userService } from '../_services';
+import { eventService } from '../_services';
 import { alertActions } from './';
 import { history } from '../_helpers';
 
-export const userActions = {
-    login,
-    logout,
-    register,
-    getAll,
-    delete: _delete,
-};
+export namespace userActions {
+    export function login(username, password) {
+        return (dispatch) => {
+            dispatch(request({ username }));
 
-function login(username, password) {
-    return (dispatch) => {
-        dispatch(request({ username }));
+            userService.login(username, password).then(
+                (user) => {
+                    dispatch(success(user));
+                    history.push('/');
+                },
+                (error) => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                },
+            );
+        };
 
-        userService.login(username, password).then(
-            (user) => {
-                dispatch(success(user));
-                history.push('/');
-            },
-            (error) => {
-                dispatch(failure(error.toString()));
-                dispatch(alertActions.error(error.toString()));
-            },
-        );
-    };
-
-    function request(user) {
-        return { type: userConstants.LOGIN_REQUEST, user };
+        function request(user) {
+            return { type: userConstants.LOGIN_REQUEST, user };
+        }
+        function success(user) {
+            return { type: userConstants.LOGIN_SUCCESS, user };
+        }
+        function failure(error) {
+            return { type: userConstants.LOGIN_FAILURE, error };
+        }
     }
-    function success(user) {
-        return { type: userConstants.LOGIN_SUCCESS, user };
-    }
-    function failure(error) {
-        return { type: userConstants.LOGIN_FAILURE, error };
-    }
-}
 
-function logout() {
-    userService.logout();
-    return { type: userConstants.LOGOUT };
-}
-
-function register(user) {
-    return (dispatch) => {
-        dispatch(request(user));
-
-        userService.register(user).then(
-            (user) => {
-                dispatch(success(user));
-                history.push('/login');
-                dispatch(alertActions.success('Registration successful'));
-            },
-            (error) => {
-                dispatch(failure(error.toString()));
-                dispatch(alertActions.error(error.toString()));
-            },
-        );
-    };
-
-    function request(user) {
-        return { type: userConstants.REGISTER_REQUEST, user };
+    export function logout() {
+        userService.logout();
+        return { type: userConstants.LOGOUT };
     }
-    function success(user) {
-        return { type: userConstants.REGISTER_SUCCESS, user };
-    }
-    function failure(error) {
-        return { type: userConstants.REGISTER_FAILURE, error };
-    }
-}
 
-function getAll() {
-    return (dispatch) => {
-        dispatch(request());
+    export function register(user) {
+        return (dispatch) => {
+            dispatch(request(user));
 
-        userService.getAll().then(
-            (response) => dispatch(success(response.list)),
-            (error) => dispatch(failure(error.toString())),
-        );
-    };
+            userService.register(user).then(
+                (user) => {
+                    dispatch(success(user));
+                    history.push('/login');
+                    dispatch(alertActions.success('Registration successful'));
+                },
+                (error) => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                },
+            );
+        };
 
-    function request() {
-        return { type: userConstants.GETALL_REQUEST };
+        function request(user) {
+            return { type: userConstants.REGISTER_REQUEST, user };
+        }
+        function success(user) {
+            return { type: userConstants.REGISTER_SUCCESS, user };
+        }
+        function failure(error) {
+            return { type: userConstants.REGISTER_FAILURE, error };
+        }
     }
-    function success(users) {
-        return { type: userConstants.GETALL_SUCCESS, users };
-    }
-    function failure(error) {
-        return { type: userConstants.GETALL_FAILURE, error };
-    }
-}
 
-// prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
-    return (dispatch) => {
-        dispatch(request(id));
+    export function getById(id?: string) {
+        if (!id) return;
+        return (dispatch) => {
+            dispatch(request());
 
-        userService.delete(id).then(
-            (user) => dispatch(success(id)),
-            (error) => dispatch(failure(id, error.toString())),
-        );
-    };
+            userService.getById(id).then(
+                (response) => dispatch(success(response)),
+                (error) => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                },
+            );
+        };
 
-    function request(id) {
-        return { type: userConstants.DELETE_REQUEST, id };
+        function request() {
+            return { type: userConstants.GETBYID_REQUEST };
+        }
+        function success(user) {
+            return { type: userConstants.GETBYID_SUCCESS, user };
+        }
+        function failure(error) {
+            return { type: userConstants.GETBYID_FAILURE, error };
+        }
     }
-    function success(id) {
-        return { type: userConstants.DELETE_SUCCESS, id };
+
+    export function getManagerEvents(userId: string) {
+        return (dispatch) => {
+            dispatch(request());
+
+            eventService.getManagerEvents(userId).then(
+                (response) => dispatch(success(response)),
+                (error) => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                },
+            );
+        };
+
+        function request() {
+            return { type: userConstants.GET_EVTSMGR_REQUEST };
+        }
+        function success(events) {
+            return { type: userConstants.GET_EVTSMGR_SUCCESS, events };
+        }
+        function failure(error) {
+            return { type: userConstants.GET_EVTSMGR_FAILURE, error };
+        }
     }
-    function failure(id, error) {
-        return { type: userConstants.DELETE_FAILURE, id, error };
+
+    export function getJudgeEvents(userId: string) {
+        return (dispatch) => {
+            dispatch(request());
+
+            eventService.getJudgeEvents(userId).then(
+                (response) => dispatch(success(response)),
+                (error) => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                },
+            );
+        };
+
+        function request() {
+            return { type: userConstants.GET_EVTSJUDGE_REQUEST };
+        }
+        function success(events) {
+            return { type: userConstants.GET_EVTSJUDGE_SUCCESS, events };
+        }
+        function failure(error) {
+            return { type: userConstants.GET_EVTSJUDGE_FAILURE, error };
+        }
+    }
+
+    export function getRefereeEvents(userId: string) {
+        return (dispatch) => {
+            dispatch(request());
+
+            eventService.getRefereeEvents(userId).then(
+                (response) => dispatch(success(response)),
+                (error) => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                },
+            );
+        };
+
+        function request() {
+            return { type: userConstants.GET_EVTSREFR_REQUEST };
+        }
+        function success(events) {
+            return { type: userConstants.GET_EVTSREFR_SUCCESS, events };
+        }
+        function failure(error) {
+            return { type: userConstants.GET_EVTSREFR_FAILURE, error };
+        }
     }
 }

@@ -6,7 +6,7 @@ import { useFormContext } from 'react-hook-form';
 import _ from 'lodash';
 
 import { ScorerPanelContext } from './ScorerPanel';
-import { ScorerContext } from './Scorer';
+import { ScorerContext } from './ScorerProvider';
 
 interface RadiosProps {
     qid: string;
@@ -36,7 +36,7 @@ export function ButtonRadios(props: RadiosProps) {
         ev.preventDefault();
         let v = ev.currentTarget.attributes.getNamedItem('value');
         if (v) changeValue(v.value);
-        onChange && onChange(ev);
+        onChange && onChange();
     };
 
     changeValue(defaultValue);

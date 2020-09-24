@@ -8,6 +8,20 @@
     },
     "Scorer": {
         "mission": "Mission",
-        "score": "Score"
+        "score": "Score",
+        "totalScore": "Total Score"
+    },
+    "ScorerPage": {
+        "title": "Scorer",
+        "scorer": {
+            "title": "Scorer",
+            "season": "Season",
+            "note": "Note",
+            "startBtn": "Start"
+        },
+        "results": {
+            "title": "Results",
+            "clearBtn": "Clear Results"
+        }
     }
 }
