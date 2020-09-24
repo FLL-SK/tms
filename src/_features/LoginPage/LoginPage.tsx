@@ -17,7 +17,7 @@ type Inputs = {
     password: string;
 };
 
-function LoginPage() {
+export function LoginPage() {
     const { register, handleSubmit, watch, errors } = useForm<Inputs>();
     const [submitted, setSubmitted] = useState(false);
     const loggingIn = useSelector((state: RootState) => state.auth.loggingIn);
@@ -38,9 +38,9 @@ function LoginPage() {
 
     return (
         <Row>
-            <Col md={{ span: 8, offset: 2 }} sm>
-                <h2>{t(txt.LoginPage.title)}</h2>
+            <Col lg={{ span: 4, offset: 4 }} md={{ span: 6, offset: 3 }} sm>
                 <Form name="loginForm" onSubmit={handleSubmit(onSubmit)}>
+                    <h2>{t(txt.LoginPage.title)}</h2>
                     <Form.Group>
                         <Form.Label>{t(txt.LoginPage.username)}</Form.Label>
                         <Form.Control
@@ -70,28 +70,19 @@ function LoginPage() {
                             </Form.Control.Feedback>
                         )}
                     </Form.Group>
-                    <Row>
-                        <Form.Group>
-                            <Button variant="secondary" type="submit">
-                                {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                                {t(txt.LoginPage.btnLogin)}
-                            </Button>
-                        </Form.Group>
-                        <Form.Group>
-                            <Link to="/register" className="btn-link">
-                                {t(txt.LoginPage.btnRegister)}
-                            </Link>
-                        </Form.Group>
-                    </Row>
-                    <Form.Group>
-                        <Button href="/scorer" variant="secondary">
-                            Scorer
-                        </Button>
-                    </Form.Group>
+                    <Button variant="secondary" type="submit">
+                        {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                        {t(txt.LoginPage.btnLogin)}
+                    </Button>{' '}
+                    <Link to="/register" className="btn-link">
+                        {t(txt.LoginPage.btnRegister)}
+                    </Link>
+                    <hr />
+                    <Button href="/scorer" variant="secondary">
+                        Scorer
+                    </Button>
                 </Form>
             </Col>
         </Row>
     );
 }
-
-export { LoginPage };
