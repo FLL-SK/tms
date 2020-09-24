@@ -3,7 +3,7 @@ import React from 'react';
 import { Scorer2020 } from './Scorer2020';
 
 interface ScorerProps {
-    onSubmit: (details: any) => any;
+    onSubmit: (program: string, details: any) => any;
     values?: string;
     program: string;
 }
@@ -11,9 +11,9 @@ interface ScorerProps {
 export function Scorer(props: ScorerProps) {
     const { onSubmit, values, program } = props;
 
-    const handleSubmit = (details) => {
+    const handleSubmit = (details: any) => {
         console.log('submit details', details);
-        onSubmit(details);
+        onSubmit(program, details);
     };
 
     return <>{program == 'FLL2020' ? <Scorer2020 onSubmit={handleSubmit} values={values} /> : null}</>;

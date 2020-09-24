@@ -1,1 +1,1 @@
-export * from '../../_components/Scorer';
+export * from './ScorerPage';
