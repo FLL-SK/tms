@@ -88,6 +88,7 @@ export function EventPage(props: RouteComponentProps<IParams>) {
 
     return (
         <>
+            <AlertDisplay type={alert.type} message={alert.message} />
             <TabContainer activeKey={key}>
                 <Navigation onSelect={(k) => setKey(k || 'details')} />
                 <TabContent>
