@@ -1,4 +1,7 @@
-export default function calcScore(methods, updateTotalScore: (score: number) => void) {
+import { UseFormMethods } from 'react-hook-form';
+import { _Inputs } from './_inputs';
+
+export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalScore: (score: number) => void) {
     const values = methods.getValues();
     let totalScore = 0;
     methods.clearErrors();
