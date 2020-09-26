@@ -47,6 +47,7 @@ export namespace Scorer2020 {
             methods.setError(path, { type: 'manual', message: msg });
 
         const handleChange = () => {
+            methods.clearErrors();
             let ts = calcScore(methods.getValues(), setMissionScore, setMissionError);
             setTotalScore(ts);
         };
