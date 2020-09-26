@@ -103,7 +103,7 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
     if (values.m08) {
         let s = 0;
         s += values.m08.cubeOnBothSides == 'yes' && values.m08.cubeSameColor == 'yes' ? 25 : 0;
-        let v = (values.m08.cubeCount as number) || 0;
+        let v: number = Number(values.m08.cubeCount) || 0;
         s += v * 5;
         s += values.m08.yellowCube == 'yes' ? 10 : 0;
 
@@ -189,8 +189,8 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
 
     if (values.m14) {
         let s = 0;
-        let v1 = ((values.m14.inAreas as number) || 0) * 1; //multiply by 1 to convert string to number
-        let v2 = ((values.m14.onPole as number) || 0) * 1;
+        let v1 = (Number(values.m14.inAreas) || 0) * 1; //multiply by 1 to convert string to number
+        let v2 = (Number(values.m14.onPole) || 0) * 1;
         if (v1 + v2 > 8) {
             console.log('M14 Error', v1, v2, (v1 + v2) as number);
             methods.setError('m14.onPole', { type: 'manual', message: 'Prilis vela jednotiek' });
