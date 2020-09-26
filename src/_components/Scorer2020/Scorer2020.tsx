@@ -42,9 +42,13 @@ export namespace Scorer2020 {
 
         const { t } = useTranslation();
 
+        const setMissionScore = (m: string, score: number) => methods.setValue(m + '.score', score);
+        const setMissionError = (path: string, msg?: string) =>
+            methods.setError(path, { type: 'manual', message: msg });
+
         const handleChange = () => {
-            calcScore(methods, setTotalScore);
-            console.log('Errors', methods.errors);
+            let ts = calcScore(methods.getValues(), setMissionScore, setMissionError);
+            setTotalScore(ts);
         };
 
         return (

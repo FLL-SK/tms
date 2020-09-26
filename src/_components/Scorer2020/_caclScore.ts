@@ -1,12 +1,11 @@
-import { UseFormMethods } from 'react-hook-form';
 import { _Inputs } from './_inputs';
 
-export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalScore: (score: number) => void) {
-    const values = methods.getValues();
+export default function calcScore(
+    values: _Inputs,
+    setMissionScore: (m: string, score: number) => void,
+    setMissionError: (path: string, msg?: string) => void,
+): number {
     let totalScore = 0;
-    methods.clearErrors();
-    console.log('Values', values);
-    console.log('Errors cleared', methods.errors);
 
     if (values.m01) {
         let s =
@@ -16,7 +15,7 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
             values.m01.touching !== 'none'
                 ? 20
                 : 0;
-        methods.setValue('m01.score', s);
+        setMissionScore('m01', s);
         totalScore += s;
         if (s) console.log('Score M01', s);
     }
@@ -32,7 +31,7 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
         if (i) s = i[1] as number;
         else s = 0;
 
-        methods.setValue('m02.score', s);
+        setMissionScore('m02', s);
         totalScore += s;
         if (s) console.log('Score M02', s);
     }
@@ -46,7 +45,7 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
         v = values.m03.onTyre;
         s += v == '2' ? 20 : v == '1' ? 20 : 0;
 
-        methods.setValue('m03.score', s);
+        setMissionScore('m03', s);
         totalScore += s;
         if (s) console.log('Score M03', s);
     }
@@ -63,7 +62,7 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
         s += v == 'yes' ? 15 : 0;
 
         totalScore += s;
-        methods.setValue('m04.score', s);
+        setMissionScore('m04', s);
         if (s) console.log('Score M04', s);
     }
 
@@ -75,7 +74,7 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
         s += v == 'top' ? 25 : v == 'middle' ? 15 : 0;
 
         totalScore += s;
-        methods.setValue('m05.score', s);
+        setMissionScore('m05', s);
         if (s) console.log('Score M05', s);
     }
 
@@ -87,7 +86,7 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
         s += v == 'yes' ? 30 : 0;
 
         totalScore += s;
-        methods.setValue('m06.score', s);
+        setMissionScore('m06', s);
         if (s) console.log('Score M06', s);
     }
 
@@ -96,7 +95,7 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
         s = values.m07.onPlace == 'yes' && values.m07.isDancing == 'yes' ? 20 : 0;
 
         totalScore += s;
-        methods.setValue('m07.score', s);
+        setMissionScore('m07', s);
         if (s) console.log('Score M07', s);
     }
 
@@ -108,7 +107,7 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
         s += values.m08.yellowCube == 'yes' ? 10 : 0;
 
         totalScore += s;
-        methods.setValue('m08.score', s);
+        setMissionScore('m08', s);
         if (s) console.log('Score M08', s);
     }
 
@@ -127,7 +126,7 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
         }
 
         totalScore += s;
-        methods.setValue('m09.score', s);
+        setMissionScore('m09', s);
         if (s) console.log('Score M09', s);
     }
 
@@ -136,7 +135,7 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
         s = values.m10.onField == 'yes' && values.m10.isFlipped == 'yes' ? 15 : 0;
 
         totalScore += s;
-        methods.setValue('m10.score', s);
+        setMissionScore('m10', s);
         if (s) console.log('Score M10', s);
     }
 
@@ -156,7 +155,7 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
         if (values.m11.touchedDial == 'yes') s = 0;
 
         totalScore += s;
-        methods.setValue('m11.score', s);
+        setMissionScore('m11', s);
         if (s) console.log('Score M11', s);
     }
 
@@ -166,7 +165,7 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
         s = v == 'inSmall' ? 30 : v == 'completelyOut' ? 15 : 0;
 
         totalScore += s;
-        methods.setValue('m12.score', s);
+        setMissionScore('m12', s);
         if (s) console.log('Score M12', s);
     }
 
@@ -183,22 +182,22 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
         if (values.m13.latchUnder == 'no') s = 0;
 
         totalScore += s;
-        methods.setValue('m13.score', s);
+        setMissionScore('m13', s);
         if (s) console.log('Score M13', s);
     }
 
     if (values.m14) {
         let s = 0;
-        let v1 = (Number(values.m14.inAreas) || 0) * 1; //multiply by 1 to convert string to number
-        let v2 = (Number(values.m14.onPole) || 0) * 1;
+        let v1 = Number(values.m14.inAreas) || 0; //multiply by 1 to convert string to number
+        let v2 = Number(values.m14.onPole) || 0;
         if (v1 + v2 > 8) {
             console.log('M14 Error', v1, v2, (v1 + v2) as number);
-            methods.setError('m14.onPole', { type: 'manual', message: 'Prilis vela jednotiek' });
+            setMissionError('m14.onPole');
         }
         s = v1 * 5 + v2 * 10;
 
         totalScore += s;
-        methods.setValue('m14.score', s);
+        setMissionScore('m14', s);
         if (s) console.log('Score M14', s);
     }
 
@@ -217,10 +216,10 @@ export default function calcScore(methods: UseFormMethods<_Inputs>, updateTotalS
         else s = 0;
 
         totalScore += s;
-        methods.setValue('m15.score', s);
+        setMissionScore('m15', s);
         if (s) console.log('Score M15', s);
     }
 
     console.log('Total score', totalScore);
-    updateTotalScore(totalScore);
+    return totalScore;
 }
