@@ -35,6 +35,8 @@ try {
             return { ...i, submitedOn: new Date(i.submitedOn) };
         });
         console.log('Parsed', initialResults);
+    } else {
+        initialResults = [];
     }
 } catch (err) {
     console.log('Error reading stored results');
