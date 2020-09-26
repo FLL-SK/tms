@@ -6,16 +6,15 @@ import { txt } from '../_locales';
 
 import _ from 'lodash';
 import { ScorerContext } from './ScorerProvider';
-
-interface ScorerPanelProps {
-    /** mission identifier */
-    mid: string;
-    children?: React.ReactNode;
-}
+import { useFormContext } from 'react-hook-form';
 
 interface ScorerPanelContextType {
     /** mission identifier */
     mid: string;
+}
+
+interface ScorerPanelProps extends ScorerPanelContextType {
+    children?: React.ReactNode;
 }
 
 export const ScorerPanelContext = createContext<Partial<ScorerPanelContextType>>({});
@@ -23,7 +22,8 @@ export const ScorerPanelContext = createContext<Partial<ScorerPanelContextType>>
 export function ScorerPanel(props: ScorerPanelProps) {
     const { t } = useTranslation();
     const { children, mid } = props;
-    const { tns, formMethods } = useContext(ScorerContext);
+    const { tns } = useContext(ScorerContext);
+    const formMethods = useFormContext();
 
     const answered = formMethods.formState.dirtyFields[mid];
 

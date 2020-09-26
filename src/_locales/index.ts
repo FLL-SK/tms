@@ -58,6 +58,8 @@ const convertLanguageJsonToObject = (obj: any, dict: Dict<string>, current?: str
     });
 };
 
+export const defaultLanguage = 'en';
+
 export const i18n = i18next
     // pass the i18n instance to react-i18next.
     .use(initReactI18next)
@@ -75,7 +77,8 @@ export const i18n = i18next
             interpolation: {
                 escapeValue: false, // not needed for react as it escapes by
                 format: function (value, fmt, lng) {
-                    if (value instanceof Date) return format(value, fmt || 'PP', { locale: dateFns.lang2Locale(lng) });
+                    if (value instanceof Date)
+                        return format(value, fmt || 'PP', { locale: dateFns.lang2Locale[lng || defaultLanguage] });
                     return value;
                 },
             },

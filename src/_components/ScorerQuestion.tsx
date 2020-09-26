@@ -20,7 +20,8 @@ export function ButtonRadios(props: RadiosProps) {
     const { t } = useTranslation();
     const { qid, values, variant, inline, defaultValue, ...rest } = props;
     const { mid } = useContext(ScorerPanelContext);
-    const { tns, onChange, formMethods } = useContext(ScorerContext);
+    const formMethods = useFormContext();
+    const { tns, onChange } = useContext(ScorerContext);
     const fqid = mid + '.' + qid;
     const [value, setValue] = React.useState('');
 

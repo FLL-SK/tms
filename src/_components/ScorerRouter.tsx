@@ -2,13 +2,13 @@ import React from 'react';
 
 import { Scorer2020 } from './Scorer2020';
 
-interface ScorerProps {
+interface ScorerRouterProps {
     onSubmit: (program: string, details: any) => any;
     values?: Scorer2020.Inputs;
     program: string;
 }
 
-export function Scorer(props: ScorerProps) {
+export function ScorerRouter(props: ScorerRouterProps) {
     const { onSubmit, values, program } = props;
 
     const handleSubmit = (details: any) => {

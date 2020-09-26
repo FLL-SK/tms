@@ -6,7 +6,7 @@ import { Tabs, Tab } from 'react-bootstrap';
 
 import { useTranslation } from 'react-i18next';
 
-import { Scorer } from '../../_components/Scorer';
+import { ScorerRouter } from '../../_components/ScorerRouter';
 
 import { txt } from '../../_locales';
 
@@ -140,7 +140,7 @@ export function ScorerPage() {
                     </Row>
                     {evaluating && (
                         <Row>
-                            <Scorer onSubmit={handleSubmit} program={program} />
+                            <ScorerRouter onSubmit={handleSubmit} program={program} />
                         </Row>
                     )}
                 </Tab>

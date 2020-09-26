@@ -6,12 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../_actions/user.actions';
 
 import { RootState } from '../../_reducers';
-import { app } from '../../_reducers/app.reducer';
-//import { user } from '../../_reducers/user.reducer'
 
 import { NotLoggedIn } from '../../_components/NotLoggedIn';
 
-function HomePage() {
+export function HomePage() {
     const userState = useSelector((state: RootState) => state.user);
     const user = useSelector((state: RootState) => state.user.user);
     const auth = useSelector((state: RootState) => state.auth);
@@ -107,5 +105,3 @@ function HomePage() {
         </>
     );
 }
-
-export { HomePage };
