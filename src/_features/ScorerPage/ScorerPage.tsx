@@ -27,7 +27,7 @@ let initialResults: ScorerResults[];
 
 try {
     console.log('Reading results');
-    let r = localStorage.getItem(localStorageItem);
+    let r = localStorage.getItem(localStorageItem) || '[]';
     console.log('Results', r);
     if (r) {
         initialResults = JSON.parse(r);
@@ -35,8 +35,6 @@ try {
             return { ...i, submitedOn: new Date(i.submitedOn) };
         });
         console.log('Parsed', initialResults);
-    } else {
-        initialResults = [];
     }
 } catch (err) {
     console.log('Error reading stored results');
