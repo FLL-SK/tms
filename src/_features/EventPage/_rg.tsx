@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, FormControl, Row, Col, Button } from 'react-bootstrap';
 
-import { Scorer } from './../../_components/Scorer';
+import { ScorerRouter } from '../../_components/ScorerRouter';
 
 interface RGProps {
     teams: any[];
@@ -51,7 +51,7 @@ export function RG(props: RGProps) {
             </Row>
             {evaluating && (
                 <Row>
-                    <Scorer onSubmit={handleSubmit} program={program} />
+                    <ScorerRouter onSubmit={handleSubmit} program={program} />
                 </Row>
             )}
         </>

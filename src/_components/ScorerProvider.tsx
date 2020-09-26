@@ -1,27 +1,19 @@
 import React, { createContext } from 'react';
 
 interface ScorerContextType {
-    /** form methods returned from useForm hook */
-    formMethods: any;
     /** translation name-space */
     tns: string;
     /** method to call on any answer */
     onChange: () => any;
 }
 
-export const ScorerContext = createContext<Partial<ScorerContextType>>({});
+export const ScorerContext = createContext<ScorerContextType>({ tns: '', onChange: () => null });
 
-interface ScorerProps {
-    /** useForm hook formeMethods */
-    formMethods: any;
-    /** translation name-space */
-    tns: string;
-    /** method to call on changing any answer */
-    onChange: () => any;
+interface ScorerContextProviderProps extends ScorerContextType {
     children?: React.ReactNode;
 }
 
-export function ScorerProvider(props: ScorerProps) {
-    const { formMethods, tns, onChange, children } = props;
-    return <ScorerContext.Provider value={{ formMethods, tns, onChange }}>{children}</ScorerContext.Provider>;
+export function ScorerContextProvider(props: ScorerContextProviderProps) {
+    const { tns, onChange, children } = props;
+    return <ScorerContext.Provider value={{ tns, onChange }}>{children}</ScorerContext.Provider>;
 }
