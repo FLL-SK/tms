@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Spinner } from 'react-bootstrap';
+import { Container, Form, Spinner } from 'react-bootstrap';
+import CardDeck from 'react-bootstrap/CardDeck';
+import CardGroup from 'react-bootstrap/CardGroup';
+import Row from 'react-bootstrap/Row';
 import { ProfileButton } from '../../_components/ProfileButton';
 import { Event } from '../../_types/Event';
 
@@ -43,17 +46,25 @@ export function EventProfile(props: EventProfileProps) {
                     </Form>
 
                     <h3>Usporiadatelia</h3>
-                    {event.managers.map((i, idx) => (
-                        <ProfileButton profile={i} key={idx} />
-                    ))}
+                    <Row>
+                        {event.managers.map((i, idx) => (
+                            <ProfileButton profile={i} key={idx} />
+                        ))}
+                    </Row>
+
                     <h3>Porotci</h3>
-                    {event.judges.map((i, idx) => (
-                        <ProfileButton profile={i} key={idx} />
-                    ))}
+                    <Row>
+                        {event.judges.map((i, idx) => (
+                            <ProfileButton profile={i} key={idx} />
+                        ))}
+                    </Row>
+
                     <h3>Rozhodcovia</h3>
-                    {event.referees.map((i, idx) => (
-                        <ProfileButton profile={i} key={idx} />
-                    ))}
+                    <Row>
+                        {event.referees.map((i, idx) => (
+                            <ProfileButton profile={i} key={idx} />
+                        ))}
+                    </Row>
                 </>
             )}
         </>
