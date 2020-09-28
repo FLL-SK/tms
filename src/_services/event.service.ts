@@ -61,4 +61,41 @@ export namespace eventService {
 
         return axios('/event/' + eventId + '/fields', requestOptions).then(handleResponse);
     }
+
+    export function submitScore(
+        cmd: string,
+        eventId: string,
+        eventTeamId: string,
+        type: string,
+        score: number,
+        details: string,
+    ) {
+        const requestOptions: AxiosRequestConfig = {
+            method: 'post',
+            headers: authHeader(),
+            data: { cmd: cmd, eventTeamId: eventTeamId, score: score, type: type, details: details },
+        };
+
+        return axios('/event/' + eventId, requestOptions).then(handleResponse);
+    }
+
+    export function submitGameScore(
+        eventId: string,
+        eventTeamId: string,
+        type: string,
+        score: number,
+        missions: string,
+    ) {
+        return submitScore('postGameScore', eventId, eventTeamId, type, score, missions);
+    }
+
+    export function submitJudgingScore(
+        eventId: string,
+        eventTeamId: string,
+        type: string,
+        score: number,
+        details: string,
+    ) {
+        return submitScore('postJudgingScore', eventId, eventTeamId, type, score, details);
+    }
 }

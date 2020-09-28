@@ -74,8 +74,12 @@ export function EventPage(props: RouteComponentProps<IParams>) {
         dispatch(eventActions.setFields(event._id, { status: newStatus }));
     }
 
-    function handleRGSubmit(program: string, teamId: string, data: any) {
-        console.log('RG Submit', program, teamId, data);
+    function handleRGSubmit(teamId: string, totalScore: number, missions: Object) {
+        console.log('RG Submit', teamId, totalScore, missions);
+        if (event)
+            dispatch(
+                eventActions.submitGameScore(event._id, teamId, eventState.round, totalScore, JSON.stringify(missions)),
+            );
         setKey('ranking');
     }
 
@@ -134,9 +138,9 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                     <TabPane eventKey="ranking">
                         <h3>Ranking Table</h3>
                         <RankingTable
-                            loading={eventState.ranking.loading || eventState.teams.loading ? true : false}
+                            loading={eventState.scores.loading || eventState.teams.loading ? true : false}
                             teams={eventState.teams.list || []}
-                            scores={eventState.ranking.list || []}
+                            scores={eventState.scores.list || []}
                         />
                     </TabPane>
                     <TabPane eventKey="catGame">
@@ -145,7 +149,7 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                             teams={eventState.teams.list || []}
                             tables={['Table A', 'Table B']}
                             onSubmit={handleRGSubmit}
-                            program={'FLL2020'}
+                            program={event?.program}
                         />
                     </TabPane>
                     <TabPane eventKey="catValues">

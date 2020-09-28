@@ -71,12 +71,12 @@ export namespace eventActions {
         return { type: userConstants.CLEAR_EVT_ROLES };
     }
 
-    export function getRanking(id?: string) {
-        if (!id) return;
+    export function getRanking(eventId?: string) {
+        if (!eventId) return;
         return (dispatch) => {
             dispatch(requested());
 
-            eventService.getRanking(id).then(
+            eventService.getRanking(eventId).then(
                 (response) => {
                     dispatch(success(response));
                 },
@@ -88,13 +88,45 @@ export namespace eventActions {
         };
 
         function requested() {
-            return { type: eventConstants.GETRANKING_REQUESTED };
+            return { type: eventConstants.GET_SCORES_REQUESTED };
         }
         function success(score) {
-            return { type: eventConstants.GETRANKING_SUCCESS, score };
+            return { type: eventConstants.GET_SCORES_SUCCESS, score };
         }
         function failure(error) {
-            return { type: eventConstants.GETRANKING_FAILURE, error };
+            return { type: eventConstants.GET_SCORES_FAILURE, error };
+        }
+    }
+
+    export function submitGameScore(
+        eventId: string,
+        eventTeamId: string,
+        type: string,
+        score: number,
+        missionData: Object,
+    ) {
+        return (dispatch) => {
+            dispatch(requested());
+
+            eventService.submitGameScore(eventId, eventTeamId, type, score, JSON.stringify(missionData)).then(
+                (teamScore) => {
+                    dispatch(success(teamScore));
+                },
+                (error) => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                },
+            );
+        };
+
+        function requested() {
+            return { type: eventConstants.POST_RGSCORE_REQUESTED };
+        }
+        function success(score) {
+            return { type: eventConstants.POST_RGSCORE_SUCCESS, score };
+        }
+        function failure(error) {
+            return { type: eventConstants.POST_RGSCORE_FAILURE, error };
         }
     }
 }

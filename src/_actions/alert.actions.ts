@@ -1,19 +1,15 @@
 import { alertConstants } from '../_constants';
 
-export const alertActions = {
-    success,
-    error,
-    clear
-};
+export namespace alertActions {
+    export function success(message) {
+        return { type: alertConstants.SUCCESS, message };
+    }
 
-function success(message) {
-    return { type: alertConstants.SUCCESS, message };
-}
+    export function error(message) {
+        return { type: alertConstants.ERROR, message };
+    }
 
-function error(message) {
-    return { type: alertConstants.ERROR, message };
-}
-
-function clear() {
-    return { type: alertConstants.CLEAR };
+    export function clear() {
+        return { type: alertConstants.CLEAR };
+    }
 }
