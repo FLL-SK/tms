@@ -4,10 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 //const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-const PATHS = {
-    src: path.join(__dirname, 'src'),
-};
-
 module.exports = {
     mode: 'development',
     resolve: {
@@ -21,14 +17,15 @@ module.exports = {
                 test: /\.css$/i,
                 use: [MiniCssExtractPlugin.loader, 'css-loader'],
             },
+            { test: /\.png/, loader: 'file-loader' },
         ],
     },
     plugins: [
+        //new BundleAnalyzerPlugin(),
         new HtmlWebpackPlugin({
             template: './src/index.html',
         }),
         new MiniCssExtractPlugin({ filename: 'app.[hash].css' }),
-        //new BundleAnalyzerPlugin(),
     ],
     output: {
         filename: 'app.[hash].js',
