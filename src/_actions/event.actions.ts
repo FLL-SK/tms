@@ -71,12 +71,12 @@ export namespace eventActions {
         return { type: userConstants.CLEAR_EVT_ROLES };
     }
 
-    export function getRanking(eventId?: string) {
+    export function getScores(eventId?: string) {
         if (!eventId) return;
         return (dispatch) => {
             dispatch(requested());
 
-            eventService.getRanking(eventId).then(
+            eventService.getScores(eventId).then(
                 (response) => {
                     dispatch(success(response));
                 },

@@ -48,8 +48,8 @@ export namespace eventService {
         return getEvent(eventId, { cmd: 'getTeams' });
     }
 
-    export function getRanking(eventId: string) {
-        return getEvent(eventId, { cmd: 'getRanking' });
+    export function getScores(eventId: string) {
+        return getEvent(eventId, { cmd: 'getScores' });
     }
 
     export function setFields(eventId: string, fields: any) {

@@ -87,7 +87,7 @@ export function EventPage(props: RouteComponentProps<IParams>) {
         const { id } = props.match.params;
         dispatch(eventActions.getById(id));
         dispatch(eventTeamActions.getTeams(id));
-        dispatch(eventActions.getRanking(id));
+        dispatch(eventActions.getScores(id));
     }, []);
 
     return (
