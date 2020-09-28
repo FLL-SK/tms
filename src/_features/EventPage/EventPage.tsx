@@ -74,11 +74,11 @@ export function EventPage(props: RouteComponentProps<IParams>) {
         dispatch(eventActions.setFields(event._id, { status: newStatus }));
     }
 
-    function handleRGSubmit(teamId: string, totalScore: number, missions: Object) {
+    function handleRGSubmit(round: string, table: string, teamId: string, totalScore: number, missions: Object) {
         console.log('RG Submit', teamId, totalScore, missions);
         if (event)
             dispatch(
-                eventActions.submitGameScore(event._id, teamId, eventState.round, totalScore, JSON.stringify(missions)),
+                eventActions.submitGameScore(event._id, teamId, round, table, totalScore, JSON.stringify(missions)),
             );
         setKey('ranking');
     }
@@ -147,7 +147,22 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                         <h3>Category: Robot Game</h3>
                         <RG
                             teams={eventState.teams.list || []}
-                            tables={['Table A', 'Table B']}
+                            tables={[
+                                ['A', 'Table A'],
+                                ['B', 'Table B'],
+                            ]}
+                            rounds={[
+                                ['1', 'Round 1'],
+                                ['2', 'Round 2'],
+                                ['3', 'Round 3'],
+                                ['PO', 'Play-off'],
+                                ['Q', 'Quarter-finals'],
+                                ['Q-PO', 'Quarter PlayOff'],
+                                ['S', 'Semi-finals'],
+                                ['Q-PO', 'Semi PlayOff'],
+                                ['F', 'Finals'],
+                                ['F-PO', 'Finals PlayOff'],
+                            ]}
                             onSubmit={handleRGSubmit}
                             program={event?.program}
                         />

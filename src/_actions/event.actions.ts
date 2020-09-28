@@ -101,14 +101,15 @@ export namespace eventActions {
     export function submitGameScore(
         eventId: string,
         eventTeamId: string,
-        type: string,
+        round: string,
+        table: string,
         score: number,
         missionData: Object,
     ) {
         return (dispatch) => {
             dispatch(requested());
 
-            eventService.submitGameScore(eventId, eventTeamId, type, score, JSON.stringify(missionData)).then(
+            eventService.submitGameScore(eventId, eventTeamId, round, table, score, JSON.stringify(missionData)).then(
                 (teamScore) => {
                     dispatch(success(teamScore));
                 },

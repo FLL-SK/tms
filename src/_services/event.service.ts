@@ -67,13 +67,14 @@ export namespace eventService {
         eventId: string,
         eventTeamId: string,
         type: string,
+        place: string,
         score: number,
         details: string,
     ) {
         const requestOptions: AxiosRequestConfig = {
             method: 'post',
             headers: authHeader(),
-            data: { cmd: cmd, eventTeamId: eventTeamId, score: score, type: type, details: details },
+            data: { cmd: cmd, eventTeamId: eventTeamId, score: score, type: type, place: place, details: details },
         };
 
         return axios('/event/' + eventId, requestOptions).then(handleResponse);
@@ -82,20 +83,22 @@ export namespace eventService {
     export function submitGameScore(
         eventId: string,
         eventTeamId: string,
-        type: string,
+        round: string,
+        table: string,
         score: number,
         missions: string,
     ) {
-        return submitScore('postGameScore', eventId, eventTeamId, type, score, missions);
+        return submitScore('postGameScore', eventId, eventTeamId, round, table, score, missions);
     }
 
     export function submitJudgingScore(
         eventId: string,
         eventTeamId: string,
         type: string,
+        room: string,
         score: number,
         details: string,
     ) {
-        return submitScore('postJudgingScore', eventId, eventTeamId, type, score, details);
+        return submitScore('postJudgingScore', eventId, eventTeamId, type, room, score, details);
     }
 }

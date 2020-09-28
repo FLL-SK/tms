@@ -1,22 +1,30 @@
 import React, { useState } from 'react';
-import { Form, FormControl, Row, Col, Button } from 'react-bootstrap';
+import FormControl from 'react-bootstrap/FormControl';
+import FormGroup from 'react-bootstrap/FormGroup';
+import FormLabel from 'react-bootstrap/FormGroup';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 import { ScorerRouter } from '../../_components/ScorerRouter';
 
 interface RGProps {
     teams: any[];
-    tables: any[];
+    tables: [string, string][];
     program?: string;
-    onSubmit: (teamId: string, score: number, data: Object) => any;
+    onSubmit: (round: string, table: string, teamId: string, score: number, data: Object) => any;
+    rounds: [string, string][];
 }
 
 export function RG(props: RGProps) {
-    const { teams, tables, onSubmit, program } = props;
+    const { teams, tables, onSubmit, program, rounds } = props;
     const [evaluating, setEvaluating] = useState(false);
     const [teamId, setTeamId] = useState('');
+    const [round, setRound] = useState('');
+    const [table, setTable] = useState('');
 
     function handleSubmit(totalScore: number, missions: Object) {
-        onSubmit(teamId, totalScore, missions);
+        onSubmit(round, table, teamId, totalScore, missions);
 
         // cleanup after submision
         setEvaluating(false);
@@ -36,6 +44,39 @@ export function RG(props: RGProps) {
 
     return (
         <>
+            <Row>
+                <Col lg={4}>
+                    <FormGroup as={Row}>
+                        <FormLabel>Round</FormLabel>
+                        <FormControl as="select" disabled={evaluating} onChange={(ev) => setRound(ev.target.value)}>
+                            <option value=""></option>
+                            {rounds.map((t, idx) => {
+                                return (
+                                    <option value={t[0]} key={idx + 1}>
+                                        {t[1]}
+                                    </option>
+                                );
+                            })}
+                        </FormControl>
+                    </FormGroup>
+                </Col>
+
+                <Col lg={4}>
+                    <FormGroup as={Row}>
+                        <FormLabel>Table</FormLabel>
+                        <FormControl as="select" disabled={evaluating} onChange={(ev) => setTable(ev.target.value)}>
+                            <option value=""></option>
+                            {tables.map((t, idx) => {
+                                return (
+                                    <option value={t[0]} key={idx + 1}>
+                                        {t[1]}
+                                    </option>
+                                );
+                            })}
+                        </FormControl>
+                    </FormGroup>
+                </Col>
+            </Row>
             <Row>
                 <Col lg={8}>
                     <FormControl as="select" defaultValue={status} disabled={evaluating} onChange={handleTeamChange}>
