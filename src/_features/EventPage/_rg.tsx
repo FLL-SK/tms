@@ -44,54 +44,76 @@ export function RG(props: RGProps) {
 
     return (
         <>
-            <Row>
-                <Col lg={4}>
-                    <FormGroup as={Row}>
-                        <FormLabel>Round</FormLabel>
-                        <FormControl as="select" disabled={evaluating} onChange={(ev) => setRound(ev.target.value)}>
-                            <option value=""></option>
-                            {rounds.map((t, idx) => {
-                                return (
-                                    <option value={t[0]} key={idx + 1}>
-                                        {t[1]}
-                                    </option>
-                                );
-                            })}
-                        </FormControl>
+            <Row className="flex-v-center">
+                <Col md={6} lg={2}>
+                    <FormGroup as={Row} className="flex-v-center">
+                        <Col sm={4} md={3}>
+                            <FormLabel>Round</FormLabel>
+                        </Col>
+                        <Col sm={8}>
+                            <FormControl as="select" disabled={evaluating} onChange={(ev) => setRound(ev.target.value)}>
+                                <option value=""></option>
+                                {rounds.map((t, idx) => {
+                                    return (
+                                        <option value={t[0]} key={idx + 1}>
+                                            {t[1]}
+                                        </option>
+                                    );
+                                })}
+                            </FormControl>
+                        </Col>
                     </FormGroup>
                 </Col>
 
-                <Col lg={4}>
-                    <FormGroup as={Row}>
-                        <FormLabel>Table</FormLabel>
-                        <FormControl as="select" disabled={evaluating} onChange={(ev) => setTable(ev.target.value)}>
-                            <option value=""></option>
-                            {tables.map((t, idx) => {
-                                return (
-                                    <option value={t[0]} key={idx + 1}>
-                                        {t[1]}
-                                    </option>
-                                );
-                            })}
-                        </FormControl>
+                <Col md={6} lg={2}>
+                    <FormGroup as={Row} className="flex-v-center">
+                        <Col sm={4} md={3}>
+                            <FormLabel>Table</FormLabel>
+                        </Col>
+                        <Col sm={8}>
+                            <FormControl as="select" disabled={evaluating} onChange={(ev) => setTable(ev.target.value)}>
+                                <option value=""></option>
+                                {tables.map((t, idx) => {
+                                    return (
+                                        <option value={t[0]} key={idx + 1}>
+                                            {t[1]}
+                                        </option>
+                                    );
+                                })}
+                            </FormControl>
+                        </Col>
                     </FormGroup>
                 </Col>
-            </Row>
-            <Row>
-                <Col lg={8}>
-                    <FormControl as="select" defaultValue={status} disabled={evaluating} onChange={handleTeamChange}>
-                        <option value=""></option>
-                        {teams.map((t, idx) => {
-                            return (
-                                <option value={t._id} key={idx + 1}>
-                                    {t.name}
-                                </option>
-                            );
-                        })}
-                    </FormControl>
+                <Col md={9} lg={6}>
+                    <FormGroup as={Row} className="flex-v-center">
+                        <Col sm={4} md={3}>
+                            <FormLabel>Team</FormLabel>
+                        </Col>
+                        <Col sm={8} md={9}>
+                            <FormControl
+                                as="select"
+                                defaultValue={status}
+                                disabled={evaluating}
+                                onChange={handleTeamChange}
+                            >
+                                <option value=""></option>
+                                {teams.map((t, idx) => {
+                                    return (
+                                        <option value={t._id} key={idx + 1}>
+                                            {t.name}
+                                        </option>
+                                    );
+                                })}
+                            </FormControl>
+                        </Col>
+                    </FormGroup>
                 </Col>
-                <Col lg={4}>
-                    {!evaluating && teamId && <Button onClick={(ev) => setEvaluating(true)}>Start</Button>}
+                <Col md={3} lg={2}>
+                    {!evaluating && teamId && (
+                        <Button size="lg" onClick={(ev) => setEvaluating(true)}>
+                            Start
+                        </Button>
+                    )}
                 </Col>
             </Row>
             {evaluating && (
