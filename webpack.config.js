@@ -2,6 +2,7 @@ const path = require('path');
 const glob = require('glob');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const PATHS = {
     src: path.join(__dirname, 'src'),
@@ -27,6 +28,7 @@ module.exports = {
             template: './src/index.html',
         }),
         new MiniCssExtractPlugin({ filename: 'app.[hash].css' }),
+        new BundleAnalyzerPlugin(),
     ],
     output: {
         filename: 'app.[hash].js',
