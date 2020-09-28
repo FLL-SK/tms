@@ -13,7 +13,7 @@ export function Navigation(props: { onSelect: (key: string | null) => any }) {
                     <Nav.Link eventKey="teams">Teams</Nav.Link>
                     <Nav.Link eventKey="rgSchedule">RG Schedule</Nav.Link>
                     <NavDropdown.Divider />
-                    <Nav.Link eventKey="ranking">Ranking</Nav.Link>
+                    <Nav.Link eventKey="scoring">Scoring</Nav.Link>
                     <NavDropdown.Divider />
                     <Nav.Link eventKey="catValues">Core Values</Nav.Link>
                     <Nav.Link eventKey="catProject">Project</Nav.Link>

@@ -14,7 +14,7 @@ import { RootState } from '../../_reducers';
 import { NotLoggedIn } from '../../_components/NotLoggedIn';
 import { User } from '../../_types/User';
 
-import { RankingTable } from './_ranking';
+import { ScoringTable } from './_scoring';
 import { EventProfile } from './_profile';
 import { RG } from './_rg';
 
@@ -80,7 +80,7 @@ export function EventPage(props: RouteComponentProps<IParams>) {
             dispatch(
                 eventActions.submitGameScore(event._id, teamId, round, table, totalScore, JSON.stringify(missions)),
             );
-        setKey('ranking');
+        setKey('scores');
     }
 
     useEffect(() => {
@@ -135,9 +135,9 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                             schedule={event ? event.rgSchedule : []}
                         />
                     </TabPane>
-                    <TabPane eventKey="ranking">
-                        <h3>Ranking Table</h3>
-                        <RankingTable
+                    <TabPane eventKey="scoring">
+                        <h3>Scoring Table</h3>
+                        <ScoringTable
                             loading={eventState.scores.loading || eventState.teams.loading ? true : false}
                             teams={eventState.teams.list || []}
                             scores={eventState.scores.list || []}

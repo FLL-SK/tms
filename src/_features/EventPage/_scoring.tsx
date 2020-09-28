@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Form, Row, Spinner } from 'react-bootstrap';
 
-function RankingItem(props: { label: string; value?: string }) {
+function ScoringItem(props: { label: string; value?: string }) {
     const { label, value } = props;
     return (
         <Col>
@@ -10,7 +10,7 @@ function RankingItem(props: { label: string; value?: string }) {
         </Col>
     );
 }
-function RankingHeading(props: { label: string }) {
+function ScoringHeading(props: { label: string }) {
     const { label } = props;
     return (
         <Col>
@@ -19,7 +19,7 @@ function RankingHeading(props: { label: string }) {
     );
 }
 
-export function RankingTable(props: { loading: boolean; scores: any[]; teams: any[] }) {
+export function ScoringTable(props: { loading: boolean; scores: any[]; teams: any[] }) {
     const { scores, teams, loading } = props;
     if (!teams) return null;
     let ranking = teams.reduce(
@@ -34,24 +34,24 @@ export function RankingTable(props: { loading: boolean; scores: any[]; teams: an
                 <>
                     <Row>
                         <Col md>
-                            <RankingHeading label={'Teams'} />
+                            <ScoringHeading label={'Teams'} />
                         </Col>
                         <Col md>
                             <Row>
-                                <RankingHeading label={'V'} />
-                                <RankingHeading label={'P'} />
-                                <RankingHeading label={'D'} />
-                                <RankingHeading label={'G'} />
+                                <ScoringHeading label={'V'} />
+                                <ScoringHeading label={'P'} />
+                                <ScoringHeading label={'D'} />
+                                <ScoringHeading label={'G'} />
                             </Row>
                         </Col>
                         <Col md>
                             <Row>
-                                <RankingHeading label={'R1'} />
-                                <RankingHeading label={'R2'} />
-                                <RankingHeading label={'R3'} />
-                                <RankingHeading label={'QF'} />
-                                <RankingHeading label={'SF'} />
-                                <RankingHeading label={'FIN'} />
+                                <ScoringHeading label={'R1'} />
+                                <ScoringHeading label={'R2'} />
+                                <ScoringHeading label={'R3'} />
+                                <ScoringHeading label={'QF'} />
+                                <ScoringHeading label={'SF'} />
+                                <ScoringHeading label={'FIN'} />
                             </Row>
                         </Col>
                     </Row>
@@ -60,20 +60,20 @@ export function RankingTable(props: { loading: boolean; scores: any[]; teams: an
                             <Col md>{r.name}</Col>
                             <Col md>
                                 <Row>
-                                    <RankingItem label={'Values'} value={r.coreValues} />
-                                    <RankingItem label={'Project'} value={r.project} />
-                                    <RankingItem label={'Design'} value={r.design} />
-                                    <RankingItem label={'Game'} value={r.game} />
+                                    <ScoringItem label={'Values'} value={r.coreValues} />
+                                    <ScoringItem label={'Project'} value={r.project} />
+                                    <ScoringItem label={'Design'} value={r.design} />
+                                    <ScoringItem label={'Game'} value={r.game} />
                                 </Row>
                             </Col>
                             <Col md>
                                 <Row>
-                                    <RankingItem label={'R1'} value={r.game1} />
-                                    <RankingItem label={'R2'} value={r.game2} />
-                                    <RankingItem label={'R3'} value={r.game3} />
-                                    <RankingItem label={'QF'} value={r.gameQ} />
-                                    <RankingItem label={'SF'} value={r.gameS} />
-                                    <RankingItem label={'FIN'} value={r.gameF} />
+                                    <ScoringItem label={'R1'} value={r.game1} />
+                                    <ScoringItem label={'R2'} value={r.game2} />
+                                    <ScoringItem label={'R3'} value={r.game3} />
+                                    <ScoringItem label={'QF'} value={r.gameQ} />
+                                    <ScoringItem label={'SF'} value={r.gameS} />
+                                    <ScoringItem label={'FIN'} value={r.gameF} />
                                 </Row>
                             </Col>
                         </Row>
