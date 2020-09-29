@@ -125,14 +125,14 @@ export function ScorerPage() {
                                 <FormControl value={note} onChange={handleNoteChange} />
                             </FormGroup>
                         </Col>
-                        <Col md={2} className="my-auto">
-                            <FormGroup>
-                                {!evaluating && (
+                        <Col md={2} style={{ display: 'flex', alignItems: 'flex-end' }}>
+                            {!evaluating && (
+                                <FormGroup>
                                     <Button onClick={(ev) => setEvaluating(true)}>
                                         {t(txt.ScorerPage.scorer.startBtn)}
                                     </Button>
-                                )}{' '}
-                            </FormGroup>
+                                </FormGroup>
+                            )}{' '}
                         </Col>
                     </Row>
                     {evaluating && (

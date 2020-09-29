@@ -80,7 +80,7 @@ export function EventPage(props: RouteComponentProps<IParams>) {
             dispatch(
                 eventActions.submitGameScore(event._id, teamId, round, table, totalScore, JSON.stringify(missions)),
             );
-        setKey('scores');
+        setKey('scoreTable');
     }
 
     useEffect(() => {
@@ -135,7 +135,7 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                             schedule={event ? event.rgSchedule : []}
                         />
                     </TabPane>
-                    <TabPane eventKey="scoring">
+                    <TabPane eventKey="scoreTable">
                         <h3>Scoring Table</h3>
                         <ScoringTable
                             loading={eventState.scores.loading || eventState.teams.loading ? true : false}

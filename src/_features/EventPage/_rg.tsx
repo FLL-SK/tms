@@ -34,7 +34,6 @@ export function RG(props: RGProps) {
     function handleTeamChange(ev) {
         ev.preventDefault();
         setTeamId(ev.target.value);
-        console.log('team changed to ', ev.target.value);
     }
 
     function handleStartEval(ev) {
