@@ -1,4 +1,5 @@
 import React from 'react';
+import { Col, Row, Spinner } from 'react-bootstrap';
 import { findMaxIndex } from '../../_helpers/findmax';
 
 function ScoringItem(props: { label: string; value?: string; top?: boolean }) {
