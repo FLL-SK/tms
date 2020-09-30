@@ -88,7 +88,19 @@ export namespace eventService {
         score: number,
         missions: string,
     ) {
-        return submitScore('postGameScore', eventId, eventTeamId, round, table, score, missions);
+        const requestOptions: AxiosRequestConfig = {
+            method: 'post',
+            headers: authHeader(),
+            data: {
+                cmd: 'postGameScore',
+                eventTeamId: eventTeamId,
+                score: score,
+                type: round,
+                place: table,
+                details: missions,
+            },
+        };
+        return axios('/event/' + eventId, requestOptions).then(handleResponse);
     }
 
     export function submitJudgingScore(
@@ -99,6 +111,19 @@ export namespace eventService {
         score: number,
         details: string,
     ) {
-        return submitScore('postJudgingScore', eventId, eventTeamId, type, room, score, details);
+        const requestOptions: AxiosRequestConfig = {
+            method: 'post',
+            headers: authHeader(),
+            data: {
+                cmd: 'postJudgingScore',
+                eventTeamId: eventTeamId,
+                score: score,
+                type: type,
+                place: room,
+                details: details,
+            },
+        };
+
+        return axios('/event/' + eventId, requestOptions).then(handleResponse);
     }
 }

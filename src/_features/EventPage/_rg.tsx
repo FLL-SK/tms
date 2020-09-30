@@ -31,16 +31,6 @@ export function RG(props: RGProps) {
         setTeamId('');
     }
 
-    function handleTeamChange(ev) {
-        ev.preventDefault();
-        setTeamId(ev.target.value);
-    }
-
-    function handleStartEval(ev) {
-        ev.preventDefault();
-        setEvaluating(true);
-    }
-
     return (
         <>
             <Row className="flex-v-center">
@@ -93,7 +83,7 @@ export function RG(props: RGProps) {
                                 as="select"
                                 defaultValue={status}
                                 disabled={evaluating}
-                                onChange={handleTeamChange}
+                                onChange={(ev) => setTeamId(ev.target.value)}
                             >
                                 <option value=""></option>
                                 {teams.map((t, idx) => {

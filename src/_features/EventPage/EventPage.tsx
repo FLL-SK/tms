@@ -17,6 +17,7 @@ import { User } from '../../_types/User';
 import { ScoringTable } from './_scoring';
 import { EventProfile } from './_profile';
 import { RG } from './_rg';
+import { Judging } from './_judge';
 
 import { Navigation } from './_nav';
 import { AlertDisplay } from '../../_components/Alert';
@@ -57,6 +58,24 @@ function RGRound({ loading, round, schedule }) {
     );
 }
 
+const tables: [string, string][] = [
+    ['A', 'Table A'],
+    ['B', 'Table B'],
+];
+
+const rounds: [string, string][] = [
+    ['1', 'Round 1'],
+    ['2', 'Round 2'],
+    ['3', 'Round 3'],
+    ['PO', 'Play-off'],
+    ['Q', 'Quarter-finals'],
+    ['Q-PO', 'Quarter PlayOff'],
+    ['S', 'Semi-finals'],
+    ['Q-PO', 'Semi PlayOff'],
+    ['F', 'Finals'],
+    ['F-PO', 'Finals PlayOff'],
+];
+
 export function EventPage(props: RouteComponentProps<IParams>) {
     const eventState = useSelector((state: RootState) => state.event);
     const event = useSelector((state: RootState) => state.event.event);
@@ -79,6 +98,15 @@ export function EventPage(props: RouteComponentProps<IParams>) {
         if (event)
             dispatch(
                 eventActions.submitGameScore(event._id, teamId, round, table, totalScore, JSON.stringify(missions)),
+            );
+        setKey('scoreTable');
+    }
+
+    function handleJudgeSubmit(teamId: string, type: string, totalScore: number, data: Object) {
+        console.log('Judge Submit', type, teamId, totalScore, data);
+        if (event)
+            dispatch(
+                eventActions.submitJudgingScore(event._id, teamId, type, 'room', totalScore, JSON.stringify(data)),
             );
         setKey('scoreTable');
     }
@@ -147,34 +175,23 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                         <h3>Category: Robot Game</h3>
                         <RG
                             teams={eventState.teams.list || []}
-                            tables={[
-                                ['A', 'Table A'],
-                                ['B', 'Table B'],
-                            ]}
-                            rounds={[
-                                ['1', 'Round 1'],
-                                ['2', 'Round 2'],
-                                ['3', 'Round 3'],
-                                ['PO', 'Play-off'],
-                                ['Q', 'Quarter-finals'],
-                                ['Q-PO', 'Quarter PlayOff'],
-                                ['S', 'Semi-finals'],
-                                ['Q-PO', 'Semi PlayOff'],
-                                ['F', 'Finals'],
-                                ['F-PO', 'Finals PlayOff'],
-                            ]}
+                            tables={tables}
+                            rounds={rounds}
                             onSubmit={handleRGSubmit}
                             program={event?.program}
                         />
                     </TabPane>
                     <TabPane eventKey="catValues">
                         <h3>Category: Core Values</h3>
+                        <Judging type="V" teams={eventState.teams.list || []} onSubmit={handleJudgeSubmit} />
                     </TabPane>
                     <TabPane eventKey="catProject">
                         <h3>Category: Innovation Project</h3>
+                        <Judging type="P" teams={eventState.teams.list || []} onSubmit={handleJudgeSubmit} />
                     </TabPane>
                     <TabPane eventKey="catDesign">
                         <h3>Category: Robot Design</h3>
+                        <Judging type="D" teams={eventState.teams.list || []} onSubmit={handleJudgeSubmit} />
                     </TabPane>
                 </TabContent>
             </TabContainer>

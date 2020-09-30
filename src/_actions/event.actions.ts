@@ -130,4 +130,37 @@ export namespace eventActions {
             return { type: eventConstants.POST_RGSCORE_FAILURE, error };
         }
     }
+
+    export function submitJudgingScore(
+        eventId: string,
+        eventTeamId: string,
+        type: string,
+        room: string,
+        score: number,
+        judgingData: Object,
+    ) {
+        return (dispatch) => {
+            dispatch(requested());
+
+            eventService.submitJudgingScore(eventId, eventTeamId, type, room, score, JSON.stringify(judgingData)).then(
+                (teamScore) => {
+                    dispatch(success(teamScore));
+                },
+                (error) => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                },
+            );
+        };
+
+        function requested() {
+            return { type: eventConstants.POST_JGSCORE_REQUESTED };
+        }
+        function success(score) {
+            return { type: eventConstants.POST_JGSCORE_SUCCESS, score };
+        }
+        function failure(error) {
+            return { type: eventConstants.POST_JGSCORE_FAILURE, error };
+        }
+    }
 }

@@ -35,6 +35,8 @@ export function event(state: EventState = initialState, action): EventState {
         case eventConstants.GET_SCORES_FAILURE:
             return { ...state, error: action.error, scores: { loading: false } };
         case eventConstants.POST_RGSCORE_SUCCESS:
+        // RGSCORE_SUCCESS result is the same as for JGSCORE SUCCES
+        case eventConstants.POST_JGSCORE_SUCCESS:
             let l = state.scores.list;
             if (l) {
                 let t = l.findIndex((i) => i.eventTeamId === action.score.eventTeamId);
