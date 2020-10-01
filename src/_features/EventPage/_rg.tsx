@@ -89,7 +89,7 @@ export function RG(props: RGProps) {
                                 <option value=""></option>
                                 {teams.map((t, idx) => {
                                     return (
-                                        <option value={t._id} key={idx + 1}>
+                                        <option value={t._id} key={t._id}>
                                             {t.name}
                                         </option>
                                     );
