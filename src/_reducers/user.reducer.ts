@@ -4,6 +4,7 @@ import { User } from '../_types/User';
 interface SimpleEvent {
     _id: string;
     name: string;
+    startDate: Date;
 }
 
 interface UserState {
@@ -37,11 +38,38 @@ export function user(state: UserState = _initial, action): UserState {
         case userConstants.GET_EVTSMGR_REQUEST:
             return { ...state, manager: { loading: true, events: [] } };
         case userConstants.GET_EVTSJUDGE_SUCCESS:
-            return { ...state, judge: { events: action.events } };
+            return {
+                ...state,
+                judge: {
+                    events:
+                        action.events &&
+                        action.events.map((i) => {
+                            return { ...i, startDate: i.startDate && new Date(i.startDate) };
+                        }),
+                },
+            };
         case userConstants.GET_EVTSREFR_SUCCESS:
-            return { ...state, referee: { events: action.events } };
+            return {
+                ...state,
+                referee: {
+                    events:
+                        action.events &&
+                        action.events.map((i) => {
+                            return { ...i, startDate: i.startDate && new Date(i.startDate) };
+                        }),
+                },
+            };
         case userConstants.GET_EVTSMGR_SUCCESS:
-            return { ...state, manager: { events: action.events } };
+            return {
+                ...state,
+                manager: {
+                    events:
+                        action.events &&
+                        action.events.map((i) => {
+                            return { ...i, startDate: i.startDate && new Date(i.startDate) };
+                        }),
+                },
+            };
         default:
             return state;
     }
