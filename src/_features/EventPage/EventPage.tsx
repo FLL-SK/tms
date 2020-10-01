@@ -21,6 +21,7 @@ import { Judging } from './_judge';
 
 import { Navigation } from './_nav';
 import { AlertDisplay } from '../../_components/Alert';
+import { GameRound, JudgingCategory } from '../../_types';
 
 interface IParams {
     id: string;
@@ -63,7 +64,7 @@ const tables: [string, string][] = [
     ['B', 'Table B'],
 ];
 
-const rounds: [string, string][] = [
+const rounds: [GameRound, string][] = [
     ['1', 'Round 1'],
     ['2', 'Round 2'],
     ['3', 'Round 3'],
@@ -93,7 +94,7 @@ export function EventPage(props: RouteComponentProps<IParams>) {
         dispatch(eventActions.setFields(event._id, { status: newStatus }));
     }
 
-    function handleRGSubmit(round: string, table: string, teamId: string, totalScore: number, missions: Object) {
+    function handleRGSubmit(round: GameRound, table: string, teamId: string, totalScore: number, missions: Object) {
         console.log('RG Submit', teamId, totalScore, missions);
         if (event)
             dispatch(
@@ -102,13 +103,12 @@ export function EventPage(props: RouteComponentProps<IParams>) {
         setKey('scoreTable');
     }
 
-    function handleJudgeSubmit(teamId: string, type: string, totalScore: number, data: Object) {
+    function handleJudgeSubmit(teamId: string, type: JudgingCategory, totalScore: number, data: Object) {
         console.log('Judge Submit', type, teamId, totalScore, data);
         if (event)
             dispatch(
                 eventActions.submitJudgingScore(event._id, teamId, type, 'room', totalScore, JSON.stringify(data)),
             );
-        setKey('scoreTable');
     }
 
     useEffect(() => {
@@ -183,15 +183,30 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                     </TabPane>
                     <TabPane eventKey="catValues">
                         <h3>Category: Core Values</h3>
-                        <Judging type="V" teams={eventState.teams.list || []} onSubmit={handleJudgeSubmit} />
+                        <Judging
+                            category="coreValues"
+                            teams={eventState.teams.list || []}
+                            scores={eventState.scores.list || []}
+                            onSubmit={handleJudgeSubmit}
+                        />
                     </TabPane>
                     <TabPane eventKey="catProject">
                         <h3>Category: Innovation Project</h3>
-                        <Judging type="P" teams={eventState.teams.list || []} onSubmit={handleJudgeSubmit} />
+                        <Judging
+                            category="project"
+                            teams={eventState.teams.list || []}
+                            scores={eventState.scores.list || []}
+                            onSubmit={handleJudgeSubmit}
+                        />
                     </TabPane>
                     <TabPane eventKey="catDesign">
                         <h3>Category: Robot Design</h3>
-                        <Judging type="D" teams={eventState.teams.list || []} onSubmit={handleJudgeSubmit} />
+                        <Judging
+                            category="design"
+                            teams={eventState.teams.list || []}
+                            scores={eventState.scores.list || []}
+                            onSubmit={handleJudgeSubmit}
+                        />
                     </TabPane>
                 </TabContent>
             </TabContainer>

@@ -7,13 +7,14 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
 import { ScorerRouter } from '../../_components/ScorerRouter';
+import { GameRound } from '../../_types';
 
 interface RGProps {
     teams: any[];
     tables: [string, string][];
     program?: string;
-    onSubmit: (round: string, table: string, teamId: string, score: number, data: Object) => any;
-    rounds: [string, string][];
+    onSubmit: (round: GameRound, table: string, teamId: string, score: number, data: Object) => any;
+    rounds: [GameRound, string][];
 }
 
 export function RG(props: RGProps) {
@@ -24,7 +25,7 @@ export function RG(props: RGProps) {
     const [table, setTable] = useState('');
 
     function handleSubmit(totalScore: number, missions: Object) {
-        onSubmit(round, table, teamId, totalScore, missions);
+        onSubmit(round as GameRound, table, teamId, totalScore, missions);
 
         // cleanup after submision
         setEvaluating(false);

@@ -27,3 +27,7 @@
     }
 
 }
+
+.fll_selected_row {
+    background-color: lightgreen;
+}

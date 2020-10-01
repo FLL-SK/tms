@@ -2,6 +2,8 @@ import { eventConstants, userConstants } from '../_constants';
 import { eventService } from '../_services';
 import { alertActions } from '.';
 
+import { GameRound, JudgingCategory, JudgingDetails } from '../_types';
+
 export namespace eventActions {
     export function loaded(event) {
         return { type: eventConstants.GETEVENT_SUCCESS, event };
@@ -101,7 +103,7 @@ export namespace eventActions {
     export function submitGameScore(
         eventId: string,
         eventTeamId: string,
-        round: string,
+        round: GameRound,
         table: string,
         score: number,
         missionData: Object,
@@ -134,7 +136,7 @@ export namespace eventActions {
     export function submitJudgingScore(
         eventId: string,
         eventTeamId: string,
-        type: string,
+        category: JudgingCategory,
         room: string,
         score: number,
         judgingData: Object,
@@ -142,15 +144,17 @@ export namespace eventActions {
         return (dispatch) => {
             dispatch(requested());
 
-            eventService.submitJudgingScore(eventId, eventTeamId, type, room, score, JSON.stringify(judgingData)).then(
-                (teamScore) => {
-                    dispatch(success(teamScore));
-                },
-                (error) => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                },
-            );
+            eventService
+                .submitJudgingScore(eventId, eventTeamId, category, room, score, JSON.stringify(judgingData))
+                .then(
+                    (teamScore) => {
+                        dispatch(success(teamScore));
+                    },
+                    (error) => {
+                        dispatch(failure(error.toString()));
+                        dispatch(alertActions.error(error.toString()));
+                    },
+                );
         };
 
         function requested() {

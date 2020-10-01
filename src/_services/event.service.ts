@@ -1,5 +1,6 @@
 import { authHeader } from '../_helpers';
 import axios, { AxiosRequestConfig } from 'axios';
+import { GameRound, JudgingCategory } from '../_types';
 
 export namespace eventService {
     function handleResponse(response) {
@@ -62,28 +63,10 @@ export namespace eventService {
         return axios('/event/' + eventId + '/fields', requestOptions).then(handleResponse);
     }
 
-    export function submitScore(
-        cmd: string,
-        eventId: string,
-        eventTeamId: string,
-        type: string,
-        place: string,
-        score: number,
-        details: string,
-    ) {
-        const requestOptions: AxiosRequestConfig = {
-            method: 'post',
-            headers: authHeader(),
-            data: { cmd: cmd, eventTeamId: eventTeamId, score: score, type: type, place: place, details: details },
-        };
-
-        return axios('/event/' + eventId, requestOptions).then(handleResponse);
-    }
-
     export function submitGameScore(
         eventId: string,
         eventTeamId: string,
-        round: string,
+        round: GameRound,
         table: string,
         score: number,
         missions: string,
@@ -95,7 +78,7 @@ export namespace eventService {
                 cmd: 'postGameScore',
                 eventTeamId: eventTeamId,
                 score: score,
-                type: round,
+                round: round,
                 place: table,
                 details: missions,
             },
@@ -106,7 +89,7 @@ export namespace eventService {
     export function submitJudgingScore(
         eventId: string,
         eventTeamId: string,
-        type: string,
+        category: JudgingCategory,
         room: string,
         score: number,
         details: string,
@@ -118,7 +101,7 @@ export namespace eventService {
                 cmd: 'postJudgingScore',
                 eventTeamId: eventTeamId,
                 score: score,
-                type: type,
+                category: category,
                 place: room,
                 details: details,
             },
