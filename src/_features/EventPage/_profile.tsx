@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Form, Spinner } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
-import { ProfileCard } from '../../_components/ProfileCard';
+import ProfileCard from '../../_components/ProfileCard';
 import { Event } from '../../_types/Event';
 
 interface EventProfileProps {

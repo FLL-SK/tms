@@ -11,7 +11,7 @@ import { eventTeamActions } from '../../_actions/eventTeam.actions';
 
 import { RootState } from '../../_reducers';
 
-import { NotLoggedIn } from '../../_components/NotLoggedIn';
+import NotLoggedIn from '../../_components/NotLoggedIn';
 import { User } from '../../_types/User';
 
 import { ScoringTable } from './_scoring';
@@ -20,8 +20,9 @@ import { RG } from './_rg';
 import { Judging } from './_judge';
 
 import { Navigation } from './_nav';
-import { AlertDisplay } from '../../_components/Alert';
+import AlertDisplay from '../../_components/Alert';
 import { GameRound, JudgingCategory } from '../../_types';
+import TeamCard from '../../_components/TeamCard';
 
 interface IParams {
     id: string;
@@ -136,12 +137,10 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                     <TabPane eventKey="teams">
                         <h2>Tímy</h2>
                         {eventState.teams.loading && <Spinner animation="grow" size="sm" />}
-                        {eventState.teams.list &&
-                            eventState.teams.list.map((i) => (
-                                <Button type="button" href={'/profile/' + i._id} variant="outline-primary" key={i._id}>
-                                    {i.name}
-                                </Button>
-                            ))}
+                        <Row>
+                            {eventState.teams.list &&
+                                eventState.teams.list.map((i) => <TeamCard id={i._id} name={i.name} key={i._id} />)}
+                        </Row>
                     </TabPane>
                     <TabPane eventKey="rgSchedule">
                         <h2>Robot Game Round 1</h2>

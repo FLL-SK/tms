@@ -7,23 +7,8 @@ import { userActions } from '../../_actions/user.actions';
 
 import { RootState } from '../../_reducers';
 
-import { NotLoggedIn } from '../../_components/NotLoggedIn';
-
-const EventCard = ({ name, date, id, ...props }) => {
-    return (
-        <Card
-            className="fll-bg-secondary"
-            style={{ width: '25rem', height: '8rem', marginRight: '1rem', marginBottom: '1rem', padding: '1rem' }}
-            {...props}
-        >
-            <Card.Title>{name}</Card.Title>
-            <label>
-                Date <input readOnly defaultValue={date} />
-            </label>
-            <Card.Link href={'/event/' + id}>Open</Card.Link>
-        </Card>
-    );
-};
+import NotLoggedIn from '../../_components/NotLoggedIn';
+import EventCard from '../../_components/EventCard';
 
 export function HomePage() {
     const userState = useSelector((state: RootState) => state.user);
