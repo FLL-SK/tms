@@ -1,4 +1,5 @@
 import { eventConstants, eventTeamConstants } from '../_constants';
+import { User } from '../_types';
 import { Event } from '../_types/Event';
 import { EventTeam } from '../_types/EventTeam';
 import { Score } from '../_types/Score';
@@ -19,13 +20,33 @@ export function event(state: EventState = initialState, action): EventState {
         case eventConstants.GETEVENT_REQUESTED:
             return { ...state, loading: true };
         case eventConstants.GETEVENT_SUCCESS:
+            if (action.event) {
+                if (action.event.managers)
+                    action.event.managers.sort((a: User, b: User) =>
+                        a.fullName > b.fullName ? 1 : a.fullName < b.fullName ? -1 : 0,
+                    );
+                if (action.event.judges)
+                    action.event.judges.sort((a: User, b: User) =>
+                        a.fullName > b.fullName ? 1 : a.fullName < b.fullName ? -1 : 0,
+                    );
+                if (action.event.referees)
+                    action.event.referees.sort((a: User, b: User) =>
+                        a.fullName > b.fullName ? 1 : a.fullName < b.fullName ? -1 : 0,
+                    );
+            }
             return { ...state, loading: false, event: action.event };
         case eventConstants.GETEVENT_FAILURE:
             return { ...state, error: action.error, loading: false };
         case eventTeamConstants.GETTEAMS_REQUEST:
             return { ...state, teams: { loading: true } };
         case eventTeamConstants.GETTEAMS_SUCCESS:
-            return { ...state, teams: { loading: false, list: action.list } };
+            return {
+                ...state,
+                teams: {
+                    loading: false,
+                    list: action.list && action.list.sort((a, b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0)),
+                },
+            };
         case eventTeamConstants.GETTEAMS_FAILURE:
             return { ...state, teams: { loading: false }, error: action.error };
         case eventConstants.GET_SCORES_REQUESTED:
