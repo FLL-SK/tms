@@ -122,9 +122,9 @@ export function EventPage(props: RouteComponentProps<IParams>) {
         <>
             <TabContainer activeKey={key}>
                 <Navigation onSelect={(k) => setKey(k || 'details')} />
+                <h1>{'Tournament ' + (event ? event.name : '')}</h1>
                 <TabContent>
                     <TabPane eventKey="details">
-                        <h3>{event ? event.name : ''}</h3>
                         <EventProfile
                             loading={eventState.loading || false}
                             event={event}
@@ -134,7 +134,7 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                         />
                     </TabPane>
                     <TabPane eventKey="teams">
-                        <h3>Tímy</h3>
+                        <h2>Tímy</h2>
                         {eventState.teams.loading && <Spinner animation="grow" size="sm" />}
                         {eventState.teams.list &&
                             eventState.teams.list.map((i) => (
@@ -144,19 +144,19 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                             ))}
                     </TabPane>
                     <TabPane eventKey="rgSchedule">
-                        <h3>Robot Game Round 1</h3>
+                        <h2>Robot Game Round 1</h2>
                         <RGRound
                             loading={eventState.teams.loading}
                             round={1}
                             schedule={event ? event.rgSchedule : []}
                         />
-                        <h3>Robot Game Round 2</h3>
+                        <h2>Robot Game Round 2</h2>
                         <RGRound
                             loading={eventState.teams.loading}
                             round={2}
                             schedule={event ? event.rgSchedule : []}
                         />
-                        <h3>Robot Game Round 3</h3>
+                        <h2>Robot Game Round 3</h2>
                         <RGRound
                             loading={eventState.teams.loading}
                             round={3}
@@ -164,7 +164,7 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                         />
                     </TabPane>
                     <TabPane eventKey="scoreTable">
-                        <h3>Scoring Table</h3>
+                        <h2>Scoring Table</h2>
                         <ScoringTable
                             loading={eventState.scores.loading || eventState.teams.loading ? true : false}
                             teams={eventState.teams.list || []}
@@ -172,7 +172,7 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                         />
                     </TabPane>
                     <TabPane eventKey="catGame">
-                        <h3>Category: Robot Game</h3>
+                        <h2>Category: Robot Game</h2>
                         <RG
                             teams={eventState.teams.list || []}
                             tables={tables}
@@ -182,7 +182,7 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                         />
                     </TabPane>
                     <TabPane eventKey="catValues">
-                        <h3>Category: Core Values</h3>
+                        <h2>Category: Core Values</h2>
                         <Judging
                             category="coreValues"
                             teams={eventState.teams.list || []}
@@ -191,7 +191,7 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                         />
                     </TabPane>
                     <TabPane eventKey="catProject">
-                        <h3>Category: Innovation Project</h3>
+                        <h2>Category: Innovation Project</h2>
                         <Judging
                             category="project"
                             teams={eventState.teams.list || []}
@@ -200,7 +200,7 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                         />
                     </TabPane>
                     <TabPane eventKey="catDesign">
-                        <h3>Category: Robot Design</h3>
+                        <h2>Category: Robot Design</h2>
                         <Judging
                             category="design"
                             teams={eventState.teams.list || []}

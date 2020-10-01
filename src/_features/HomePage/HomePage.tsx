@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Row, Col, Card, ListGroup, Spinner } from 'react-bootstrap';
+import { Col, Card, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -9,6 +9,22 @@ import { RootState } from '../../_reducers';
 
 import { NotLoggedIn } from '../../_components/NotLoggedIn';
 
+const EventCard = ({ name, date, id, ...props }) => {
+    return (
+        <Card
+            className="fll-bg-secondary"
+            style={{ width: '25rem', height: '8rem', marginRight: '1rem', marginBottom: '1rem', padding: '1rem' }}
+            {...props}
+        >
+            <Card.Title>{name}</Card.Title>
+            <label>
+                Date <input readOnly defaultValue={date} />
+            </label>
+            <Card.Link href={'/event/' + id}>Open</Card.Link>
+        </Card>
+    );
+};
+
 export function HomePage() {
     const userState = useSelector((state: RootState) => state.user);
     const user = useSelector((state: RootState) => state.user.user);
@@ -16,8 +32,6 @@ export function HomePage() {
     const dispatch = useDispatch();
 
     if (!auth.loggedIn) return NotLoggedIn();
-
-    console.log('HomePage user=', auth.user);
 
     useEffect(() => {
         if (auth.user) {
@@ -31,75 +45,64 @@ export function HomePage() {
     return (
         <>
             <Col lg={{ span: 8, offset: 2 }}>
-                <Card>
-                    <Card.Body>
-                        <Card.Title>Profil</Card.Title>
+                <h1>Profile</h1>
 
-                        {userState.loading && <Spinner animation="grow" size="sm" />}
-                        {user && (
-                            <>
-                                <Card.Text>
-                                    You're logged in as {user.username} id= {user._id}
-                                    {user.fullName}
-                                    {user.dpaAccepted}
-                                    {user.email}
-                                    {user.phone}
-                                </Card.Text>
-                                <Link to="/login">Logout</Link>
-                            </>
-                        )}
-                    </Card.Body>
-                </Card>
+                {userState.loading && <Spinner animation="grow" size="sm" />}
+                {user && (
+                    <>
+                        <Card>
+                            You're logged in as {user.username} <br />
+                            id= {user._id}
+                            <br />
+                            {user.fullName}
+                            <br />
+                            {user.dpaAccepted}
+                            <br />
+                            {user.email}
+                            <br />
+                            {user.phone}
+                        </Card>
+                        <Link to="/login">Logout</Link>
+                    </>
+                )}
 
                 {userState.manager && userState.manager.loading && <Spinner animation="grow" size="sm" />}
                 {userState.manager && userState.manager.events && (
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Organizujem turnaje</Card.Title>
+                    <>
+                        <h2 key={1}>My Tournaments</h2>
 
-                            <ListGroup>
-                                {userState.manager.events.map((e) => (
-                                    <ListGroup.Item action href={'/event/' + e._id} key={e._id}>
-                                        {e.name}
-                                    </ListGroup.Item>
-                                ))}
-                            </ListGroup>
-                        </Card.Body>
-                    </Card>
+                        <div style={{ display: 'flex' }}>
+                            {userState.manager.events.map((e) => (
+                                <EventCard name={e.name} id={e._id} key={e._id} date={e.startDate} />
+                            ))}
+                        </div>
+                    </>
                 )}
 
                 {userState.judge && userState.judge.loading && <Spinner animation="grow" size="sm" />}
-                {userState.judge && userState.judge.events && (
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Som porotcom</Card.Title>
+                {userState.judge && userState.judge.events && userState.judge.events.length > 0 && (
+                    <>
+                        <h2>I'm judging</h2>
 
-                            <ListGroup>
-                                {userState.judge.events.map((e) => (
-                                    <ListGroup.Item action href={'/event/' + e._id} key={e._id}>
-                                        {e.name}
-                                    </ListGroup.Item>
-                                ))}
-                            </ListGroup>
-                        </Card.Body>
-                    </Card>
+                        <div style={{ display: 'flex' }}>
+                            {userState.judge.events.map((e) => (
+                                <EventCard name={e.name} id={e._id} key={e._id} date={e.startDate} />
+                            ))}
+                        </div>
+                    </>
                 )}
 
                 {userState.referee && userState.referee.loading && <Spinner animation="grow" size="sm" />}
-                {userState.referee && userState.referee.events && (
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Som rozhodcom</Card.Title>
+                {userState.referee && userState.referee.events && userState.referee.events.length > 0 && (
+                    <>
+                        <h2>I'm referee at</h2>
 
-                            <ListGroup>
-                                {userState.referee.events.map((e) => (
-                                    <ListGroup.Item action href={'/event/' + e._id} key={e._id}>
-                                        {e.name}
-                                    </ListGroup.Item>
-                                ))}
-                            </ListGroup>
-                        </Card.Body>
-                    </Card>
+                        <div style={{ display: 'flex' }}>
+                            {userState.referee.events.map((e) => (
+                                <EventCard name={e.name} id={e._id} key={e._id} date={e.startDate} />
+                            ))}
+                        </div>
+                    </>
                 )}
             </Col>
         </>
