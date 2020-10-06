@@ -72,7 +72,7 @@ export const i18n = i18next
         {
             resources: translationsJson,
             fallbackLng: 'sk',
-            debug: process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test',
+            debug: process.env.ENV !== 'production' && process.env.ENV !== 'test',
 
             interpolation: {
                 escapeValue: false, // not needed for react as it escapes by

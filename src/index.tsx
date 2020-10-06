@@ -15,7 +15,7 @@ import './_styles/style.css';
 
 import './_locales';
 
-AppSettings.loadApiUrl();
+AppSettings.configureApiUrl();
 AppSettings.loadLanguage();
 
 render(
