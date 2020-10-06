@@ -2,6 +2,8 @@ import { eventConstants, userConstants } from '../_constants';
 import { eventService } from '../_services';
 import { alertActions } from '.';
 
+import { GameRound, JudgingCategory, JudgingDetails } from '../_types';
+
 export namespace eventActions {
     export function loaded(event) {
         return { type: eventConstants.GETEVENT_SUCCESS, event };
@@ -71,12 +73,12 @@ export namespace eventActions {
         return { type: userConstants.CLEAR_EVT_ROLES };
     }
 
-    export function getRanking(id?: string) {
-        if (!id) return;
+    export function getScores(eventId?: string) {
+        if (!eventId) return;
         return (dispatch) => {
             dispatch(requested());
 
-            eventService.getRanking(id).then(
+            eventService.getScores(eventId).then(
                 (response) => {
                     dispatch(success(response));
                 },
@@ -88,13 +90,81 @@ export namespace eventActions {
         };
 
         function requested() {
-            return { type: eventConstants.GETRANKING_REQUESTED };
+            return { type: eventConstants.GET_SCORES_REQUESTED };
         }
         function success(score) {
-            return { type: eventConstants.GETRANKING_SUCCESS, score };
+            return { type: eventConstants.GET_SCORES_SUCCESS, score };
         }
         function failure(error) {
-            return { type: eventConstants.GETRANKING_FAILURE, error };
+            return { type: eventConstants.GET_SCORES_FAILURE, error };
+        }
+    }
+
+    export function submitGameScore(
+        eventId: string,
+        eventTeamId: string,
+        round: GameRound,
+        table: string,
+        score: number,
+        missionData: Object,
+    ) {
+        return (dispatch) => {
+            dispatch(requested());
+
+            eventService.submitGameScore(eventId, eventTeamId, round, table, score, JSON.stringify(missionData)).then(
+                (teamScore) => {
+                    dispatch(success(teamScore));
+                },
+                (error) => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                },
+            );
+        };
+
+        function requested() {
+            return { type: eventConstants.POST_RGSCORE_REQUESTED };
+        }
+        function success(score) {
+            return { type: eventConstants.POST_RGSCORE_SUCCESS, score };
+        }
+        function failure(error) {
+            return { type: eventConstants.POST_RGSCORE_FAILURE, error };
+        }
+    }
+
+    export function submitJudgingScore(
+        eventId: string,
+        eventTeamId: string,
+        category: JudgingCategory,
+        room: string,
+        score: number,
+        judgingData: Object,
+    ) {
+        return (dispatch) => {
+            dispatch(requested());
+
+            eventService
+                .submitJudgingScore(eventId, eventTeamId, category, room, score, JSON.stringify(judgingData))
+                .then(
+                    (teamScore) => {
+                        dispatch(success(teamScore));
+                    },
+                    (error) => {
+                        dispatch(failure(error.toString()));
+                        dispatch(alertActions.error(error.toString()));
+                    },
+                );
+        };
+
+        function requested() {
+            return { type: eventConstants.POST_JGSCORE_REQUESTED };
+        }
+        function success(score) {
+            return { type: eventConstants.POST_JGSCORE_SUCCESS, score };
+        }
+        function failure(error) {
+            return { type: eventConstants.POST_JGSCORE_FAILURE, error };
         }
     }
 }

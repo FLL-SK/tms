@@ -11,15 +11,18 @@ import { eventTeamActions } from '../../_actions/eventTeam.actions';
 
 import { RootState } from '../../_reducers';
 
-import { NotLoggedIn } from '../../_components/NotLoggedIn';
+import NotLoggedIn from '../../_components/NotLoggedIn';
 import { User } from '../../_types/User';
 
-import { RankingTable } from './_ranking';
+import { ScoringTable } from './_scoring';
 import { EventProfile } from './_profile';
 import { RG } from './_rg';
+import { Judging } from './_judge';
 
 import { Navigation } from './_nav';
-import { AlertDisplay } from '../../_components/Alert';
+import AlertDisplay from '../../_components/Alert';
+import { GameRound, JudgingCategory } from '../../_types';
+import TeamCard from '../../_components/TeamCard';
 
 interface IParams {
     id: string;
@@ -57,6 +60,24 @@ function RGRound({ loading, round, schedule }) {
     );
 }
 
+const tables: [string, string][] = [
+    ['A', 'Table A'],
+    ['B', 'Table B'],
+];
+
+const rounds: [GameRound, string][] = [
+    ['1', 'Round 1'],
+    ['2', 'Round 2'],
+    ['3', 'Round 3'],
+    ['PO', 'Play-off'],
+    ['Q', 'Quarter-finals'],
+    ['Q-PO', 'Quarter PlayOff'],
+    ['S', 'Semi-finals'],
+    ['Q-PO', 'Semi PlayOff'],
+    ['F', 'Finals'],
+    ['F-PO', 'Finals PlayOff'],
+];
+
 export function EventPage(props: RouteComponentProps<IParams>) {
     const eventState = useSelector((state: RootState) => state.event);
     const event = useSelector((state: RootState) => state.event.event);
@@ -74,25 +95,37 @@ export function EventPage(props: RouteComponentProps<IParams>) {
         dispatch(eventActions.setFields(event._id, { status: newStatus }));
     }
 
-    function handleRGSubmit(program: string, teamId: string, data: any) {
-        console.log('RG Submit', program, teamId, data);
-        setKey('ranking');
+    function handleRGSubmit(round: GameRound, table: string, teamId: string, totalScore: number, missions: Object) {
+        console.log('RG Submit', teamId, totalScore, missions);
+        if (event)
+            dispatch(
+                eventActions.submitGameScore(event._id, teamId, round, table, totalScore, JSON.stringify(missions)),
+            );
+        setKey('scoreTable');
+    }
+
+    function handleJudgeSubmit(teamId: string, type: JudgingCategory, totalScore: number, data: Object) {
+        console.log('Judge Submit', type, teamId, totalScore, data);
+        if (event)
+            dispatch(
+                eventActions.submitJudgingScore(event._id, teamId, type, 'room', totalScore, JSON.stringify(data)),
+            );
     }
 
     useEffect(() => {
         const { id } = props.match.params;
         dispatch(eventActions.getById(id));
         dispatch(eventTeamActions.getTeams(id));
-        dispatch(eventActions.getRanking(id));
+        dispatch(eventActions.getScores(id));
     }, []);
 
     return (
         <>
             <TabContainer activeKey={key}>
                 <Navigation onSelect={(k) => setKey(k || 'details')} />
+                <h1>{'Tournament ' + (event ? event.name : '')}</h1>
                 <TabContent>
                     <TabPane eventKey="details">
-                        <h3>{event ? event.name : ''}</h3>
                         <EventProfile
                             loading={eventState.loading || false}
                             event={event}
@@ -102,60 +135,77 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                         />
                     </TabPane>
                     <TabPane eventKey="teams">
-                        <h3>Tímy</h3>
+                        <h2>Tímy</h2>
                         {eventState.teams.loading && <Spinner animation="grow" size="sm" />}
-                        {eventState.teams.list &&
-                            eventState.teams.list.map((i) => (
-                                <Button type="button" href={'/profile/' + i._id} variant="outline-primary" key={i._id}>
-                                    {i.name}
-                                </Button>
-                            ))}
+                        <Row>
+                            {eventState.teams.list &&
+                                eventState.teams.list.map((i) => <TeamCard id={i._id} name={i.name} key={i._id} />)}
+                        </Row>
                     </TabPane>
                     <TabPane eventKey="rgSchedule">
-                        <h3>Robot Game Round 1</h3>
+                        <h2>Robot Game Round 1</h2>
                         <RGRound
                             loading={eventState.teams.loading}
                             round={1}
                             schedule={event ? event.rgSchedule : []}
                         />
-                        <h3>Robot Game Round 2</h3>
+                        <h2>Robot Game Round 2</h2>
                         <RGRound
                             loading={eventState.teams.loading}
                             round={2}
                             schedule={event ? event.rgSchedule : []}
                         />
-                        <h3>Robot Game Round 3</h3>
+                        <h2>Robot Game Round 3</h2>
                         <RGRound
                             loading={eventState.teams.loading}
                             round={3}
                             schedule={event ? event.rgSchedule : []}
                         />
                     </TabPane>
-                    <TabPane eventKey="ranking">
-                        <h3>Ranking Table</h3>
-                        <RankingTable
-                            loading={eventState.ranking.loading || eventState.teams.loading ? true : false}
+                    <TabPane eventKey="scoreTable">
+                        <h2>Scoring Table</h2>
+                        <ScoringTable
+                            loading={eventState.scores.loading || eventState.teams.loading ? true : false}
                             teams={eventState.teams.list || []}
-                            scores={eventState.ranking.list || []}
+                            scores={eventState.scores.list || []}
                         />
                     </TabPane>
                     <TabPane eventKey="catGame">
-                        <h3>Category: Robot Game</h3>
+                        <h2>Category: Robot Game</h2>
                         <RG
                             teams={eventState.teams.list || []}
-                            tables={['Table A', 'Table B']}
+                            tables={tables}
+                            rounds={rounds}
                             onSubmit={handleRGSubmit}
-                            program={'FLL2020'}
+                            program={event?.program}
                         />
                     </TabPane>
                     <TabPane eventKey="catValues">
-                        <h3>Category: Core Values</h3>
+                        <h2>Category: Core Values</h2>
+                        <Judging
+                            category="coreValues"
+                            teams={eventState.teams.list || []}
+                            scores={eventState.scores.list || []}
+                            onSubmit={handleJudgeSubmit}
+                        />
                     </TabPane>
                     <TabPane eventKey="catProject">
-                        <h3>Category: Innovation Project</h3>
+                        <h2>Category: Innovation Project</h2>
+                        <Judging
+                            category="project"
+                            teams={eventState.teams.list || []}
+                            scores={eventState.scores.list || []}
+                            onSubmit={handleJudgeSubmit}
+                        />
                     </TabPane>
                     <TabPane eventKey="catDesign">
-                        <h3>Category: Robot Design</h3>
+                        <h2>Category: Robot Design</h2>
+                        <Judging
+                            category="design"
+                            teams={eventState.teams.list || []}
+                            scores={eventState.scores.list || []}
+                            onSubmit={handleJudgeSubmit}
+                        />
                     </TabPane>
                 </TabContent>
             </TabContainer>

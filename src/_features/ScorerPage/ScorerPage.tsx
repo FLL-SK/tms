@@ -70,17 +70,14 @@ export function ScorerPage() {
         setNote(ev.target.value);
     }
 
-    function handleSubmit(program: string, data: any) {
-        console.log('SUBMIT', program, data);
-        let score = 0;
-        for (let m in data) {
-            score += data[m]['score'];
-        }
+    function handleSubmit(score: number, missions: Object) {
+        console.log('SUBMIT', program, missions);
+
         let pkg = {
             submitedOn: new Date(),
             score: score,
             program: program,
-            data: JSON.stringify(data),
+            data: JSON.stringify(missions),
             note: note,
         };
         dispatch({ type: 'submit', data: pkg });
@@ -128,14 +125,14 @@ export function ScorerPage() {
                                 <FormControl value={note} onChange={handleNoteChange} />
                             </FormGroup>
                         </Col>
-                        <Col md={2} className="my-auto">
-                            <FormGroup>
-                                {!evaluating && (
+                        <Col md={2} style={{ display: 'flex', alignItems: 'flex-end' }}>
+                            {!evaluating && (
+                                <FormGroup>
                                     <Button onClick={(ev) => setEvaluating(true)}>
                                         {t(txt.ScorerPage.scorer.startBtn)}
                                     </Button>
-                                )}{' '}
-                            </FormGroup>
+                                </FormGroup>
+                            )}{' '}
                         </Col>
                     </Row>
                     {evaluating && (

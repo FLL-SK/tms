@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Row, Col } from 'react-bootstrap';
+import Image from 'react-bootstrap/Image';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -11,6 +12,9 @@ import { txt } from '../../_locales';
 import { userActions } from '../../_actions';
 
 import { RootState } from '../../_reducers';
+
+// @ts-ignore
+import logo from '../../assets/logo_fll.png';
 
 type Inputs = {
     username: string;
@@ -39,6 +43,11 @@ export function LoginPage() {
     return (
         <Row>
             <Col lg={{ span: 4, offset: 4 }} md={{ span: 6, offset: 3 }} sm>
+                <div>
+                    <Image src={logo} fluid />
+                </div>
+                <h1>Tournaments</h1>
+
                 <Form name="loginForm" onSubmit={handleSubmit(onSubmit)}>
                     <h2>{t(txt.LoginPage.title)}</h2>
                     <Form.Group>
@@ -46,9 +55,9 @@ export function LoginPage() {
                         <Form.Control
                             type="text"
                             name="username"
-                            defaultValue="aa"
                             ref={register({ required: true })}
                             className={submitted && errors.username ? ' is-invalid' : ''}
+                            autoComplete="username"
                         />
                         {errors.username && (
                             <Form.Control.Feedback type="invalid">
@@ -63,6 +72,7 @@ export function LoginPage() {
                             name="password"
                             ref={register({ required: true })}
                             className={submitted && errors.password ? ' is-invalid' : ''}
+                            autoComplete="current-password"
                         />
                         {errors.password && (
                             <Form.Control.Feedback type="invalid">

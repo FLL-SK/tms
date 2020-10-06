@@ -1,3 +1,23 @@
+import { GameRound } from './GameRound';
+
+export interface JudgingDetails {
+    submitedOn?: Date;
+    submitedBy?: string;
+    score: number;
+    beginning: number;
+    developing: number;
+    accomplished: number;
+    exceeds: number;
+}
+
+export interface GameDetails {
+    type: GameRound;
+    submitedOn?: Date;
+    submitedBy?: string; // userId
+    score: number;
+    missions: string; // details of completed missions
+}
+
 export interface Score {
     team: {
         _id: string;
@@ -15,21 +35,8 @@ export interface Score {
     gameQ?: number; // quarter-finals score
     gameS?: number; // semi-finals score
     gameF?: number; // finals score
-    judgingDetails: {
-        type: string;
-        submitedOn?: Date;
-        submitedBy?: string;
-        score: number;
-        one: number;
-        two: number;
-        three: number;
-        four: number;
-    }[];
-    gameDetails: {
-        type: string; //R1, R2, R3, R1-PO, R2-PO, R3-PO, Q, Q-PO, S, S-PO, F, F-PO
-        submitedOn?: Date;
-        submitedBy?: string;
-        score: number;
-        missions: string; // details of completed missions
-    }[];
+    cvDetails: JudgingDetails[];
+    projectDetails: JudgingDetails[];
+    designDetails: JudgingDetails[];
+    gameDetails: GameDetails[];
 }

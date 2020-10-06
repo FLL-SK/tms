@@ -1,4 +1,3 @@
-import { appConstants } from '../_constants';
 import { apiService } from '../_services/api.service';
 import i18next from 'i18next';
 
@@ -14,15 +13,10 @@ export namespace AppSettings {
         return lang;
     }
 
-    export function setApiUrl(url: string): string {
-        localStorage.setItem('tms_apiUrl', url);
+    export function configureApiUrl(): string {
+        const url = process.env.API_URL || 'notset';
         apiService.setUrl(url);
-        return url;
-    }
-
-    export function loadApiUrl(): string {
-        const url = localStorage.getItem('tms_apiUrl') || 'http://localhost:3000';
-        apiService.setUrl(url);
+        console.log('APIURL', url);
         return url;
     }
 }

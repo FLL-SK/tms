@@ -1,3 +1,37 @@
 .fll_blue_bg {
     background: #007bff
 }
+
+.fll-top-score {
+    background-color: gold;
+}
+
+/* Bootstrap breakpoints
+(xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px)*/
+
+.fll_scoring_header-even {
+    background-color: lightgrey;
+}
+
+.fll_scoring_row {
+    background-color: lightgrey;
+}
+
+@media screen and (max-width: 768px) {
+    .fll_scoring_header-odd {
+        background-color: lightgrey;
+    }
+
+    .fll_scoring_row {
+        background-color: white;
+    }
+
+}
+
+.fll_selected_row {
+    background-color: lightgreen;
+}
+
+.fll-bg-secondary {
+    background-color: lightgreen !important;
+}

@@ -16,7 +16,6 @@ type Inputs = {
 };
 
 const lang = AppSettings.loadLanguage();
-const url = AppSettings.loadApiUrl();
 
 export function SettingsPage() {
     const { register, handleSubmit, watch, errors } = useForm<Inputs>();
@@ -26,7 +25,6 @@ export function SettingsPage() {
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         AppSettings.changeLanguage(data.language);
-        AppSettings.setApiUrl(data.apiUrl);
         console.log('Settings saved', data);
     };
 
@@ -35,11 +33,6 @@ export function SettingsPage() {
             <Col md={{ span: 8, offset: 2 }} sm>
                 <Form name="loginForm" onSubmit={handleSubmit(onSubmit)}>
                     <h2>{t(txt.SettingsPage.title)}</h2>
-
-                    <Form.Group>
-                        <Form.Label>{t(txt.SettingsPage.apiUrl)}</Form.Label>
-                        <Form.Control type="text" name="apiUrl" defaultValue={url} ref={register({ required: true })} />
-                    </Form.Group>
                     <Form.Group>
                         <Form.Label>{t(txt.SettingsPage.language)}</Form.Label>
                         <Form.Control

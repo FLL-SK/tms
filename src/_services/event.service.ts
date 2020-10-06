@@ -1,5 +1,6 @@
 import { authHeader } from '../_helpers';
 import axios, { AxiosRequestConfig } from 'axios';
+import { GameRound, JudgingCategory } from '../_types';
 
 export namespace eventService {
     function handleResponse(response) {
@@ -48,8 +49,8 @@ export namespace eventService {
         return getEvent(eventId, { cmd: 'getTeams' });
     }
 
-    export function getRanking(eventId: string) {
-        return getEvent(eventId, { cmd: 'getRanking' });
+    export function getScores(eventId: string) {
+        return getEvent(eventId, { cmd: 'getScores' });
     }
 
     export function setFields(eventId: string, fields: any) {
@@ -60,5 +61,52 @@ export namespace eventService {
         };
 
         return axios('/event/' + eventId + '/fields', requestOptions).then(handleResponse);
+    }
+
+    export function submitGameScore(
+        eventId: string,
+        eventTeamId: string,
+        round: GameRound,
+        table: string,
+        score: number,
+        missions: string,
+    ) {
+        const requestOptions: AxiosRequestConfig = {
+            method: 'post',
+            headers: authHeader(),
+            data: {
+                cmd: 'postGameScore',
+                eventTeamId: eventTeamId,
+                score: score,
+                round: round,
+                place: table,
+                details: missions,
+            },
+        };
+        return axios('/event/' + eventId, requestOptions).then(handleResponse);
+    }
+
+    export function submitJudgingScore(
+        eventId: string,
+        eventTeamId: string,
+        category: JudgingCategory,
+        room: string,
+        score: number,
+        details: string,
+    ) {
+        const requestOptions: AxiosRequestConfig = {
+            method: 'post',
+            headers: authHeader(),
+            data: {
+                cmd: 'postJudgingScore',
+                eventTeamId: eventTeamId,
+                score: score,
+                category: category,
+                place: room,
+                details: details,
+            },
+        };
+
+        return axios('/event/' + eventId, requestOptions).then(handleResponse);
     }
 }

@@ -21,19 +21,13 @@ export namespace Scorer2020 {
 
     export interface Props {
         /** method receiving form data on submit */
-        onSubmit: (data: any) => any;
+        onSubmit: (score: number, data: Object) => any;
         /** JSON string containing scorer values */
         values?: Inputs;
     }
 
     export function Scorer(props: Props) {
         const { onSubmit, values } = props;
-
-        const _onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
-            console.log(data);
-            onSubmit(data);
-        };
-
         const [totalScore, setTotalScore] = useState(0);
 
         // using reac-form might be an overkill, but going to keep it
@@ -50,6 +44,11 @@ export namespace Scorer2020 {
             methods.clearErrors();
             let ts = calcScore(methods.getValues(), setMissionScore, setMissionError);
             setTotalScore(ts);
+        };
+
+        const _onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
+            console.log(data);
+            onSubmit(totalScore, data);
         };
 
         return (

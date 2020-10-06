@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { txt } from '../_locales';
 import { Button } from 'react-bootstrap';
 
-export function NotLoggedIn() {
+export default function NotLoggedIn() {
     const { t } = useTranslation();
     console.log('Not Logged In');
     return (
