@@ -7,10 +7,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = (env) => {
     // load env variables from .env file
     const fileEnv = dotenv.config().parsed;
+    let envKeys = {};
 
     if (fileEnv) {
         // create object from the env variable
-        const envKeys = Object.keys(fileEnv).reduce((prev, next) => {
+        envKeys = Object.keys(fileEnv).reduce((prev, next) => {
             prev[`process.env.${next}`] = JSON.stringify(fileEnv[next]);
             return prev;
         }, {});
