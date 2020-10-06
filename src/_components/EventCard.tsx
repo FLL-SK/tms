@@ -2,6 +2,8 @@ import React from 'react';
 
 import Card from 'react-bootstrap/Card';
 
+import { dateFns } from '../_locales/date-fns';
+
 export default function EventCard({ name, date, id, ...props }) {
     return (
         <Card
@@ -10,9 +12,11 @@ export default function EventCard({ name, date, id, ...props }) {
             {...props}
         >
             <Card.Title>{name}</Card.Title>
-            <label>
-                Date <input readOnly defaultValue={date} />{' '}
-            </label>
+            <div>
+                <span>
+                    Date: <span>{date ? dateFns.format(date, 'PP') : 'not defined'}</span>
+                </span>
+            </div>
             <Card.Link className="stretched-link" href={'/event/' + id}>
                 Open
             </Card.Link>
