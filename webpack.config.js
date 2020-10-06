@@ -4,18 +4,35 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 //const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+function convertEnv2Obj(fEnv) {
+    if (!fEnv) return {};
+    // create object from the env variable
+    let eObj = Object.keys(fEnv).reduce((prev, key) => {
+        prev[`process.env.${key}`] = JSON.stringify(fEnv[key]);
+        return prev;
+    }, {});
+    return eObj;
+}
+
+function loadEnvValues(keys) {
+    if (!keys) return {};
+    let eObj = keys.reduce((prev, key) => {
+        prev[`process.env.${key}`] = JSON.stringify(process.env[key]);
+        return prev;
+    }, {});
+    return eObj;
+}
+
 module.exports = (env) => {
     // load env variables from .env file
     const fileEnv = dotenv.config().parsed;
-    let envKeys = {};
 
-    if (fileEnv) {
-        // create object from the env variable
-        envKeys = Object.keys(fileEnv).reduce((prev, next) => {
-            prev[`process.env.${next}`] = JSON.stringify(fileEnv[next]);
-            return prev;
-        }, {});
-    }
+    // following keys will be loaded from environment
+    const envKeys = ['API_URL', 'ENV'];
+
+    // load env from .env file
+    // and then overwrite by values set in environment
+    const envObj = { ...convertEnv2Obj(fileEnv), ...loadEnvValues(envKeys) };
 
     wcfg = {
         mode: 'development',
@@ -39,7 +56,7 @@ module.exports = (env) => {
                 template: './src/index.html',
             }),
             new MiniCssExtractPlugin({ filename: 'app.[hash].css' }),
-            new webpack.DefinePlugin(envKeys),
+            new webpack.DefinePlugin(envObj),
         ],
         output: {
             filename: 'app.[hash].js',
