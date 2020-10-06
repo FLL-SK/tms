@@ -9,6 +9,8 @@ import { useForm, UseFormMethods, Resolver } from 'react-hook-form';
 import * as CTable from '../../_components/ColapsibleTable';
 import { Score, JudgingCategory } from '../../_types';
 
+import { PencilSquare } from 'react-bootstrap-icons';
+
 function J(props: { name: keyof Inputs; title: string; onChange: (ev) => any; methods: any }) {
     const { title, onChange, methods, name } = props;
     const v = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -100,29 +102,28 @@ export function Judging(props: JudgeProps) {
     return (
         <>
             <Row>
-                <Col md>
+                <Col sm="8">
                     <CTable.Label label={'Teams'} align="left" />
                 </Col>
-                <Col md>
-                    <Row>
-                        <CTable.Label label={'Score'} align="center" />
-                    </Row>
+                <Col sm="2">
+                    <CTable.Label label={'Score'} brk="sm" align="center" />
                 </Col>
             </Row>
             {tscores.map((r, idx) => (
                 <React.Fragment key={idx}>
-                    <Row
+                    <div
                         onClick={() => setTeamId(r._id)}
                         className={(idx % 2 ? '' : 'fll_scoring_row') + (teamId === r._id ? ' fll_selected_row' : '')}
                         style={{
                             display: 'flex',
+                            flexWrap: 'wrap',
                             alignItems: 'flex-end',
                             paddingTop: '1rem',
                             paddingBottom: '1rem',
                         }}
                     >
                         <Col
-                            md
+                            sm="8"
                             className={
                                 'fll_scoring_header-' +
                                 (idx % 2 ? 'odd' : 'even') +
@@ -131,16 +132,23 @@ export function Judging(props: JudgeProps) {
                         >
                             {r.name}
                         </Col>
-                        <Col md>
-                            <Row>
-                                {category == 'coreValues' && (
-                                    <CTable.Value label={'Score'} value={r.score.coreValues} />
-                                )}
-                                {category == 'project' && <CTable.Value label={'Score'} value={r.score.project} />}
-                                {category == 'design' && <CTable.Value label={'Score'} value={r.score.design} />}
-                            </Row>
+                        <Col xs sm="2">
+                            {category == 'coreValues' && (
+                                <CTable.Value label={'Score'} labelBrk="sm" value={r.score.coreValues} />
+                            )}
+                            {category == 'project' && (
+                                <CTable.Value label={'Score'} labelBrk="sm" value={r.score.project} />
+                            )}
+                            {category == 'design' && (
+                                <CTable.Value label={'Score'} labelBrk="sm" value={r.score.design} />
+                            )}
                         </Col>
-                    </Row>
+                        {teamId != r._id && (
+                            <Col xs sm="2" style={{ textAlign: 'center' }}>
+                                <PencilSquare />
+                            </Col>
+                        )}
+                    </div>
                     {teamId === r._id && (
                         <div className="fll_selected_row">
                             <Form name="Judging" onSubmit={methods.handleSubmit(handleSubmit)}>
@@ -149,13 +157,25 @@ export function Judging(props: JudgeProps) {
                                     <J name="developing" title="Developing" onChange={handleChange} methods={methods} />
                                     <J
                                         name="accomplished"
-                                        title="Acomplished"
+                                        title="Accomplished"
                                         onChange={handleChange}
                                         methods={methods}
                                     />
                                     <J name="exceeds" title="Exceeding" onChange={handleChange} methods={methods} />
                                 </Row>
-                                <Row>{methods.errors.exceeds && 'celkovy pocet odpovedi musi byt presne 10'}</Row>
+                                {methods.errors.exceeds && (
+                                    <Row
+                                        style={{
+                                            justifyContent: 'center',
+                                            backgroundColor: 'salmon',
+                                            padding: '1rem',
+                                            marginTop: '1rem',
+                                            marginBottom: '1rem',
+                                        }}
+                                    >
+                                        <span>celkovy pocet odpovedi musi byt presne 10</span>
+                                    </Row>
+                                )}
                                 <Row style={{ justifyContent: 'center' }}>
                                     <Button type="submit" style={{ margin: '1rem' }}>
                                         Submit

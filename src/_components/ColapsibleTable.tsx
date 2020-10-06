@@ -1,11 +1,13 @@
 import React from 'react';
 import Col from 'react-bootstrap/Col';
 
-export function Value(props: { label: string; value?: string; format?: (value: any) => string }) {
-    const { label, value, format } = props;
+export function Value(props: { label: string; labelBrk?: string; value?: string; format?: (value: any) => string }) {
+    const { label, value, labelBrk, format } = props;
+    let spBrk = '';
+    if (labelBrk) spBrk = 'd-' + labelBrk + '-none';
     return (
         <Col style={{ textAlign: 'center' }}>
-            <span className={'d-md-none'} style={{ display: 'contents' }}>
+            <span className={spBrk} style={{ display: 'contents' }}>
                 {label}
                 <br />
             </span>
@@ -13,11 +15,13 @@ export function Value(props: { label: string; value?: string; format?: (value: a
         </Col>
     );
 }
-export function Label(props: { label: string; align?: AlignSetting }) {
-    const { label, align } = props;
+export function Label(props: { label: string; brk?: string; align?: AlignSetting }) {
+    const { label, brk, align } = props;
+    let spBrk = '';
+    if (brk) spBrk = 'd-none d-' + brk + '-block';
     return (
         <Col style={{ textAlign: align }}>
-            <label className={'d-none d-md-block'}>{label}</label>
+            <label className={spBrk}>{label}</label>
         </Col>
     );
 }

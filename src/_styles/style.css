@@ -17,7 +17,7 @@
     background-color: lightgrey;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 576px) {
     .fll_scoring_header-odd {
         background-color: lightgrey;
     }
