@@ -8,11 +8,13 @@ module.exports = (env) => {
     // load env variables from .env file
     const fileEnv = dotenv.config().parsed;
 
-    // create object from the env variable
-    const envKeys = Object.keys(fileEnv).reduce((prev, next) => {
-        prev[`process.env.${next}`] = JSON.stringify(fileEnv[next]);
-        return prev;
-    }, {});
+    if (fileEnv) {
+        // create object from the env variable
+        const envKeys = Object.keys(fileEnv).reduce((prev, next) => {
+            prev[`process.env.${next}`] = JSON.stringify(fileEnv[next]);
+            return prev;
+        }, {});
+    }
 
     wcfg = {
         mode: 'development',
