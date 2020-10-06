@@ -35,7 +35,7 @@ module.exports = (env) => {
     const envObj = { ...convertEnv2Obj(fileEnv), ...loadEnvValues(envKeys) };
 
     wcfg = {
-        mode: 'development',
+        mode: envObj['process.env.ENV'] || 'production',
         resolve: {
             extensions: ['.js', '.ts', '.tsx'],
         },
