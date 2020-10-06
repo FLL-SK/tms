@@ -121,94 +121,96 @@ export function EventPage(props: RouteComponentProps<IParams>) {
 
     return (
         <>
-            <TabContainer activeKey={key}>
-                <Navigation onSelect={(k) => setKey(k || 'details')} />
-                <h1>{'Tournament ' + (event ? event.name : '')}</h1>
-                <TabContent>
-                    <TabPane eventKey="details">
-                        <EventProfile
-                            loading={eventState.loading || false}
-                            event={event}
-                            isAdmin={auth.sysRoles.isAdmin || false}
-                            isEventManager={auth.eventRoles.isEventManager || false}
-                            onStatusChange={handleStatusChange}
-                        />
-                    </TabPane>
-                    <TabPane eventKey="teams">
-                        <h2>Tímy</h2>
-                        {eventState.teams.loading && <Spinner animation="grow" size="sm" />}
-                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                            {eventState.teams.list &&
-                                eventState.teams.list.map((i) => <TeamCard id={i._id} name={i.name} key={i._id} />)}
-                        </div>
-                    </TabPane>
-                    <TabPane eventKey="rgSchedule">
-                        <h2>Robot Game Round 1</h2>
-                        <RGRound
-                            loading={eventState.teams.loading}
-                            round={1}
-                            schedule={event ? event.rgSchedule : []}
-                        />
-                        <h2>Robot Game Round 2</h2>
-                        <RGRound
-                            loading={eventState.teams.loading}
-                            round={2}
-                            schedule={event ? event.rgSchedule : []}
-                        />
-                        <h2>Robot Game Round 3</h2>
-                        <RGRound
-                            loading={eventState.teams.loading}
-                            round={3}
-                            schedule={event ? event.rgSchedule : []}
-                        />
-                    </TabPane>
-                    <TabPane eventKey="scoreTable">
-                        <h2>Scoring Table</h2>
-                        <ScoringTable
-                            loading={eventState.scores.loading || eventState.teams.loading ? true : false}
-                            teams={eventState.teams.list || []}
-                            scores={eventState.scores.list || []}
-                        />
-                    </TabPane>
-                    <TabPane eventKey="catGame">
-                        <h2>Category: Robot Game</h2>
-                        <RG
-                            teams={eventState.teams.list || []}
-                            tables={tables}
-                            rounds={rounds}
-                            onSubmit={handleRGSubmit}
-                            program={event?.program}
-                        />
-                    </TabPane>
-                    <TabPane eventKey="catValues">
-                        <h2>Category: Core Values</h2>
-                        <Judging
-                            category="coreValues"
-                            teams={eventState.teams.list || []}
-                            scores={eventState.scores.list || []}
-                            onSubmit={handleJudgeSubmit}
-                        />
-                    </TabPane>
-                    <TabPane eventKey="catProject">
-                        <h2>Category: Innovation Project</h2>
-                        <Judging
-                            category="project"
-                            teams={eventState.teams.list || []}
-                            scores={eventState.scores.list || []}
-                            onSubmit={handleJudgeSubmit}
-                        />
-                    </TabPane>
-                    <TabPane eventKey="catDesign">
-                        <h2>Category: Robot Design</h2>
-                        <Judging
-                            category="design"
-                            teams={eventState.teams.list || []}
-                            scores={eventState.scores.list || []}
-                            onSubmit={handleJudgeSubmit}
-                        />
-                    </TabPane>
-                </TabContent>
-            </TabContainer>
+            <Col lg={{ span: 8, offset: 2 }}>
+                <TabContainer activeKey={key}>
+                    <Navigation onSelect={(k) => setKey(k || 'details')} />
+                    <h1>{'Tournament ' + (event ? event.name : '')}</h1>
+                    <TabContent>
+                        <TabPane eventKey="details">
+                            <EventProfile
+                                loading={eventState.loading || false}
+                                event={event}
+                                isAdmin={auth.sysRoles.isAdmin || false}
+                                isEventManager={auth.eventRoles.isEventManager || false}
+                                onStatusChange={handleStatusChange}
+                            />
+                        </TabPane>
+                        <TabPane eventKey="teams">
+                            <h2>Tímy</h2>
+                            {eventState.teams.loading && <Spinner animation="grow" size="sm" />}
+                            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                                {eventState.teams.list &&
+                                    eventState.teams.list.map((i) => <TeamCard id={i._id} name={i.name} key={i._id} />)}
+                            </div>
+                        </TabPane>
+                        <TabPane eventKey="rgSchedule">
+                            <h2>Robot Game Round 1</h2>
+                            <RGRound
+                                loading={eventState.teams.loading}
+                                round={1}
+                                schedule={event ? event.rgSchedule : []}
+                            />
+                            <h2>Robot Game Round 2</h2>
+                            <RGRound
+                                loading={eventState.teams.loading}
+                                round={2}
+                                schedule={event ? event.rgSchedule : []}
+                            />
+                            <h2>Robot Game Round 3</h2>
+                            <RGRound
+                                loading={eventState.teams.loading}
+                                round={3}
+                                schedule={event ? event.rgSchedule : []}
+                            />
+                        </TabPane>
+                        <TabPane eventKey="scoreTable">
+                            <h2>Scoring Table</h2>
+                            <ScoringTable
+                                loading={eventState.scores.loading || eventState.teams.loading ? true : false}
+                                teams={eventState.teams.list || []}
+                                scores={eventState.scores.list || []}
+                            />
+                        </TabPane>
+                        <TabPane eventKey="catGame">
+                            <h2>Category: Robot Game</h2>
+                            <RG
+                                teams={eventState.teams.list || []}
+                                tables={tables}
+                                rounds={rounds}
+                                onSubmit={handleRGSubmit}
+                                program={event?.program}
+                            />
+                        </TabPane>
+                        <TabPane eventKey="catValues">
+                            <h2>Category: Core Values</h2>
+                            <Judging
+                                category="coreValues"
+                                teams={eventState.teams.list || []}
+                                scores={eventState.scores.list || []}
+                                onSubmit={handleJudgeSubmit}
+                            />
+                        </TabPane>
+                        <TabPane eventKey="catProject">
+                            <h2>Category: Innovation Project</h2>
+                            <Judging
+                                category="project"
+                                teams={eventState.teams.list || []}
+                                scores={eventState.scores.list || []}
+                                onSubmit={handleJudgeSubmit}
+                            />
+                        </TabPane>
+                        <TabPane eventKey="catDesign">
+                            <h2>Category: Robot Design</h2>
+                            <Judging
+                                category="design"
+                                teams={eventState.teams.list || []}
+                                scores={eventState.scores.list || []}
+                                onSubmit={handleJudgeSubmit}
+                            />
+                        </TabPane>
+                    </TabContent>
+                </TabContainer>
+            </Col>
         </>
     );
 }
