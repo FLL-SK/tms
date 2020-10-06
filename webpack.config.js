@@ -68,5 +68,26 @@ module.exports = (env) => {
         },
     };
 
+    if (wcfg.mode === 'production') {
+        // add optimization in production mode
+        wcfg.optimization = {
+            minimize: true,
+            minimizer: [
+                new TerserPlugin({
+                    sourceMap: true,
+                    terserOptions: {
+                        compress: {
+                            drop_console: true,
+                        },
+                        output: {
+                            comments: /@license/i,
+                        },
+                    },
+                    extractComments: false,
+                }),
+            ],
+        };
+    }
+
     return wcfg;
 };
