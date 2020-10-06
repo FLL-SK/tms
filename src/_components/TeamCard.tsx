@@ -7,7 +7,7 @@ export default function TeamCard({ name, id }) {
             style={{
                 width: '20rem',
                 height: '8rem',
-                backgroundColor: 'lightcyan',
+                backgroundColor: 'lightgreen',
                 marginRight: '1rem',
                 marginBottom: '1rem',
                 padding: '1rem',

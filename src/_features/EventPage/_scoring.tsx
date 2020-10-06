@@ -25,14 +25,14 @@ export function ScoringTable(props: { loading: boolean; scores: any[]; teams: an
                     <h3>All categories</h3>
                     <Row style={{ paddingTop: '1rem', paddingBottom: '1rem', backgroundColor: 'lightblue' }}>
                         <Col md>
-                            <CTable.Label label={'Teams'} align="left" />
+                            <CTable.Label label={'Teams'} brk="md" align="left" />
                         </Col>
                         <Col md>
                             <Row>
-                                <CTable.Label label={'V'} align="center" />
-                                <CTable.Label label={'P'} align="center" />
-                                <CTable.Label label={'D'} align="center" />
-                                <CTable.Label label={'G'} align="center" />
+                                <CTable.Label label={'V'} brk="md" align="center" />
+                                <CTable.Label label={'P'} brk="md" align="center" />
+                                <CTable.Label label={'D'} brk="md" align="center" />
+                                <CTable.Label label={'G'} brk="md" align="center" />
                             </Row>
                         </Col>
                     </Row>
@@ -54,21 +54,25 @@ export function ScoringTable(props: { loading: boolean; scores: any[]; teams: an
                                 <Row>
                                     <CTable.Value
                                         label={'Values'}
+                                        labelBrk="md"
                                         value={r.coreValues}
                                         format={() => (topV == idx ? 'fll_top_score' : '')}
                                     />
                                     <CTable.Value
                                         label={'Project'}
+                                        labelBrk="md"
                                         value={r.project}
                                         format={() => (topP == idx ? 'fll_top_score' : '')}
                                     />
                                     <CTable.Value
                                         label={'Design'}
+                                        labelBrk="md"
                                         value={r.design}
                                         format={() => (topD == idx ? 'fll_top_score' : '')}
                                     />
                                     <CTable.Value
                                         label={'Game'}
+                                        labelBrk="md"
                                         value={r.game}
                                         format={() => (topG == idx ? 'fll_top_score' : '')}
                                     />
@@ -83,12 +87,12 @@ export function ScoringTable(props: { loading: boolean; scores: any[]; teams: an
                         </Col>
                         <Col md>
                             <Row>
-                                <CTable.Label label={'R1'} align="center" />
-                                <CTable.Label label={'R2'} align="center" />
-                                <CTable.Label label={'R3'} align="center" />
-                                <CTable.Label label={'QF'} align="center" />
-                                <CTable.Label label={'SF'} align="center" />
-                                <CTable.Label label={'FIN'} align="center" />
+                                <CTable.Label label={'R1'} brk="md" align="center" />
+                                <CTable.Label label={'R2'} brk="md" align="center" />
+                                <CTable.Label label={'R3'} brk="md" align="center" />
+                                <CTable.Label label={'QF'} brk="md" align="center" />
+                                <CTable.Label label={'SF'} brk="md" align="center" />
+                                <CTable.Label label={'FIN'} brk="md" align="center" />
                             </Row>
                         </Col>
                     </Row>
@@ -105,6 +109,7 @@ export function ScoringTable(props: { loading: boolean; scores: any[]; teams: an
                                 <Row>
                                     <CTable.Value
                                         label={'R1'}
+                                        labelBrk="md"
                                         value={r.game1}
                                         format={() =>
                                             r.game1 == Math.max(r.game1 || 0, r.game2 || 0, r.game3 || 0)
@@ -114,6 +119,7 @@ export function ScoringTable(props: { loading: boolean; scores: any[]; teams: an
                                     />
                                     <CTable.Value
                                         label={'R2'}
+                                        labelBrk="md"
                                         value={r.game2}
                                         format={() =>
                                             r.game2 == Math.max(r.game1 || 0, r.game2 || 0, r.game3 || 0)
@@ -123,6 +129,7 @@ export function ScoringTable(props: { loading: boolean; scores: any[]; teams: an
                                     />
                                     <CTable.Value
                                         label={'R3'}
+                                        labelBrk="md"
                                         value={r.game3}
                                         format={() =>
                                             r.game3 == Math.max(r.game1 || 0, r.game2 || 0, r.game3 || 0)
@@ -130,9 +137,9 @@ export function ScoringTable(props: { loading: boolean; scores: any[]; teams: an
                                                 : ''
                                         }
                                     />
-                                    <CTable.Value label={'QF'} value={r.gameQ} />
-                                    <CTable.Value label={'SF'} value={r.gameS} />
-                                    <CTable.Value label={'FIN'} value={r.gameF} />
+                                    <CTable.Value label={'QF'} labelBrk="md" value={r.gameQ} />
+                                    <CTable.Value label={'SF'} labelBrk="md" value={r.gameS} />
+                                    <CTable.Value label={'FIN'} labelBrk="md" value={r.gameF} />
                                 </Row>
                             </Col>
                         </Row>

@@ -16,8 +16,6 @@ export function EventProfile(props: EventProfileProps) {
     const { loading, event, onStatusChange, isAdmin, isEventManager } = props;
     const [status, setStatus] = useState(event ? event.status : 0);
 
-    console.log('Event Profile');
-
     function handleStatusChange(ev) {
         ev.preventDefault();
         setStatus(ev.target.value);
@@ -44,25 +42,25 @@ export function EventProfile(props: EventProfileProps) {
                     </Form>
 
                     <h3>Usporiadatelia</h3>
-                    <Row>
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                         {event.managers.map((i, idx) => (
                             <ProfileCard profile={i} key={i._id} />
                         ))}
-                    </Row>
+                    </div>
 
                     <h3>Porotci</h3>
-                    <Row>
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                         {event.judges.map((i, idx) => (
                             <ProfileCard profile={i} key={i._id} />
                         ))}
-                    </Row>
+                    </div>
 
                     <h3>Rozhodcovia</h3>
-                    <Row>
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                         {event.referees.map((i, idx) => (
                             <ProfileCard profile={i} key={i._id} />
                         ))}
-                    </Row>
+                    </div>
                 </>
             )}
         </>

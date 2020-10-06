@@ -137,10 +137,10 @@ export function EventPage(props: RouteComponentProps<IParams>) {
                     <TabPane eventKey="teams">
                         <h2>Tímy</h2>
                         {eventState.teams.loading && <Spinner animation="grow" size="sm" />}
-                        <Row>
+                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {eventState.teams.list &&
                                 eventState.teams.list.map((i) => <TeamCard id={i._id} name={i.name} key={i._id} />)}
-                        </Row>
+                        </div>
                     </TabPane>
                     <TabPane eventKey="rgSchedule">
                         <h2>Robot Game Round 1</h2>

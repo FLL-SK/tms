@@ -4,7 +4,15 @@ import Card from 'react-bootstrap/Card';
 
 export default function ProfileCard({ profile }) {
     return (
-        <Card style={{ width: '18rem', margin: '1rem', backgroundColor: 'lightcyan' }}>
+        <Card
+            style={{
+                width: '10rem',
+                height: '7rem',
+                marginRight: '1rem',
+                marginBottom: '1rem',
+                backgroundColor: 'lightgreen',
+            }}
+        >
             <Card.Body>
                 <Card.Title>
                     <h5>{profile.fullName}</h5>

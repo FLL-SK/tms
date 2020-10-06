@@ -34,6 +34,7 @@ export function event(state: EventState = initialState, action): EventState {
                         a.fullName > b.fullName ? 1 : a.fullName < b.fullName ? -1 : 0,
                     );
             }
+            if (action.event.startDate) action.event.startDate = new Date(action.event.startDate);
             return { ...state, loading: false, event: action.event };
         case eventConstants.GETEVENT_FAILURE:
             return { ...state, error: action.error, loading: false };
