@@ -34,9 +34,9 @@ export function HomePage() {
 
     return (
         <>
-            <Col lg={{ span: 8, offset: 2 }}>
+            <Col lg={{ span: 6, offset: 3 }}>
                 <Navigation onSelect={onSelect} />
-                <h1>Profile</h1>
+                  <h1>Profile</h1>
 
                 {userState.loading && <Spinner animation="grow" size="sm" />}
                 {user && (
